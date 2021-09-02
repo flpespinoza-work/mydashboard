@@ -63,6 +63,24 @@ return [
             ]) : [],
         ],
 
+        // Conexion con la base de datos de tokencash
+        'tokencash' => [
+            'driver' => 'mysql',
+            'host'      => env('TOKENCASH_DB_HOST'),
+            'database'  => env('TOKENCASH_DB_NAME'),
+            'username'  => env('TOKENCASH_DB_USERNAME'),
+            'password'  => env('TOKENCASH_DB_PASSWORD')
+        ],
+
+        'tokencash_campanas' => [
+            'driver' => 'mysql',
+            'host'      => env('TOKENCASH_CAMPANAS_DB_HOST'),
+            'port'      => env('TOKENCASH_CAMPANAS_DB_PORT'),
+            'database'  => env('TOKENCASH_CAMPANAS_DB_NAME'),
+            'username'  => env('TOKENCASH_CAMPANAS_DB_USERNAME'),
+            'password'  => env('TOKENCASH_CAMPANAS_DB_PASSWORD')
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
@@ -119,7 +137,7 @@ return [
 
     'redis' => [
 
-        'client' => env('REDIS_CLIENT', 'phpredis'),
+        'client' => env('REDIS_CLIENT', 'predis'),
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
