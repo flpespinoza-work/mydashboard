@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\ResponseController;
+use App\Http\Controllers\StoreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +18,10 @@ use App\Http\Controllers\DashboardController;
 */
 
 Route::get('/', [DashboardController::class, 'index']);
+Route::get('/grupos', [GroupController::class, 'index']);
+Route::get('/establecimientos', [StoreController::class, 'index']);
+Route::get('/respuestas', [ResponseController::class, 'index']);
+
 
 /*Route::get('/dashboard', function () {
     return view('dashboard');
