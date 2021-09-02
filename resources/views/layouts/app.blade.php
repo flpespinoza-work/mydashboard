@@ -10,7 +10,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100;1,100&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300,400,500,700&display=swap" rel="stylesheet">
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -19,21 +19,48 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
-    <body class="m-0 font-sans text-sm antialiased text-gray-700 bg-gray-50">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <body
+    x-data="{ sidebarOpen: false }"
+    class="m-0 font-sans text-sm antialiased text-gray-700 bg-white">
+        <noscript>{{ __('You need to enable JavaScript to run this app.') }}</noscript>
+        <div class="flex h-screen overflow-hidden">
+            <div class="lg:w-72">
+                <div x-show="sidebarOpen" :class="{ 'opacity-100' : sidebarOpen }"
+                class="fixed inset-0 z-40 transition-opacity duration-200 bg-black bg-opacity-25 opacity-0 pointer-events-none lg:hidden lg:z-auto"
+                aria-hidden="true"></div>
+                @include('layouts.navigation')
+            </div>
 
-            <!-- Page Heading -->
-            <header class="bg-white shadow">
-                <div class="px-4 py-6 mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
+            <div class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
+                <header class="sticky top-0 z-30 bg-white border-b border-gray-100 lg:hidden">
+                    <div class="px-4 mx-auto lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-xl sm:px-6 lg:px-4">
+                        <div class="flex items-center justify-between h-16 -mb-px">
+                            <div class="flex items-center">
+                                <button class="text-gray-darker lg:hidden" aria-controls="sidebar" aria-expanded="false" @click="sidebarOpen = !sidebarOpen">
+                                    <span class="sr-only">Mostrar menu</span>
+                                    <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                                    </svg>
+                                </button>
+                                <a class="inline-block ml-4 lg:hidden" href="/">
+                                    <x-logo class="h-7"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
 
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
-            </main>
+                <main class="h-screen">
+                    <div class="relative px-4 py-4 mx-auto lg:py-6 lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-2xl sm:px-6 lg:px-4">
+                        <div class="w-full pb-3 border-b border-gray-150 lg:pb-6">
+                            <h3 class="text-base font-semibold lg:text-xl">{{ $title }}</h3>
+                        </div>
+                        <div class="p-2 mt-4 bg-white rounded-sm lg:pb-4 lg:mt-8">
+                            {{ $slot}}
+                        </div>
+                    </div>
+                </main>
+            </div>
         </div>
         <livewire:scripts />
     </body>
