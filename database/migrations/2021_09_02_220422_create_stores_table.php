@@ -15,7 +15,16 @@ class CreateStoresTable extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('group_id')->constrained();
+            $table->string('name', 100);
+            $table->string('phone', 10);
+            $table->string('email', 255);
+            $table->string('contact_name', 100);
+            $table->integer('token_node')->unique();
+            $table->string('token_giftcard')->unique();
+            $table->string('token_budget')->unique();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
