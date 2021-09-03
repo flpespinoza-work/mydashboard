@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -45,4 +46,14 @@ class User extends Authenticatable
     ];
 
     protected $guarded = [];
+
+    public function stores()
+    {
+        return $this->BelongsToMany(Store::class);
+    }
+
+    public function isSuperAdmin()
+    {
+        return $this->hasRole('superadmin');
+    }
 }
