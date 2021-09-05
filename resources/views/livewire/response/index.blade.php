@@ -15,8 +15,8 @@ class="space-y-6 lg:flex lg:space-y-0 lg:space-x-6">
                 </div>
             </div>
             <div class="flex items-center justify-end p-3">
-                <button wire:click="resetForm" class="w-1/2 py-2 text-xs font-semibold text-gray-500 rounded-md md:w-40">Cancelar</button>
-                <button class="w-1/2 py-2 text-xs font-semibold bg-blue-600 rounded-md md:w-40 text-blue-50">Guardar</button>
+                <button wire:click="resetForm" class="px-4 py-2 bg-gray-300 text-sm font-semibold text-gray-500 rounded-md">Cancelar</button>
+                <button class="px-4 py-2 text-sm font-semibold bg-blue-600 rounded-md text-blue-50 ml-4">Guardar respuesta</button>
             </div>
         </form>
     </div>
