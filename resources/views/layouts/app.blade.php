@@ -10,7 +10,9 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300,400,500,700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300,400,500,600,700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -51,14 +53,15 @@
                 </header>
 
                 <main class="h-screen">
-                    <div class="w-full border-b border-gray-150 bg-white">
+                    <div class="w-full">
                         <div class="p-6 mx-auto lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-2xl">
                             <span class="text-xs font-normal text-gray-700">{{ $sectionTitle}}</span>
-                            <h3 class="mt-2 text-md font-medium lg:text-xl text-gray-800 tracking-tight">{{ $title }}</h3>
+                            <h3 class="flex items-center mt-2 font-medium tracking-tight text-md lg:text-xl">{{ $title }}</h3>
+                            <p class="mt-2 text-xs font-medium text-gray-500 md:font-semibold">{{ $description }}</p>
                         </div>
                     </div>
                     <div class="relative p-6 mx-auto lg:py-6 lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-2xl">
-                        <div class="mt-4 rounded-sm lg:pb-4 lg:mt-6">
+                        <div class="lg:pb-4">
                             {{ $slot}}
                         </div>
                     </div>

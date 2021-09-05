@@ -1,20 +1,45 @@
-<div class="lg:flex">
-    <div id="response-form" class="p-4 bg-white lg:w-96 h-64 max-h-64">
-            <div class="flex flex-col space-y-2 text-xs">
-                <label for="response" class="font-semibold text-gray-600">Agregar nueva respuesta</label>
-                <textarea wire:model.defer="response" id="response" class="border-none bg-gray-50 rounded-sm focus:ring-gray-200 h-32"></textarea>
+<div
+class="space-y-6 lg:flex lg:space-y-0 lg:space-x-6">
+    <div id="response-form" class="overflow-hidden bg-white border border-gray-100 rounded-md shadow-sm lg:w-1/3 lg:max-h-48">
+        <form wire:submit.prevent="addResponse">
+            <div class="p-3">
+                <label for="response" class="block text-sm font-medium text-gray-700">
+                Ingresa el texto de la respuesta
+                </label>
+                <div class="mt-3">
+                    <textarea id="response"
+                    wire:model.defer="response"
+                    rows="3"
+                    class="block w-full mt-1 border border-gray-100 rounded-md resize-none bg-gray-50 focus:ring-0 focus:border-gray-200 sm:text-sm"
+                    placeholder="Respuesta"></textarea>
+                </div>
             </div>
-            <div class="mt-6 lg:flex lg:justify-between lg:space-x-3">
-                <button wire:click="resetForm" class="py-3 w-full lg:w-1/2 text-center font-bold inline-block rounded border-2 border-gray-600">Cancelar</button>
-                <button type="submit" class=" mt-3 lg:mt-0 py-3 w-full lg:w-1/2 text-center font-bold inline-block text-blue-50 bg-blue-700 rounded">Guardar</button>
+            <div class="flex items-center justify-end p-3">
+                <button wire:click="resetForm" class="w-1/2 py-2 text-xs font-semibold text-gray-500 rounded-md md:w-40">Cancelar</button>
+                <button class="w-1/2 py-2 text-xs font-semibold bg-blue-600 rounded-md md:w-40 text-blue-50">Guardar</button>
             </div>
         </form>
     </div>
-    <div id="response-list" class="md:flex-1 lg:ml-6 bg-red-50 mt-6 lg:mt-0 lg:min-h-screen">
+
+    <div id="response-list" class="p-3 space-y-2 bg-white border rounded-md shadow-sm border-gray-50 lg:flex-1">
+        <div class="my-5">
+            <input type="search"
+            placeholder="Buscar"
+            wire:model="search"
+            id="search"
+            class="w-full text-sm border-gray-100 rounded-sm bg-gray-25 focus:border-gray-100 focus:ring-gray-300">
+        </div>
         @forelse ($responses as $response)
-            <p>{{ $response->response }}</p>
+            <div class="flex items-center p-3 border rounded-md border-gray-50 bg-gray-50">
+                <p class="font-light text-gray-500">{{ $response->response}}</p>
+                <span wire:click="deleteResponse({{$response}})" class="ml-auto cursor-pointer">
+                    <x-icons.trash class="w-4 h-4 ml-auto" />
+                </span>
+            </div>
         @empty
-            <p>No hay respuestas registradas</p>
+            <p class="font-medium text-center">No hay respuestas registradas</p>
         @endforelse
+
+        {{ $responses->links() }}
     </div>
 </div>
