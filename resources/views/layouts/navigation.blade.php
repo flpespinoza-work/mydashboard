@@ -1,5 +1,5 @@
 <sidebar :class="{ '-translate-x-72': !sidebarOpen }" id="sidebar"
-class="absolute top-0 left-0 z-40 flex-shrink-0 inline-block h-screen max-h-full py-4 overflow-y-scroll transition-transform duration-200 ease-in-out transform border-r border-gray-150 bg-gray-25 w-72 lg:static lg:left-auto lg:top-auto lg:translate-x-0 lg:overflow-y-auto no-scrollbar">
+class="absolute top-0 left-0 z-40 flex-shrink-0 inline-block h-screen max-h-full py-4 overflow-y-scroll transition-transform duration-200 ease-in-out transform border-r border-gray-150 bg-white w-72 lg:static lg:left-auto lg:top-auto lg:translate-x-0 lg:overflow-y-auto no-scrollbar">
     <div class="flex items-center px-6 pr-3 mb-10">
         <button class="mr-4 text-gray-500 outline-none lg:hidden hover:text-gray-400"
         aria-controls="sidebar" aria-expanded="false" @click="sidebarOpen = !sidebarOpen">

@@ -21,7 +21,7 @@
     </head>
     <body
     x-data="{ sidebarOpen: false }"
-    class="m-0 font-sans text-sm antialiased text-gray-700 bg-white">
+    class="m-0 font-sans text-sm antialiased text-gray-700 bg-gray-50">
         <noscript>{{ __('You need to enable JavaScript to run this app.') }}</noscript>
         <div class="flex h-screen overflow-hidden">
             <div class="lg:w-72">
@@ -51,11 +51,14 @@
                 </header>
 
                 <main class="h-screen">
-                    <div class="relative px-4 py-4 mx-auto lg:py-6 lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-2xl sm:px-6 lg:px-4">
-                        <div class="w-full pb-3 border-b border-gray-150 lg:pb-6">
-                            <h3 class="text-base font-semibold lg:text-xl">{{ $title }}</h3>
+                    <div class="w-full border-b border-gray-150 bg-white">
+                        <div class="p-6 mx-auto lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-2xl">
+                            <span class="text-xs font-normal text-gray-700">{{ $sectionTitle}}</span>
+                            <h3 class="mt-2 text-md font-medium lg:text-xl text-gray-800 tracking-tight">{{ $title }}</h3>
                         </div>
-                        <div class="p-2 mt-4 bg-white rounded-sm lg:pb-4 lg:mt-8">
+                    </div>
+                    <div class="relative p-6 mx-auto lg:py-6 lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-2xl">
+                        <div class="mt-4 rounded-sm lg:pb-4 lg:mt-6">
                             {{ $slot}}
                         </div>
                     </div>

@@ -1,4 +1,5 @@
 <x-app-layout>
+    <x-slot name="sectionTitle">Administración</x-slot>
     <x-slot name="title">Respuestas</x-slot>
-    <div>Respuestas</div>
+    <livewire:response.index/>
 </x-app-layout>
