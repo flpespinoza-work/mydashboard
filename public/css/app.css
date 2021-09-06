@@ -22993,6 +22993,10 @@ select {
   line-height: 1;
 }
 
+.text-xxs {
+  font-size: .65rem;
+}
+
 .font-thin {
   font-weight: 100;
 }
@@ -54996,6 +55000,10 @@ select {
     line-height: 1;
   }
 
+  .sm\:text-xxs {
+    font-size: .65rem;
+  }
+
   .sm\:font-thin {
     font-weight: 100;
   }
@@ -86985,6 +86993,10 @@ select {
   .md\:text-9xl {
     font-size: 8rem;
     line-height: 1;
+  }
+
+  .md\:text-xxs {
+    font-size: .65rem;
   }
 
   .md\:font-thin {
@@ -118978,6 +118990,10 @@ select {
     line-height: 1;
   }
 
+  .lg\:text-xxs {
+    font-size: .65rem;
+  }
+
   .lg\:font-thin {
     font-weight: 100;
   }
@@ -150969,6 +150985,10 @@ select {
     line-height: 1;
   }
 
+  .xl\:text-xxs {
+    font-size: .65rem;
+  }
+
   .xl\:font-thin {
     font-weight: 100;
   }
@@ -182958,6 +182978,10 @@ select {
   .\32xl\:text-9xl {
     font-size: 8rem;
     line-height: 1;
+  }
+
+  .\32xl\:text-xxs {
+    font-size: .65rem;
   }
 
   .\32xl\:font-thin {

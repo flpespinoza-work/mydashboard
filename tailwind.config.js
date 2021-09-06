@@ -17,6 +17,9 @@ module.exports = {
                 'gray-150': '#F0F1F3',
                 'orange': '#ef6a37',
                 'orange-light': '#ffe6dd'
+            },
+            fontSize: {
+                'xxs': '.65rem'
             }
         },
     },

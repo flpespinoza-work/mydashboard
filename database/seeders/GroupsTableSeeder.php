@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class GroupTableSeeder extends Seeder
+class GroupsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +15,9 @@ class GroupTableSeeder extends Seeder
     public function run()
     {
         $groups = [
+            [
+                'name' => 'Todos'
+            ],
             [
                 'name' => 'Gasomax'
             ],

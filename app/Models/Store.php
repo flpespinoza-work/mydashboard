@@ -16,4 +16,9 @@ class Store extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
 }
