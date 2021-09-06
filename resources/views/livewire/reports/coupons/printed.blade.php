@@ -11,11 +11,11 @@
                 </select>
             </div>
 
-            <div class="px-2 space-y-2 md:w-1/3">
+            <div class="px-2 space-y-2 md:w-1/6">
                 <label for="store" class="block text-sm font-medium text-gray-700">Seleccione la fecha o periodo</label>
                 <div class="relative">
-                    <x-heroicon-s-calendar class="absolute w-5 h-5 text-gray-400 top-2 left-2"/>
-                    <input type="text" id="date" readonly class="block w-full pl-10 mt-1 border-gray-300 rounded-md shadow-sm bg-gray-25 sm:text-sm">
+                    <x-heroicon-s-calendar class="absolute w-4 h-4 text-gray-400 top-2 left-2"/>
+                    <input type="text" id="date" readonly class="block w-full pl-10 mt-1 border-gray-300 rounded-md shadow-sm bg-gray-25 text-sm">
                 </div>
             </div>
 
