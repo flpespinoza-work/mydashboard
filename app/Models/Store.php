@@ -21,4 +21,5 @@ class Store extends Model
     {
         return $this->belongsTo(Group::class);
     }
+
 }

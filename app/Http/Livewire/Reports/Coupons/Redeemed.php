@@ -2,12 +2,12 @@
 
 namespace App\Http\Livewire\Reports\Coupons;
 
-use Livewire\Component;
-use App\Models\Store;
 use App\Traits\Reports\Coupons;
+use App\Models\Store;
+use Livewire\Component;
 use Asantibanez\LivewireCharts\Models\AreaChartModel;
 
-class Printed extends Component
+class Redeemed extends Component
 {
     use Coupons;
 
@@ -34,7 +34,7 @@ class Printed extends Component
                 $coupon = $coupons[$key];
                 return $couponsChartModel->addPoint($key, $coupon['count']);
             }, (new AreaChartModel())
-                ->setTitle('Cupones impresos')
+                ->setTitle('Cupones canjeados')
                 ->setAnimated(true)
                 ->setSmoothCurve()
                 ->withGrid()
@@ -45,21 +45,21 @@ class Printed extends Component
                 $coupon = $coupons[$key];
                 return $ammountChartModel->addPoint($key, $coupon['ammount']);
             }, (new AreaChartModel())
-                ->setTitle('Dinero impreso')
+                ->setTitle('Dinero canjeado')
                 ->setAnimated(true)
                 ->setSmoothCurve()
                 ->withGrid()
                 ->setXAxisVisible(true)
                 ->setColor('#CF0924')
             );
-            return view('livewire.reports.coupons.printed')->with(['stores' => $stores,'couponsChartModel' => $couponsChartModel, 'ammountChartModel' => $ammountChartModel]);
+            return view('livewire.reports.coupons.redeemed')->with(['stores' => $stores,'couponsChartModel' => $couponsChartModel, 'ammountChartModel' => $ammountChartModel]);
         }
 
-        return view('livewire.reports.coupons.printed', compact('stores'));
+        return view('livewire.reports.coupons.redeemed', compact('stores'));
     }
 
     public function generateReport()
     {
-        $this->result = $this->getPrintedCoupons($this->filters);
+        $this->result = $this->getRedeemedCoupons($this->filters);
     }
 }

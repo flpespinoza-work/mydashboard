@@ -1,3 +1,11 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+.apexcharts-title-text {
+    @apply font-sans text-sm font-semibold !important;
+}
+
+.apexcharts-text.apexcharts-xaxis-label {
+    @apply font-sans text-xxs !important;
+}

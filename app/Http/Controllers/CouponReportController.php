@@ -13,26 +13,26 @@ class CouponReportController extends Controller
 
     public function redeemed()
     {
-
+        return view('reports.coupons.redeemed');
     }
 
     public function lastPrinted()
     {
-
+        return view('reports.coupons.last-printed');
     }
 
     public function printedRedeemed()
     {
-
+        return view('reports.coupons.printed-redeemed');
     }
 
     public function detailRedeemed()
     {
-
+        return view('reports.coupons.detail-redeemed');
     }
 
     public function printedRedeemedHistory()
     {
-
+        return view('reports.coupons.redeemed-history');
     }
 }

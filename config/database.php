@@ -64,7 +64,7 @@ return [
         ],
 
         // Conexion con la base de datos de tokencash
-        'tokencash' => [
+        'reportes' => [
             'driver' => 'mysql',
             'host'      => env('TOKENCASH_DB_HOST'),
             'database'  => env('TOKENCASH_DB_NAME'),

@@ -10,9 +10,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300,400,500,600,700&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
-
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -25,7 +23,7 @@
     <body
     x-data="{ sidebarOpen: false }"
     style="background: #f2f2f4"
-    class="m-0 font-sans text-sm antialiased text-gray-700">
+    class="m-0 font-sans text-sm antialiased text-gray-600">
         <noscript>{{ __('You need to enable JavaScript to run this app.') }}</noscript>
         <div class="flex h-screen overflow-hidden">
             <div class="lg:w-72">
@@ -71,6 +69,7 @@
             </div>
         </div>
         <livewire:scripts />
+        @livewireChartsScripts
         @stack('scripts')
     </body>
 </html>
