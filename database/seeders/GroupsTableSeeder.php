@@ -19,14 +19,29 @@ class GroupsTableSeeder extends Seeder
                 'name' => 'Todos'
             ],
             [
-                'name' => 'Gasomax'
+                'name' => 'ATG'
             ],
             [
-                'name' => 'Shell'
+                'name' => 'Euro'
             ],
             [
-                'name' => 'Redpetroil'
+                'name' => 'Hormadi'
             ],
+            [
+                'name' => 'Servicio El Milagro'
+            ],
+            [
+                'name' => 'Guerra'
+            ],
+            [
+                'name' => 'Petro'
+            ],
+            [
+                'name' => 'ATH'
+            ],
+            [
+                'name' => 'Gaxxor'
+            ]
         ];
 
         DB::table('groups')->insert($groups);

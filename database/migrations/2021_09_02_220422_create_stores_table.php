@@ -17,9 +17,9 @@ class CreateStoresTable extends Migration
             $table->id();
             $table->foreignId('group_id')->constrained();
             $table->string('name', 100)->unique();
-            $table->integer('token_node')->unique();
-            $table->string('token_giftcard')->unique();
-            $table->string('token_budget')->unique();
+            $table->integer('node')->unique();
+            $table->string('giftcard')->unique();
+            $table->string('budget')->unique();
             $table->string('phone', 10)->nullable();
             $table->string('email', 255)->nullable();
             $table->string('contact_name', 100)->nullable();

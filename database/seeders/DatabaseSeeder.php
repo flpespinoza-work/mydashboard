@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             MenusTableSeeder::class,
             MenuRoleTableSeeder::class,
             GroupsTableSeeder::class,
+            StoreTableSeeder::class,
             UsersTableSeeder::class,
         ]);
     }
