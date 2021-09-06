@@ -10,12 +10,38 @@ class Index extends Component
 {
     use WithPagination;
 
-    public $response;
+    public Response $response;
     public $search;
+    public $showModal = false;
 
     protected $rules = [
-        'response' => 'required|min:10'
+        'response.response' => 'required|min:10'
     ];
+
+    public function mount()
+    {
+        $this->response = $this->initializeResponse();
+    }
+
+    public function create()
+    {
+        if($this->response->getKey())
+            $this->response = $this->initializeResponse();
+        $this->showModal = true;
+    }
+
+    public function edit(Response $response)
+    {
+        if($this->response->isNot($response))
+            $this->response = $response;
+        $this->showModal = true;
+    }
+
+    public function initializeResponse()
+    {
+        return Response::make();;
+    }
+
     public function render()
     {
         $responses = Response::where('response', 'like', '%' . $this->search . '%')
@@ -25,15 +51,11 @@ class Index extends Component
         return view('livewire.response.index', compact('responses'));
     }
 
-    public function addResponse()
+    public function saveResponse()
     {
         $this->validate();
-
-        Response::create([
-            'response' => $this->response
-        ]);
-
-        $this->reset();
+        $this->response->save();
+        $this->showModal = false;
     }
 
     public function deleteResponse(Response $response)
@@ -41,8 +63,4 @@ class Index extends Component
         $response->delete();
     }
 
-    public function resetForm()
-    {
-        $this->reset();
-    }
 }

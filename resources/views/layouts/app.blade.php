@@ -23,7 +23,8 @@
     </head>
     <body
     x-data="{ sidebarOpen: false }"
-    class="m-0 font-sans text-sm antialiased text-gray-700 bg-gray-50">
+    style="background: #f2f2f4"
+    class="m-0 font-sans text-sm antialiased text-gray-700">
         <noscript>{{ __('You need to enable JavaScript to run this app.') }}</noscript>
         <div class="flex h-screen overflow-hidden">
             <div class="lg:w-72">
@@ -53,7 +54,7 @@
                 </header>
 
                 <main class="h-screen">
-                    <div class="w-full">
+                    <div class="w-full bg-white">
                         <div class="p-6 mx-auto lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-2xl">
                             <span class="text-xs font-normal text-gray-700">{{ $sectionTitle}}</span>
                             <h3 class="flex items-center mt-2 font-medium tracking-tight text-md lg:text-xl">{{ $title }}</h3>

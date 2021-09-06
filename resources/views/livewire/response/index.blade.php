@@ -1,45 +1,36 @@
-<div
-class="space-y-6 lg:flex lg:space-y-0 lg:space-x-6">
-    <div id="response-form" class="overflow-hidden bg-white border border-gray-100 rounded-md shadow-sm lg:w-1/3 lg:max-h-48">
-        <form wire:submit.prevent="addResponse">
-            <div class="p-3">
-                <label for="response" class="block text-sm font-medium text-gray-700">
-                Ingresa el texto de la respuesta
-                </label>
-                <div class="mt-3">
-                    <textarea id="response"
-                    wire:model.defer="response"
-                    rows="3"
-                    class="block w-full mt-1 border border-gray-100 rounded-md resize-none bg-gray-50 focus:ring-0 focus:border-gray-200 sm:text-sm"
-                    placeholder="Respuesta"></textarea>
-                </div>
-            </div>
-            <div class="flex items-center justify-end p-3">
-                <button wire:click="resetForm" class="px-4 py-2 bg-gray-300 text-sm font-semibold text-gray-500 rounded-md">Cancelar</button>
-                <button class="px-4 py-2 text-sm font-semibold bg-blue-600 rounded-md text-blue-50 ml-4">Guardar respuesta</button>
-            </div>
-        </form>
+<div class="w-full mx-auto overflow-hidden">
+    <div class="flex items-center p-3 space-x-3 bg-white rounded-md">
+        <input class="flex-1 w-full text-sm border-gray-100 rounded-md bg-gray-50 focus:ring-gray-200 focus:border-gray-100" type="search" wire:model="search" id="search" placeholder="Buscar...">
+        <button
+            wire:click="create"
+            class="flex items-center justify-center p-2 ml-auto transition duration-75 rounded-md bg-orange">
+            <x-icons.plus class="w-5 h-5 text-green-50"/>
+            <span class="hidden ml-2 text-xs font-semibold md:inline-block text-orange-light">Nueva respuesta</span>
+        </button>
     </div>
-
-    <div id="response-list" class="p-3 space-y-2 bg-white border rounded-md shadow-sm border-gray-50 lg:flex-1">
-        <div class="my-5">
-            <input type="search"
-            placeholder="Buscar"
-            wire:model="search"
-            id="search"
-            class="w-full text-sm border-gray-100 rounded-sm bg-gray-25 focus:border-gray-100 focus:ring-gray-300">
-        </div>
-        @forelse ($responses as $response)
-            <div class="flex items-center p-3 border rounded-md border-gray-50 bg-gray-50">
-                <p class="font-light text-gray-500">{{ $response->response}}</p>
-                <span wire:click="deleteResponse({{$response}})" class="ml-auto cursor-pointer">
-                    <x-icons.trash class="w-4 h-4 ml-auto" />
-                </span>
-            </div>
-        @empty
-            <p class="font-medium text-center">No hay respuestas registradas</p>
-        @endforelse
-
-        {{ $responses->links() }}
+    <div class="mt-4">
+        @foreach ($responses as $response)
+            <p class="my-2" wire:click="edit({{$response}})">{{ $response->response }}</p>
+        @endforeach
+    </div>
+    <div>
+        <form wire:submit.prevent="saveResponse">
+            <x-modals.dialog wire:model.defer="showModal">
+                <x-slot name="title">Crear respuesta</x-slot>
+                <x-slot name="content">
+                    <textarea
+                        wire:model.defer="response.response"
+                        class="w-full p-2 border-gray-100 rounded-md resize-none bg-gray-50 focus:ring-gray-200 focus:border-gray-100"
+                        placeholder="Ingrese el texto de la respuesta"
+                        id="response"
+                        rows="3">
+                    </textarea>
+                </x-slot>
+                <x-slot name="footer">
+                    <button type="button" x-on:click="show=false" class="px-4 py-2 font-semibold text-gray-500 bg-gray-200 rounded-md">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 font-semibold rounded-md text-orange-light bg-orange">Guardar</button>
+                </x-slot>
+            </x-modals.dialog>
+        </form>
     </div>
 </div>
