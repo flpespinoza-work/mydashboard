@@ -34,11 +34,11 @@
             </div>
 
             <div class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
-                <header class="sticky top-0 z-30 bg-white border-b border-gray-100 lg:hidden">
+                <header style="background: #0a1410" class="sticky top-0 z-30 border-b border-gray-100 lg:hidden">
                     <div class="px-4 mx-auto lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-xl sm:px-6 lg:px-4">
                         <div class="flex items-center justify-between h-16 -mb-px">
                             <div class="flex items-center">
-                                <button class="text-gray-darker lg:hidden" aria-controls="sidebar" aria-expanded="false" @click="sidebarOpen = !sidebarOpen">
+                                <button class="text-gray-25 lg:hidden" aria-controls="sidebar" aria-expanded="false" @click="sidebarOpen = !sidebarOpen">
                                     <span class="sr-only">Mostrar menu</span>
                                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
