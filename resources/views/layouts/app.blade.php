@@ -10,7 +10,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
@@ -52,15 +52,30 @@
                 </header>
 
                 <main class="h-screen">
-                    <div class="w-full" style="background: #f0f2f4">
-                        <div class="p-6 mx-auto lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-xl">
-                            <span class="text-xs font-normal text-gray-700">{{ $sectionTitle}}</span>
-                            <h3 class="flex items-center mt-2 font-medium tracking-tight text-md lg:text-xl">{{ $title }}</h3>
-                            <p class="mt-2 text-xs font-medium text-gray-500 md:font-semibold">{{ $description }}</p>
+                    <div class="bg-gray-135">
+                        <div class="px-6 py-5 mx-auto lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-xl xl:flex">
+                            <div>
+                                @isset($module)
+                                    <span class="text-xs font-semibold text-gray-400">{{ $module }}</span>
+                                @endisset
+
+                                @isset($title)
+                                    <h3 class="flex items-center my-1 text-base font-medium tracking-tight lg:text-xl">{{ $title }}</h3>
+                                @endisset
+
+                                @isset($description)
+                                    <p class="text-xs font-light text-gray-500">{{ $description }}</p>
+                                @endisset
+                            </div>
+                            @isset($actions)
+                            <div class="flex-1 py-5">
+                                {{ $actions }}
+                            </div>
+                            @endisset
                         </div>
                     </div>
-                    <div class="relative p-6 mx-auto lg:py-6 lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-xl">
-                        <div class="lg:pb-4">
+                    <div class="relative hidden px-6 py-5 mx-auto sm:block lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-xl">
+                        <div class="pb-4">
                             {{ $slot}}
                         </div>
                     </div>

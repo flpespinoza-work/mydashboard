@@ -23,7 +23,7 @@
     </div>
     <div>
         <form wire:submit.prevent="saveGroup">
-            <x-modals.dialog wire:model.defer="showModal">
+            <x-modals.dialog maxWidth="sm" wire:model.defer="showModal">
                 <x-slot name="title">Crear nuevo grupo</x-slot>
                 <x-slot name="content">
                     <div class="my-2">

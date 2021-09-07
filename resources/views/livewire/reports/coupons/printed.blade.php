@@ -2,7 +2,7 @@
     <div class="flex items-end" style="margin-top: -5.6rem;">
         <form class="items-end justify-end flex-1 md:flex" wire:submit.prevent="generateReport">
             <div class="px-2 space-y-2 md:w-3/12">
-                <label for="store" class="text-xs font-semibold text-gray-600 hidden">Establecimiento</label>
+                <label for="store" class="hidden text-xs font-semibold text-gray-600">Establecimiento</label>
                 <select
                     wire:model.defer="filters.store"
                     id="store"
@@ -16,7 +16,7 @@
             </div>
 
             <div class="px-2 space-y-2 md:w-1/5">
-                <label for="date" class="text-xs font-semibold text-gray-600 hidden">Fecha o Periodo</label>
+                <label for="date" class="hidden text-xs font-semibold text-gray-600">Fecha o Periodo</label>
                 <div class="relative">
                     <x-heroicon-o-calendar class="absolute w-4 h-4 text-gray-500 top-3 left-2"/>
                     <input
@@ -32,12 +32,12 @@
                     <span wire:loading wire:target="generateReport" class="mr-2">
                         <x-loader class="w-5 h-5"/>
                     </span>
-                    Generar reporte
+                    Generar
                 </button>
             </div>
         </form>
 
-        <div class="w-1/5 hidden">
+        <div class="hidden w-1/5">
             @if(!is_null($result))
             <button wire:click="exportReport" type="button"  class="flex items-center px-5 py-2 ml-auto text-sm font-semibold bg-green-600 border border-green-700 rounded-md hover:bg-green-700 text-green-50">
                 <x-heroicon-s-document-download class="w-4 h-4 md:h-5 md:w-5" />
