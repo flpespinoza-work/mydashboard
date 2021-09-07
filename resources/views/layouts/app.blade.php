@@ -53,7 +53,8 @@
 
                 <main class="h-screen">
                     <div class="bg-gray-135">
-                        <div class="px-6 py-5 mx-auto lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-xl xl:flex">
+                        <div class="items-end px-6 py-5 mx-auto lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-xl xl:flex xl:space-x-16 2xl:space-x-36">
+
                             <div>
                                 @isset($module)
                                     <span class="text-xs font-semibold text-gray-400">{{ $module }}</span>
@@ -67,11 +68,13 @@
                                     <p class="text-xs font-light text-gray-500">{{ $description }}</p>
                                 @endisset
                             </div>
+
                             @isset($actions)
-                            <div class="flex-1 py-5">
+                            <div class="flex-1 mt-5 xl:mt-0">
                                 {{ $actions }}
                             </div>
                             @endisset
+
                         </div>
                     </div>
                     <div class="relative hidden px-6 py-5 mx-auto sm:block lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-xl">
