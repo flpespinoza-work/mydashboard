@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="sectionTitle">Reportes</x-slot>
+    <x-slot name="module">Reportes</x-slot>
     <x-slot name="title">
         <div class="flex items-center">
             <div class="p-2 bg-gray-800 rounded-full">

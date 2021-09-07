@@ -9,6 +9,12 @@ class Filters extends Component
 {
     public $report;
 
+    protected $rules = [
+        'filters.store' => 'required',
+        'filters.initial_date' => 'required',
+        'filters.final_date' => 'required'
+    ];
+
     public $filters = [
         'store' => null,
         'initial_date' => null,
@@ -28,6 +34,8 @@ class Filters extends Component
 
     public function sendFiltersToReport()
     {
+        $this->validate();
+
         $this->emitTo($this->report,'generateReport', $this->filters);
     }
 }

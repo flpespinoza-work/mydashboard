@@ -3,15 +3,15 @@
 namespace App\Http\Livewire\Reports\Coupons;
 
 use App\Http\Livewire\Reports\BaseReport;
-use App\Models\Store;
 use Asantibanez\LivewireCharts\Models\AreaChartModel;
 
 class Redeemed extends BaseReport
 {
+    public $reportName = 'reports.coupons.redeemed';
+    protected $listeners = ['generateReport'];
+
     public function render()
     {
-        $stores = Store::orderBy('name')->pluck('name', 'id');
-
         if(!is_null($this->result))
         {
             $couponsChartModel = null;
@@ -41,14 +41,14 @@ class Redeemed extends BaseReport
                 ->setXAxisVisible(true)
                 ->setColor('#CF0924')
             );
-            return view('livewire.reports.coupons.redeemed')->with(['stores' => $stores,'couponsChartModel' => $couponsChartModel, 'amountChartModel' => $amountChartModel]);
+            return view('livewire.reports.coupons.redeemed')->with(['couponsChartModel' => $couponsChartModel, 'amountChartModel' => $amountChartModel]);
         }
 
-        return view('livewire.reports.coupons.redeemed', compact('stores'));
+        return view('livewire.reports.coupons.redeemed');
     }
 
-    public function generateReport()
+    public function generateReport($filters)
     {
-        $this->result = $this->getRedeemedCoupons($this->filters);
+        $this->result = $this->getRedeemedCoupons($filters);
     }
 }
