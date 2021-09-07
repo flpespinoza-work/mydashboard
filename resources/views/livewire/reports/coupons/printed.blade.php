@@ -1,14 +1,14 @@
 <div>
-    <div class="flex items-end">
-        <form class="items-end justify-start flex-1 md:flex" wire:submit.prevent="generateReport">
-            <div class="px-2 space-y-2 md:w-1/5">
-                <label for="store" class="block text-xs font-semibold text-gray-600">Establecimiento</label>
+    <div class="flex items-end" style="margin-top: -5.6rem;">
+        <form class="items-end justify-end flex-1 md:flex" wire:submit.prevent="generateReport">
+            <div class="px-2 space-y-2 md:w-3/12">
+                <label for="store" class="text-xs font-semibold text-gray-600 hidden">Establecimiento</label>
                 <select
                     wire:model.defer="filters.store"
                     id="store"
                     autocomplete="store"
                     class="block w-full p-2 mt-1 text-sm font-semibold border-gray-300 rounded-md bg-gray-50 focus:outline-none focus:ring-gray-200 focus:border-gray-300">
-                    <option>Selecciona...</option>
+                    <option>Selecciona un establecimiento</option>
                     @foreach ($stores as $store => $name)
                     <option value="{{ $store }}">{{ $name }}</option>
                     @endforeach
@@ -16,7 +16,7 @@
             </div>
 
             <div class="px-2 space-y-2 md:w-1/5">
-                <label for="date" class="block text-xs font-semibold text-gray-600">Fecha o Periodo</label>
+                <label for="date" class="text-xs font-semibold text-gray-600 hidden">Fecha o Periodo</label>
                 <div class="relative">
                     <x-heroicon-o-calendar class="absolute w-4 h-4 text-gray-500 top-3 left-2"/>
                     <input
@@ -37,7 +37,7 @@
             </div>
         </form>
 
-        <div class="w-1/5 ">
+        <div class="w-1/5 hidden">
             @if(!is_null($result))
             <button wire:click="exportReport" type="button"  class="flex items-center px-5 py-2 ml-auto text-sm font-semibold bg-green-600 border border-green-700 rounded-md hover:bg-green-700 text-green-50">
                 <x-heroicon-s-document-download class="w-4 h-4 md:h-5 md:w-5" />
@@ -46,7 +46,7 @@
             @endif
         </div>
     </div>
-    <div class="min-h-full mt-10">
+    <div class="min-h-full mt-14">
         @if (!is_null($result))
             <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
