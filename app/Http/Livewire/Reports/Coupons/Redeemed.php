@@ -2,23 +2,12 @@
 
 namespace App\Http\Livewire\Reports\Coupons;
 
-use App\Traits\Reports\Coupons;
+use App\Http\Livewire\Reports\BaseReport;
 use App\Models\Store;
-use Livewire\Component;
 use Asantibanez\LivewireCharts\Models\AreaChartModel;
 
-class Redeemed extends Component
+class Redeemed extends BaseReport
 {
-    use Coupons;
-
-    public $result = null;
-
-    public $filters = [
-        'store' => null,
-        'initial_date' => null,
-        'final_date' => null
-    ];
-
     public function render()
     {
         $stores = Store::orderBy('name')->pluck('name', 'id');
@@ -26,7 +15,7 @@ class Redeemed extends Component
         if(!is_null($this->result))
         {
             $couponsChartModel = null;
-            $ammountChartModel = null;
+            $amountChartModel = null;
 
             $coupons = collect($this->result['coupons']);
 
@@ -41,9 +30,9 @@ class Redeemed extends Component
                 ->setXAxisVisible(true)
             );
 
-            $ammountChartModel = $coupons->reduce(function (AreaChartModel $ammountChartModel, $data, $key) use($coupons) {
+            $amountChartModel = $coupons->reduce(function (AreaChartModel $amountChartModel, $data, $key) use($coupons) {
                 $coupon = $coupons[$key];
-                return $ammountChartModel->addPoint($key, $coupon['ammount']);
+                return $amountChartModel->addPoint($key, $coupon['amount']);
             }, (new AreaChartModel())
                 ->setTitle('Dinero canjeado')
                 ->setAnimated(true)
@@ -52,7 +41,7 @@ class Redeemed extends Component
                 ->setXAxisVisible(true)
                 ->setColor('#CF0924')
             );
-            return view('livewire.reports.coupons.redeemed')->with(['stores' => $stores,'couponsChartModel' => $couponsChartModel, 'ammountChartModel' => $ammountChartModel]);
+            return view('livewire.reports.coupons.redeemed')->with(['stores' => $stores,'couponsChartModel' => $couponsChartModel, 'amountChartModel' => $amountChartModel]);
         }
 
         return view('livewire.reports.coupons.redeemed', compact('stores'));

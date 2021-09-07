@@ -22,8 +22,7 @@
     </head>
     <body
     x-data="{ sidebarOpen: false }"
-    style="background: #f2f2f4"
-    class="m-0 font-sans text-sm antialiased text-gray-600">
+    class="m-0 font-sans text-sm antialiased text-gray-600 bg-white">
         <noscript>{{ __('You need to enable JavaScript to run this app.') }}</noscript>
         <div class="flex h-screen overflow-hidden">
             <div class="lg:w-72">
@@ -53,14 +52,14 @@
                 </header>
 
                 <main class="h-screen">
-                    <div class="w-full bg-white">
-                        <div class="p-6 mx-auto lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-2xl">
+                    <div class="w-full" style="background: #f0f2f4">
+                        <div class="p-6 mx-auto lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-xl">
                             <span class="text-xs font-normal text-gray-700">{{ $sectionTitle}}</span>
                             <h3 class="flex items-center mt-2 font-medium tracking-tight text-md lg:text-xl">{{ $title }}</h3>
                             <p class="mt-2 text-xs font-medium text-gray-500 md:font-semibold">{{ $description }}</p>
                         </div>
                     </div>
-                    <div class="relative p-6 mx-auto lg:py-6 lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-2xl">
+                    <div class="relative p-6 mx-auto lg:py-6 lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-xl">
                         <div class="lg:pb-4">
                             {{ $slot}}
                         </div>

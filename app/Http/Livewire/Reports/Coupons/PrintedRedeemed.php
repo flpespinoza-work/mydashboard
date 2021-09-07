@@ -2,22 +2,12 @@
 
 namespace App\Http\Livewire\Reports\Coupons;
 
-use App\Traits\Reports\Coupons;
-use Livewire\Component;
+use App\Http\Livewire\Reports\BaseReport;
 use App\Models\Store;
 use Asantibanez\LivewireCharts\Models\LineChartModel;
 
-class PrintedRedeemed extends Component
+class PrintedRedeemed extends BaseReport
 {
-    use Coupons;
-
-    public $result = null;
-
-    public $filters = [
-        'store' => null,
-        'initial_date' => null,
-        'final_date' => null
-    ];
 
     public function render()
     {
