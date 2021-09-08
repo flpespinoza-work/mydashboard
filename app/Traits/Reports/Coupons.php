@@ -37,11 +37,16 @@ trait Coupons
                 }
             });
 
-            $tmpRes['totals'] = $totales;
-            $tmpRes['totals']['average_amount'] = number_format($totales['printed_amount'] / $totales['printed_coupons'], 3);
-            $tmpRes['totals']['average_sale'] = number_format($totales['printed_sale'] / $totales['printed_coupons'], 3);
+            if(!empty($tmpRes))
+            {
+                $tmpRes['totals'] = $totales;
+                $tmpRes['totals']['average_amount'] = number_format($totales['printed_amount'] / $totales['printed_coupons'], 3);
+                $tmpRes['totals']['average_sale'] = number_format($totales['printed_sale'] / $totales['printed_coupons'], 3);
+            }
+
             return $tmpRes;
         });
+
         return $result;
     }
 
@@ -76,8 +81,13 @@ trait Coupons
                     ];
                 }
             });
-            $tmpRes['totals'] = $totales;
-            $tmpRes['totals']['average_amount'] = $totales['redeemed_amount'] / $totales['redeemed_coupons'];
+
+            if(!empty($tmpRes))
+            {
+                $tmpRes['totals'] = $totales;
+                $tmpRes['totals']['average_amount'] = $totales['redeemed_amount'] / $totales['redeemed_coupons'];
+            }
+
             return $tmpRes;
         });
 
@@ -121,8 +131,13 @@ trait Coupons
                     ];
                 }
             });
-            $tmpRes['totals'] = $totales;
-            $tmpRes['totals']['average_amount'] = $totales['redeemed_amount'] / $totales['redeemed_coupons'];
+
+            if(!empty($tmpRes))
+            {
+                $tmpRes['totals'] = $totales;
+                $tmpRes['totals']['average_amount'] = $totales['redeemed_amount'] / $totales['redeemed_coupons'];
+            }
+
             return $tmpRes;
         });
 

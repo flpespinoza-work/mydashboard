@@ -24,6 +24,8 @@ class Filters extends Component
     public function mount($report)
     {
         $this->report = $report;
+        $this->filters['initial_date'] = date('Y-m-d');
+        $this->filters['final_date'] = date('Y-m-d');
     }
 
     public function render()

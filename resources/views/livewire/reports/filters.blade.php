@@ -1,14 +1,15 @@
 <form wire:submit.prevent="sendFiltersToReport" class="items-center space-y-2 md:space-y-0 md:space-x-4 xl:justify-end md:flex">
     <div class="md:w-6/12 lg:w-5/12 xl:w-6/12">
-        <select wire:model="filters.store" id="store" class="@error('filters.store') border-red-200 @enderror w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
+        <select wire:model="filters.store" id="store" class="{{ $errors->has('filters.store') ? 'border-red-300 bg-red-50' : '' }} w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
             <option value="">Seleccione un establecimiento</option>
             @foreach ($stores as $id => $store)
             <option value="{{ $id }}">{{ $store }}</option>
             @endforeach
         </select>
     </div>
-    <div class="md:w-4/12 lg:w-5/12 xl:w-4/12">
-        <input type="text" id="date_range" class="w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
+    <div class="relative md:w-4/12 lg:w-5/12 xl:w-4/12">
+        <input type="text" id="date_range" class="{{ $errors->has('filters.initial_date') ? 'border-red-300 bg-red-50' : '' }} w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
+        <x-heroicon-o-calendar class="absolute right-0 w-5 h-5 mr-2 text-gray-400 transform -translate-y-1/2 top-1/2"/>
     </div>
     <div class="md:w-2/12">
         <button type="submit" class="w-full py-2 text-xs font-semibold text-white border rounded-md border-orange-light bg-orange">Generar</button>

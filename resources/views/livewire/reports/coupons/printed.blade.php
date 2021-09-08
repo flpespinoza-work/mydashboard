@@ -5,7 +5,14 @@
     </x-slot>
 
     <div class="min-h-full mt-14">
-        @if (!is_null($result))
+        <div wire:loading.delay class="w-full">
+            <p class="text-xs font-semibold text-center md:text-sm">
+                <x-loader class="w-10 h-10" />
+                Obteniendo información...
+            </p>
+        </div>
+
+        @if (!is_null($result) && !empty($result))
             <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
                     <h5 class="text-sm font-semibold text-gray-400">Cupones impresos</h5>
@@ -24,7 +31,6 @@
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ $result['totals']['average_sale'] }} </span>
                 </div>
             </div>
-
             <div class="grid grid-cols-2 gap-4 mt-8">
                 <div class="h-40 col-span-2 p-4 border rounded-md shadow-sm bg-gray-25 border-gray-50 md:col-span-1 md:h-80">
                     <livewire:livewire-area-chart :area-chart-model="$couponsChartModel" :wire:key="time()"/>
@@ -107,7 +113,14 @@
                 </div>
             </div>
         @else
-            <p class="mt-40 text-sm font-semibold text-center">No hay información que mostrar</p>
+            <div wire:loading.remove>
+                @if (!is_null($result) && empty($result))
+                    <p class="text-xs font-semibold text-center md:text-sm">No hay resultados para la busqueda</p>
+                @else
+                   <p class="text-xs font-semibold text-center md:text-sm">No hay información que mostrar</p>
+                @endif)
+
+            </div>
         @endif
     </div>
 </div>
