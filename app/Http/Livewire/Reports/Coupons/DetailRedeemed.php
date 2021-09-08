@@ -6,7 +6,7 @@ use App\Http\Livewire\Reports\BaseReport;
 
 class DetailRedeemed extends BaseReport
 {
-    public $reportName = 'reports.coupons.detail-printed';
+    public $reportName = 'reports.coupons.detail-redeemed';
     protected $listeners = ['generateReport'];
 
     public function render()

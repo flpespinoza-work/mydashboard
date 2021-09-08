@@ -12,7 +12,7 @@ class PrintedRedeemed extends BaseReport
 
     public function render()
     {
-        if(!is_null($this->result))
+        if(!is_null($this->result) && !empty($this->result))
         {
             $couponsChartModel = null;
 

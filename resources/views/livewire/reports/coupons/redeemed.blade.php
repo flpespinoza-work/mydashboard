@@ -3,8 +3,15 @@
         <livewire:reports.filters :report="$reportName"/>
     </x-slot>
 
-    <div class="min-h-full mt-10">
-        @if (!is_null($result))
+    <div class="min-h-full mt-14">
+        <div wire:loading.delay class="w-full">
+            <p class="text-xs font-semibold text-center md:text-sm">
+                <x-loader class="w-10 h-10" />
+                Obteniendo información...
+            </p>
+        </div>
+
+        @if (!is_null($result) && !empty($result))
             <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
                     <h5 class="text-sm font-semibold text-gray-400">Cupones canjeados</h5>
@@ -93,7 +100,13 @@
                 </div>
             </div>
         @else
-            <p class="mt-40 text-sm font-semibold text-center">No hay información que mostrar</p>
+            <div wire:loading.remove>
+                @if (!is_null($result) && empty($result))
+                    <p class="text-xs font-semibold text-center md:text-sm">No hay resultados para la busqueda</p>
+                @else
+                   <p class="text-xs font-semibold text-center md:text-sm">No hay información que mostrar</p>
+                @endif
+            </div>
         @endif
     </div>
 </div>
