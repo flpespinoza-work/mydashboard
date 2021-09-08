@@ -56,4 +56,12 @@ class User extends Authenticatable
     {
         return $this->hasRole('superadmin');
     }
+
+    public function getStores()
+    {
+        if($this->isSuperAdmin())
+        {
+
+        }
+    }
 }
