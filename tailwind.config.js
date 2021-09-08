@@ -17,7 +17,8 @@ module.exports = {
                 'gray-135': '#f0f2f4',
                 'gray-150': '#F0F1F3',
                 'orange': '#ef6a37',
-                'orange-light': '#ffe6dd'
+                'orange-light': '#ffe6dd',
+                'orange-lightest': '#FEF8F3'
             },
             fontSize: {
                 'xxs': '.65rem'

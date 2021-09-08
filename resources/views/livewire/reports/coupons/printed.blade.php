@@ -118,7 +118,7 @@
                     <p class="text-xs font-semibold text-center md:text-sm">No hay resultados para la busqueda</p>
                 @else
                    <p class="text-xs font-semibold text-center md:text-sm">No hay información que mostrar</p>
-                @endif)
+                @endif
             </div>
         @endif
     </div>

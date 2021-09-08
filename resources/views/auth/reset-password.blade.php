@@ -1,48 +1,62 @@
 <x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+    <div class="flex flex-col items-center justify-center px-10">
+        <div>
+            <a href="{{ route('login') }}">
+                <x-logo-dark class="w-auto h-12"></x-logo>
             </a>
-        </x-slot>
+        </div>
+        <div class="w-full max-w-sm mx-auto mt-4">
+            <form method="POST" action="{{ route('password.update') }}">
+                @csrf
+                <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+                <div class="my-3">
+                    <label for="email" class="text-sm text-gray-600">Correo Electrónico</label>
+                    <input
+                    value="{{ old('email') }}"
+                    type="email" id="email"
+                    name="email"
+                    class="w-full text-sm border-gray-300 rounded-md focus:border-gray-300 focus:ring-gray-200 p-2 block mt-2 {{ $errors->has('email') ? 'border-red' : '' }}" placeholder="example@email.com"/>
+                    @if($errors->has('email'))
+                        <span class="text-red text-xs font-semibold mt-0.5">
+                            {{ $errors->first('email') }}
+                        </span>
+                    @endif
+                </div>
+                <div class="my-3">
+                    <label for="password" class="text-sm text-gray-600">Contraseña</label>
+                    <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    class="w-full text-sm border-gray-300 rounded-md focus:border-gray-300 focus:ring-gray-200 p-2 block mt-2 {{ $errors->has('password') ? ' border-red' : '' }}"
+                    placeholder="******"/>
+                    @if($errors->has('password'))
+                        <span class="text-red text-xs font-semibold mt-0.5">
+                            {{ $errors->first('password') }}
+                        </span>
+                    @endif
+                </div>
 
-        <form method="POST" action="{{ route('password.update') }}">
-            @csrf
+                <div class="my-3">
+                    <label for="password_confirmation" class="text-sm text-gray-600">Confirme su contraseña</label>
+                    <input
+                    type="password"
+                    id="password_confirmation"
+                    name="password_confirmation"
+                    class="w-full text-sm border-gray-300 rounded-md focus:border-gray-300 focus:ring-gray-200 p-2 block mt-2 {{ $errors->has('password') ? ' border-red' : '' }}"
+                    placeholder="******"/>
+                    @if($errors->has('password_confirmation'))
+                        <span class="text-red text-xs font-semibold mt-0.5">
+                            {{ $errors->first('password_confirmation') }}
+                        </span>
+                    @endif
+                </div>
 
-            <!-- Password Reset Token -->
-            <input type="hidden" name="token" value="{{ $request->route('token') }}">
-
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus />
-            </div>
-
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
-
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                    type="password"
-                                    name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Reset Password') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
+                <div class="my-5">
+                    <button type="submit" class="justify-center w-full h-10 text-sm capitalize rounded-md bg-orange text-gray-50 border-orange-light">Restablecer contraseña</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </x-guest-layout>

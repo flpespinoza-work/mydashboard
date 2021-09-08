@@ -1,4 +1,6 @@
 <x-app-layout>
     <x-slot name="title">Dashboard</x-slot>
-    <div>Hola</div>
+    <div>
+
+    </div>
 </x-app-layout>

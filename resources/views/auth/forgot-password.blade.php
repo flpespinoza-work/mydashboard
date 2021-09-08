@@ -1,36 +1,37 @@
 <x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+    <div class="flex flex-col items-center justify-center px-10">
+        <div>
+            <a href="{{ route('login') }}">
+                <x-logo-dark class="w-auto h-12"></x-logo>
             </a>
-        </x-slot>
-
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
         </div>
+        <div class="w-full max-w-sm mx-auto mt-4 text-sm text-gray-600">
+            <p class="px-3">
+            ¿Olvidó su contraseña? No hay problema. Simplemente déjenos saber su dirección de correo electrónico y le enviaremos un enlace para restablecer la contraseña que le permitirá elegir una nueva.
+            </p>
+        </div>
+        <div class="w-full max-w-sm mx-auto mt-4">
+            <form method="POST" action="{{ route('password.email') }}">
+                @csrf
+                <div class="my-3">
+                    <label for="email" class="text-sm text-gray-600">Correo Electrónico</label>
+                    <input
+                    value="{{ old('email') }}"
+                    type="email" id="email"
+                    name="email"
+                    class="w-full text-sm border-gray-300 rounded-md focus:border-gray-300 focus:ring-gray-200 p-2 block mt-2 {{ $errors->has('email') ? 'border-red' : '' }}" placeholder="example@email.com"/>
+                    @if($errors->has('email'))
+                        <span class="text-red text-xs font-semibold mt-0.5">
+                            {{ $errors->first('email') }}
+                        </span>
+                    @endif
+                </div>
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+                <div class="my-5">
+                    <button type="submit" class="justify-center w-full h-10 text-sm rounded-md bg-orange text-gray-50 border-orange-light">Enviar link para restablecer contraseña</button>
+                </div>
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
-        <form method="POST" action="{{ route('password.email') }}">
-            @csrf
-
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
-
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Email Password Reset Link') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
+            </form>
+        </div>
+    </div>
 </x-guest-layout>
