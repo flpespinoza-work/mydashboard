@@ -31,7 +31,7 @@ trait Sales
                 foreach($sales as $sale)
                 {
                     $totalSales['sales'] += 1;
-                    $totalSales['ammount'] += $sale->MONTO_VENTA;
+                    $totalSales['amount'] += $sale->MONTO_VENTA;
                     $tmpRes['sales'][] = [
                         'date' => $sale->VEN_FECHA_HORA,
                         'user' => $sale->NOD_USU_NODO,
@@ -45,12 +45,14 @@ trait Sales
                 $tmpRes['totals'] = $totalSales;
                 $tmpRes['totals']['average_sale'] = $totalSales['amount'] / $totalSales['sales'];
             }
+
+            return $tmpRes;
         });
 
         return $result;
     }
 
-    function getHistorySales($filters)
+    function getHistorySales($filters) //Revisar si es posible solo traer desde el 2020
     {
         $tokDB = DB::connection('reportes');
         $filters['node'] = fnGetTokencashNode($filters['store']);
@@ -97,7 +99,7 @@ trait Sales
             $tokDB->table('doc_dbm_ventas')
             ->join('cat_dbm_nodos_usuarios', 'doc_dbm_ventas.VEN_NODO', '=', 'cat_dbm_nodos_usuarios.NOD_USU_NODO')
             ->select(DB::raw('DATE_FORMAT(VEN_FECHA_HORA, "%d/%m/%Y") DIA, COUNT(VEN_ID) VENTAS, SUM(VEN_MONTO) MONTO_VENTA'))
-            ->whereIn('VEN_DESTINO', $filters['node'])
+            ->where('VEN_DESTINO', $filters['node'])
             ->where('VEN_ESTADO', '=', 'VIGENTE')
             ->whereBetween('VEN_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->whereRaw("(BINARY NOD_USU_CERTIFICADO REGEXP '[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]' OR NOD_USU_CERTIFICADO = '')")
