@@ -68,6 +68,7 @@ if(!function_exists('fnGetSellers'))
         return $tokDB->table('cat_dbm_nodos_usuarios')
         ->selectRaw('NOD_USU_NUMERO phone, NOD_USU_NOMBRE name')
         ->where('NOD_USU_NODO', $node)
+        ->orderBy('name')
         ->get();
     }
 }

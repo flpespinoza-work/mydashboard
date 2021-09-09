@@ -22,4 +22,9 @@ class Store extends Model
         return $this->belongsTo(Group::class);
     }
 
+    public function sellers()
+    {
+        return $this->hasMany(Seller::class);
+    }
+
 }

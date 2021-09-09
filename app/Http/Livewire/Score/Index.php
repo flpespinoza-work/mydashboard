@@ -8,6 +8,9 @@ use Livewire\Component;
 class Index extends Component
 {
     use Scores;
+
+    public $result = null;
+
     protected $listeners = ['getScore'];
 
     public function render()
@@ -17,6 +20,6 @@ class Index extends Component
 
     public function getScore($filters)
     {
-
+        $this->result = $this->getScores($filters);
     }
 }
