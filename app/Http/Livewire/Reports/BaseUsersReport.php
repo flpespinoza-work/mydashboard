@@ -2,11 +2,11 @@
 
 namespace App\Http\Livewire\Reports;
 
-use App\Traits\Reports\Coupons;
+use App\Traits\Reports\Users;
 use Livewire\Component;
 
-class BaseReport extends Component
+class BaseUsersReport extends Component
 {
-    use Coupons;
+    use Users;
     public $result = null;
 }

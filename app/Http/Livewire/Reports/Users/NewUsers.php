@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Reports\Users;
 
-use App\Http\Livewire\Reports\BaseReport;
+use App\Http\Livewire\Reports\BaseUsersReport;
 
-class NewUsers extends BaseReport
+class NewUsers extends BaseUsersReport
 {
     public $reportName = 'reports.users.new-users';
     protected $listeners = ['generateReport'];
@@ -16,6 +16,6 @@ class NewUsers extends BaseReport
 
     public function generateReport($filters)
     {
-
+        $this->result = $this->getNewUsers($filters);
     }
 }

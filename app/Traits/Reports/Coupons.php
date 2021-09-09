@@ -179,4 +179,9 @@ trait Coupons
 
         return $result;
     }
+
+    function getLastPrintedCoupon()
+    {
+
+    }
 }

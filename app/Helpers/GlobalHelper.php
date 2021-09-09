@@ -13,7 +13,7 @@ if(!function_exists('fnGetBudget'))
     }
 }
 
-//Obtener presupuestos
+//Obtener presupuestos con PRESUPUESTO_
 if(!function_exists('fnGetBudgetFull'))
 {
     function fnGetBudgetFull($store)
@@ -31,12 +31,30 @@ if(!function_exists('fnGetGiftcard'))
     }
 }
 
-//Obtener giftcards
+//Obtener giftcards con GIFTCARD_
 if(!function_exists('fnGetGiftcardFull'))
 {
     function fnGetGiftcardFull($store)
     {
         return "GIFTCARD_" . fnGetGiftcard($store);
+    }
+}
+
+//Obtener el nodo tokencash del establecimiento
+if(!function_exists('fnGetTokencashNode'))
+{
+    function fnGetTokencashNode($store)
+    {
+        return Store::where('id', $store)->value('node');
+    }
+}
+
+//Obtener la informacion de los establecimientos que tiene asignado el usuario
+if(!function_exists('fnGetMyStoresData'))
+{
+    function getMyStoresData()
+    {
+
     }
 }
 

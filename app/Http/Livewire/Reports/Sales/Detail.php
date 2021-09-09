@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Reports\Sales;
 
-use App\Http\Livewire\Reports\BaseReport;
+use App\Http\Livewire\Reports\BaseSalesReport;
 
-class Detail extends BaseReport
+class Detail extends BaseSalesReport
 {
     public $reportName = 'reports.sales.detail';
     protected $listeners = ['generateReport'];
@@ -16,6 +16,6 @@ class Detail extends BaseReport
 
     public function generateReport($filters)
     {
-
+        $this->result = $this->getDetailSales($filters);
     }
 }

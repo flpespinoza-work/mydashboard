@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Reports\Coupons;
 
-use App\Http\Livewire\Reports\BaseReport;
+use App\Http\Livewire\Reports\BaseCouponsReport;
 
-class DetailRedeemed extends BaseReport
+class DetailRedeemed extends BaseCouponsReport
 {
     public $reportName = 'reports.coupons.detail-redeemed';
     protected $listeners = ['generateReport'];

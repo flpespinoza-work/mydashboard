@@ -2,10 +2,10 @@
 
 namespace App\Http\Livewire\Reports\Coupons;
 
-use App\Http\Livewire\Reports\BaseReport;
+use App\Http\Livewire\Reports\BaseCouponsReport;
 use Asantibanez\LivewireCharts\Models\AreaChartModel;
 
-class Redeemed extends BaseReport
+class Redeemed extends BaseCouponsReport
 {
     public $reportName = 'reports.coupons.redeemed';
     protected $listeners = ['generateReport'];

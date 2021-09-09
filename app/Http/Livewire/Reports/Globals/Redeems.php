@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Reports\Globals;
 
-use App\Http\Livewire\Reports\BaseReport;
+use App\Http\Livewire\Reports\BaseGlobalsReport;
 
-class Redeems extends BaseReport
+class Redeems extends BaseGlobalsReport
 {
     public $reportName = 'reports.globals.redeems';
     protected $listeners = ['generateReport'];

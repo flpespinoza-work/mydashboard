@@ -2,9 +2,9 @@
 
 namespace App\Http\Livewire\Reports\Users;
 
-use App\Http\Livewire\Reports\BaseReport;
+use App\Http\Livewire\Reports\BaseUsersReport;
 
-class History extends BaseReport
+class History extends BaseUsersReport
 {
     public $reportName = 'reports.users.history';
     protected $listeners = ['generateReport'];
@@ -16,6 +16,6 @@ class History extends BaseReport
 
     public function generateReport($filters)
     {
-
+        $this->result = $this->getHistoryUsers($filters);
     }
 }
