@@ -9,5 +9,5 @@
         </div>
     </x-slot>
     <x-slot name="description">Información sobre usuarios registrados en el establecimiento</x-slot>
-    <livewire:reports.users.new/>
+    <livewire:reports.users.new-users/>
 </x-app-layout>
