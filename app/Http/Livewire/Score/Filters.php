@@ -15,10 +15,13 @@ class Filters extends Component
         'seller' => null
     ];
 
+    public $sellers = [];
+
     protected $rules = [
         'filters.store' => 'required',
         'filters.initial_date' => 'required',
-        'filters.final_date' => 'required'
+        'filters.final_date' => 'required',
+        'filters.seller' => 'required'
     ];
 
 
@@ -32,6 +35,12 @@ class Filters extends Component
     {
         $stores = Store::orderBy('name')->pluck('name', 'id');
         return view('livewire.score.filters', compact('stores'));
+    }
+
+    public function updateSellers()
+    {
+        $this->sellers = fnGetSellers($this->filters['store']);
+        //dd($this->sellers);
     }
 
     public function sendFiltersToScore()

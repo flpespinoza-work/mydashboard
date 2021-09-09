@@ -1,6 +1,6 @@
 <form wire:submit.prevent="sendFiltersToReport" class="items-center space-y-2 md:space-y-0 md:space-x-4 xl:justify-end md:flex">
     <div class="md:w-5/12 lg:w-5/12 xl:w-6/12">
-        <select wire:model="filters.store" id="store" class="{{ $errors->has('filters.store') ? 'border-red-300 bg-red-50' : '' }} w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
+        <select wire:model="filters.store" wire:change="updateSellers" id="store" class="{{ $errors->has('filters.store') ? 'border-red-300 bg-red-50' : '' }} w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
             <option value="">Seleccione un establecimiento</option>
             @foreach ($stores as $id => $store)
             <option value="{{ $id }}">{{ $store }}</option>
@@ -12,8 +12,12 @@
         <x-heroicon-o-calendar class="absolute right-0 w-5 h-5 mr-2 text-gray-400 transform -translate-y-1/2 top-1/2"/>
     </div>
     <div class="md:w-5/12 lg:w-5/12 xl:w-6/12">
-        <select wire:model="filters.store" id="store" class="{{ $errors->has('filters.store') ? 'border-red-300 bg-red-50' : '' }} w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
+        <select wire:model="filters.seller" id="store" class="{{ $errors->has('filters.store') ? 'border-red-300 bg-red-50' : '' }} w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
             <option value="">Seleccione un vendedor</option>
+            @forelse ($sellers as $seller)
+            <option value="{{ $seller->phone }}">{{ $seller->name }}</option>
+            @empty
+            @endforelse
         </select>
     </div>
     <div class="md:w-2/12">

@@ -58,6 +58,20 @@ if(!function_exists('fnGetMyStoresData'))
     }
 }
 
+//Obtener los vendedores de cada establecimiento
+if(!function_exists('fnGetSellers'))
+{
+    function fnGetSellers($store)
+    {
+        $node = fnGetTokencashNode($store);
+        $tokDB =DB::connection('reportes');
+        return $tokDB->table('cat_dbm_nodos_usuarios')
+        ->selectRaw('NOD_USU_NUMERO phone, NOD_USU_NOMBRE name')
+        ->where('NOD_USU_NODO', $node)
+        ->get();
+    }
+}
+
 //Generar identificador para los reportes
 if(!function_exists('fnGenerateReportId'))
 {
