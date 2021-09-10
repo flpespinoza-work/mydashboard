@@ -29,10 +29,10 @@ class ScoreFilters extends Component
 
     public function updatedSelectedStore($store)
     {
-        if(!is_null($store))
+        /*if(!is_null($store))
         {
             $this->sellers = fnGetSellers($store);
-        }
+        }*/
     }
 
     public function sendFiltersToReport()

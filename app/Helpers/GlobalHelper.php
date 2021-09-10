@@ -89,9 +89,10 @@ if(!function_exists('fnRememberReportTime'))
     {
         if(date('Y-m-d') > date('Y-m-d', strtotime($fecha)))
         {
-            return  Date::now()->addMinutes(10);
+            return Date::now()->addWeek();
         }
 
-        return Date::now()->addWeek();
+        return  Date::now()->addMinutes(10);
+
     }
 }

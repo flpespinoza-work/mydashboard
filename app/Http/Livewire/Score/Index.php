@@ -9,7 +9,7 @@ class Index extends Component
 {
     use Scores;
 
-    public $result = null;
+    public $scores = null;
 
     protected $listeners = ['getScore'];
 
@@ -20,6 +20,7 @@ class Index extends Component
 
     public function getScore($filters)
     {
-        $this->result = $this->getScores($filters);
+        $this->scores = $this->getScores($filters);
+        //dd($this->scores);
     }
 }

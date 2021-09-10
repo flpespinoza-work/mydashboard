@@ -55,7 +55,7 @@ trait Scores
                         'date' => $score->COM_FECHA_HORA,
                         'user' => $score->NOD_USU_NODO,
                         'store' => $score->COM_ESTABLECIMIENTO_ID,
-                        'action' => $score->COM_TIPO,
+                        'action' => ($score->COM_TIPO == 'CANJE') ? 'Canje de cupon' : 'Pago con Tokencash',
                         'comment' => $score->COM_COMENTARIO,
                         'score' => $score->COM_CALIFICACION,
                         'seller' => $score->COM_VENDEDOR,
