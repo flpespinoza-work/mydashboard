@@ -23,4 +23,12 @@ class="absolute top-0 left-0 z-40 flex-shrink-0 inline-block h-screen max-h-full
             </button>
         </form>
     </div>
+    <div class="self-end mt-auto">
+        <form method="POST" action="{{ route('logout') }}" role="none" >
+            @csrf
+            <button type="submit" class="block w-full px-4 py-2 text-sm text-center text-gray-700" role="menuitem" tabindex="-1" id="menu-item-3">
+            Cerrar sesión
+            </button>
+        </form>
+    </div>
 </sidebar>
