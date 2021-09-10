@@ -94,7 +94,7 @@
                                         <span class="font-semibold text-gray-darker">Monto total: ${{ number_format($result['totals']['printed_amount'], 2) }}</span>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        <span class="font-semibold text-gray-darker">Promedio cupón: ${{ number_format($result['totals']['average_amount'], 3) }}</span>
+                                        <span class="font-semibold text-gray-darker">Promedio cupón: ${{ number_format($result['totals']['average_amount'], 2) }}</span>
                                     </td>
                                 </tr>
                                 @endif
