@@ -10,11 +10,14 @@ trait Data
         $balance = $this->getBalance($filters);
         $printed = $this->getPrintedCoupons($filters);
         $redeemed = $this->getRedeemedCoupons($filters);
-        //dd($redeemed);
+        $sales = $this->getSales($filters);
+
+        //dd($sales);
         return [
             'balance' => $balance,
             'printed_coupons' => $printed,
-            'redeemed_coupons' => $redeemed
+            'redeemed_coupons' => $redeemed,
+            'sales' => $sales
         ];
     }
     function getBalance($filters)
@@ -91,6 +94,27 @@ trait Data
 
     function getSales($filters)
     {
+        $tokDB = DB::connection('reportes');
+        $filters['node'] = fnGetTokencashNode($filters['store']);
+        $reportId = fnGenerateReportId($filters);
+        $rememberReport = fnRememberReportTime($filters['final_date']);
 
+        $result = cache()->remember('sales-report' . $reportId, $rememberReport, function() use($tokDB, $filters){
+            return $tokDB->table('doc_dbm_ventas')
+            ->join('cat_dbm_nodos_usuarios', 'doc_dbm_ventas.VEN_NODO', '=', 'cat_dbm_nodos_usuarios.NOD_USU_NODO')
+            ->select(DB::raw('COUNT(1) sales, SUM(VEN_MONTO) amount'))
+            ->where('VEN_DESTINO', $filters['node'])
+            ->where('VEN_ESTADO', '=', 'VIGENTE')
+            ->where('VEN_ADICIONAL', 'LIKE', "%TOKEN%")
+            ->whereBetween('VEN_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
+            ->whereRaw("(BINARY NOD_USU_CERTIFICADO REGEXP '[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]' OR NOD_USU_CERTIFICADO = '')")
+            ->get()
+            ->toArray();
+        });
+
+        if(count($result))
+            return ['sales' => $result[0]->sales, 'amount' =>$result[0]->amount ];
+
+        return ['sales' => '0', 'amount' => '0'];
     }
 }

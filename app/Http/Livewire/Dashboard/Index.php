@@ -13,7 +13,8 @@ class Index extends Component
     public $result = [
         'balance' => '0',
         'printed_coupons' => ['coupons' => 0, 'amount' => 0],
-        'redeemed_coupons' => ['redeems' => 0, 'amount' => 0]
+        'redeemed_coupons' => ['redeems' => 0, 'amount' => 0],
+        'sales' => ['sales' => 0, 'amount' => 0]
     ];
 
     protected $listeners = ['generateReport'];
