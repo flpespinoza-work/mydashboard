@@ -16,43 +16,43 @@
         </div>
         @if(!is_null($scores) && !empty($scores))
         <div id="comments">
-            <h4 class="text-sm md:text-lg xl:text-xl text-gray-400">Comentarios</h4>
+            <h4 class="text-sm text-gray-400 md:text-lg xl:text-xl">Comentarios</h4>
             <div x-data="{ openTab: 5 }" class="mt-4">
                 <div class="w-full">
-                    <ul class="flex flex-nowrap items-center justify-between border border-gray-150 overflow-auto rounded-sm">
+                    <ul class="flex items-center justify-between overflow-auto border rounded-sm flex-nowrap border-gray-150">
                         <li @click="openTab = 5" :class="openTab === 5 ? 'bg-gray-25' : 'bg-orange-lightest'"
-                            class="w-28 h-14 md:flex-1 flex-shrink-0 border-r border-gray-150">
-                            <a class="cursor-pointer w-full h-full flex items-center justify-center">
+                            class="flex-shrink-0 border-r w-28 h-14 md:flex-1 border-gray-150">
+                            <a class="flex items-center justify-center w-full h-full cursor-pointer">
                                 <x-scores.5 class="w-12 h-12 mx-auto" />
                             </a>
                         </li>
                         <li @click="openTab = 4" :class="openTab === 4 ? 'bg-gray-25' : 'bg-orange-lightest'"
-                            class="w-28 h-14 md:flex-1 flex-shrink-0 border-r border-gray-150 ">
-                            <a class="cursor-pointer w-full h-full flex items-center justify-center">
+                            class="flex-shrink-0 border-r w-28 h-14 md:flex-1 border-gray-150 ">
+                            <a class="flex items-center justify-center w-full h-full cursor-pointer">
                                 <x-scores.4 class="w-12 h-12 mx-auto" />
                             </a>
                         </li>
                         <li @click="openTab = 3" :class="openTab === 3 ? 'bg-gray-25' : 'bg-orange-lightest'"
-                            class="w-28 h-14 md:flex-1 flex-shrink-0 border-r border-gray-150">
-                            <a class="cursor-pointer w-full h-full flex items-center justify-center">
+                            class="flex-shrink-0 border-r w-28 h-14 md:flex-1 border-gray-150">
+                            <a class="flex items-center justify-center w-full h-full cursor-pointer">
                                 <x-scores.3 class="w-12 h-12 mx-auto" />
                             </a>
                         </li>
                         <li @click="openTab = 2" :class="openTab === 2 ? 'bg-gray-25' : 'bg-orange-lightest'"
-                            class="w-28 h-14 md:flex-1 flex-shrink-0 border-r border-gray-150">
-                            <a class="cursor-pointer w-full h-full flex items-center justify-center">
+                            class="flex-shrink-0 border-r w-28 h-14 md:flex-1 border-gray-150">
+                            <a class="flex items-center justify-center w-full h-full cursor-pointer">
                                 <x-scores.2 class="w-12 h-12 mx-auto" />
                             </a>
                         </li>
                         <li @click="openTab = 1" :class="openTab === 1 ? 'bg-gray-25' : 'bg-orange-lightest'"
-                            class="w-28 h-14 md:flex-1 flex-shrink-0 border-r border-gray-150">
-                            <a class="cursor-pointer w-full h-full flex items-center justify-center">
+                            class="flex-shrink-0 border-r w-28 h-14 md:flex-1 border-gray-150">
+                            <a class="flex items-center justify-center w-full h-full cursor-pointer">
                                 <x-scores.1 class="w-12 h-12 mx-auto" />
                             </a>
                         </li>
                         <li @click="openTab = 0" :class="openTab === 0 ? 'bg-gray-25' : 'bg-orange-lightest'"
-                            class="w-60 h-14 md:flex-1 flex-shrink-0">
-                            <a class="cursor-pointer w-full h-full flex items-center justify-center text-xs md:text-sm leading-snug font-semibold">Solo comentarios</a>
+                            class="flex-shrink-0 w-60 h-14 md:flex-1">
+                            <a class="flex items-center justify-center w-full h-full text-xs font-semibold leading-snug cursor-pointer md:text-sm">Solo comentarios</a>
                         </li>
                     </ul>
                     <div class="px-4 py-8 border border-t-0 border-gray-150">
@@ -60,24 +60,32 @@
                             @if (isset($scores['comments'][$value]))
                                 <div id="score-{{$value}}" x-show="openTab === {{ $value }}" class="space-y-4">
                                     @foreach ($scores['comments'][$value] as $comment)
-                                        <div class="border-b border-gray-150 rounded-sm p-3">
+                                        <div class="p-3 border rounded-md md:w-3/4 border-gray-150">
                                             <div class="flex items-center space-x-3">
                                                 <span class="text-xs font-semibold text-gray-500">Usuario: {{ $comment['user']}}</span>
-                                                <span class="text-xxs md:text-xs font-medium text-gray-400">{{ $comment['date']}}</span>
+                                                <span class="font-medium text-gray-400 text-xxs md:text-xs">{{ $comment['date']}}</span>
                                                 <span
                                                     class="text-xxs tracking-wide font-medium py-0.5 px-3 bg-gray-100 rounded-full text-gray-400 capitalize">
                                                     {{ Str::lower($comment['action']) }}
                                                 </span>
                                             </div>
-                                            <div class="mt-2">
-                                                <p class="text-gray-600 text-sm md:text-base">{{ $comment['comment']}}</p>
+                                            <div class="p-3 mt-3 rounded-sm bg-gray-50">
+                                                <p class="text-sm font-medium text-gray-500 md:text-sm">{{ $comment['comment'] }}</p>
+                                            </div>
+                                            <div class="p-1 ml-" x-data="{showReply:false}">
+                                                <span @click="showReply = !showReply" class="rounded-full inline-block py-0.5 px-3 bg-gray-100 hover:bg-gray-200">
+                                                    <x-heroicon-o-dots-horizontal class="w-4 h-4"/>
+                                                </span>
+                                                <div x-show="showReply" class="p-4 mt-2 bg-white border border-gray-100 rounded-md shadow-sm">
+                                                    <livewire:score.reply :user="1" >
+                                                </div>
                                             </div>
                                         </div>
                                     @endforeach
                                 </div>
                             @else
                                 <div id="score-{{$value}}" x-show="openTab === {{ $value }}">
-                                    <p class="text-center text-xs md:text-sm font-medium">No hay comentarios para esta calificación</p>
+                                    <p class="text-xs font-medium text-center md:text-sm">No hay comentarios para esta calificación</p>
                                 </div>
                             @endif
                         @endforeach
