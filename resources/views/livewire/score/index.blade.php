@@ -10,7 +10,7 @@
 
         @if(!is_null($scores) && !empty($scores))
         <div class="space-y-4">
-            <div class="grid grid-cols-3 gap-4 md:w-3/5">
+            <div class="grid grid-cols-4 gap-4">
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
                     <h5 class="text-sm font-semibold text-gray-400">Calificaciones totales:</h5>
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ $scores['totalScores'] }} </span>
@@ -18,6 +18,10 @@
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
                     <h5 class="text-sm font-semibold text-gray-400">Promedio:</h5>
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ $scores['scorePromedio'] }}% </span>
+                </div>
+                <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
+                    <h5 class="text-sm font-semibold text-gray-400">Total de comentarios:</h5>
+                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ number_format($scores['totalComments']) }} </span>
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
                     <h5 class="text-sm font-semibold text-gray-400">Porcentaje de comentarios:</h5>
