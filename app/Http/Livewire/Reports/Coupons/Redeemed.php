@@ -30,9 +30,11 @@ class Redeemed extends BaseCouponsReport
                 ->setXAxisVisible(true)
             );
 
-            $amountChartModel = $coupons->reduce(function (AreaChartModel $amountChartModel, $data, $key) use($coupons) {
+            $amount = 0.00;
+            $amountChartModel = $coupons->reduce(function (AreaChartModel $amountChartModel, $data, $key) use($coupons, &$amount) {
                 $coupon = $coupons[$key];
-                return $amountChartModel->addPoint($key, $coupon['amount']);
+                $amount += $coupon['amount'];
+                return $amountChartModel->addPoint($key, round($amount));
             }, (new AreaChartModel())
                 ->setTitle('Dinero canjeado')
                 ->setAnimated(true)

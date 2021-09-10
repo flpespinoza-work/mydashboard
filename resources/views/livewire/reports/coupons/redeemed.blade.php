@@ -15,15 +15,19 @@
             <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
                     <h5 class="text-sm font-semibold text-gray-400">Cupones canjeados</h5>
-                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ $result['totals']['redeemed_coupons'] }} </span>
+                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ number_format($result['totals']['redeemed_coupons'], 2) }} </span>
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
                     <h5 class="text-sm font-semibold text-gray-400">Dinero canjeado:</h5>
-                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['redeemed_amount'], 3) }} </span>
+                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['redeemed_amount'], 2) }} </span>
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
                     <h5 class="text-sm font-semibold text-gray-400">Promedio de canje:</h5>
-                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['average_amount'], 3) }} </span>
+                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['average_amount'], 2) }} </span>
+                </div>
+                <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
+                    <h5 class="text-sm font-semibold text-gray-400">Ticket de carga promedio:</h5>
+                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['average_amount'] / 0.029, 2) }} </span>
                 </div>
             </div>
 
@@ -84,13 +88,13 @@
                                 <tr>
                                     <td>&nbsp;</td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        <span class="font-semibold text-gray-darker">Canjeas totales: {{ $result['totals']['redeemed_coupons']}}</span>
+                                        <span class="font-semibold text-gray-darker">Canjeas totales: {{ number_format($result['totals']['redeemed_coupons'],2) }}</span>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                         <span class="font-semibold text-gray-darker">Monto total: ${{ number_format($result['totals']['redeemed_amount'], 2) }}</span>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        <span class="font-semibold text-gray-darker">Promedio canje: ${{ number_format($result['totals']['average_amount'], 3) }}</span>
+                                        <span class="font-semibold text-gray-darker">Promedio canje: ${{ number_format($result['totals']['average_amount'], 2) }}</span>
                                     </td>
                                 </tr>
                                 @endif

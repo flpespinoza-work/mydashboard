@@ -16,7 +16,7 @@ trait Coupons
             $tmpRes = [];
             $totales = [ 'printed_coupons' => 0, 'printed_amount' => 0, 'printed_sale' => 0];
             $tokDB->table('dat_reporte_cupones_impresos')
-            ->selectRaw('DATE_FORMAT(REP_IMP_CUPON_FECHA_HORA, "%d/%m/%Y") DIA, COUNT(REP_IMP_ID) CUPONES, SUM(REP_IMP_CUPON_MONTO) MONTO, SUM(REP_IMP_CUPON_PRECIO_VENTA) PRECIO, AVG(REP_IMP_CUPON_MONTO) PROMEDIO_CUPON, AVG(REP_IMP_CUPON_PRECIO_VENTA) PROMEDIO_VENTA')
+            ->selectRaw('DATE_FORMAT(REP_IMP_CUPON_FECHA_HORA, "%d/%m/%Y") DIA, COUNT(REP_IMP_ID) CUPONES, SUM(REP_IMP_CUPON_MONTO) MONTO, SUM(REP_IMP_CUPON_PRECIO_VENTA) PRECIO, AVG(REP_IMP_CUPON_MONTO) PROMEDIO_CUPON')
             ->where('REP_IMP_CUPON_PRESUPUESTO', $filters['budget'])
             ->whereBetween('REP_IMP_CUPON_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->groupBy('DIA')
@@ -31,8 +31,7 @@ trait Coupons
                         'day' => $coupon->DIA,
                         'count' => $coupon->CUPONES,
                         'amount' => $coupon->MONTO,
-                        'average_coupon' => number_format($coupon->PROMEDIO_CUPON, 3),
-                        'average_sale' => number_format($coupon->PROMEDIO_VENTA, 3)
+                        'average_coupon' => $coupon->PROMEDIO_CUPON
                     ];
                 }
             });
@@ -178,6 +177,27 @@ trait Coupons
         });
 
         return $result;
+    }
+
+    function getRedeemedHistoryCoupons($filters)
+    {
+        $tokDB = DB::connection('reportes');
+        $filters['giftcard'] = fnGetGiftcard($filters['store']);
+        $reportId = fnGenerateReportId($filters);
+        $rememberReport = fnRememberReportTime(date('Y-m-d'));
+
+        $result = cache()->remember('reporte-cupones-canjeados' . $reportId, $rememberReport, function() use($tokDB, $filters){
+            return $tokDB->table('dat_reporte_cupones_canjeados')
+            ->selectRaw('COUNT(1) redeems, SUM(REP_CAN_CUPON_MONTO) amount')
+            ->where('REP_CAN_CUPON_GIFTCARD', $filters['giftcard'])
+            ->get()
+            ->toArray();
+        });
+
+        if(count($result))
+            return ['redeems' => $result[0]->redeems, 'amount' =>$result[0]->amount ];
+
+        return ['redeems' => '0', 'amount' => '0'];
     }
 
     function getLastPrintedCoupon()

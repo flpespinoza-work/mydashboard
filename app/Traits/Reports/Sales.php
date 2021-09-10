@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\DB;
 
 trait Sales
 {
-    function getSales($filters)
+    function getDetailSales($filters)
     {
         $tokDB = DB::connection('reportes');
         $filters['node'] = fnGetTokencashNode($filters['store']);
@@ -57,36 +57,27 @@ trait Sales
         $tokDB = DB::connection('reportes');
         $filters['node'] = fnGetTokencashNode($filters['store']);
         $reportId = fnGenerateReportId($filters);
-        $rememberReport = fnRememberReportTime($filters['final_date']);
+        $rememberReport = fnRememberReportTime(date('Y-m-d'));
 
         $result = cache()->remember('history-sales-report' . $reportId, $rememberReport, function() use($tokDB, $filters){
-            $tmpRes = [];
-            $tokDB->table('doc_dbm_ventas')
+            return $tokDB->table('doc_dbm_ventas')
             ->join('cat_dbm_nodos_usuarios', 'doc_dbm_ventas.VEN_NODO', '=', 'cat_dbm_nodos_usuarios.NOD_USU_NODO')
-            ->select(DB::raw('COUNT(VEN_ID) VENTAS, SUM(VEN_MONTO) MONTO_VENTA, VEN_DESTINO ESTABLECIMIENTO'))
+            ->select(DB::raw('COUNT(1) sales, SUM(VEN_MONTO) amount'))
             ->where('VEN_DESTINO', $filters['node'])
             ->where('VEN_ESTADO', '=', 'VIGENTE')
             ->whereRaw("(BINARY NOD_USU_CERTIFICADO REGEXP '[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]' OR NOD_USU_CERTIFICADO = '')")
-            ->groupBy('VEN_DESTINO')
-            ->orderBy('VEN_DESTINO')
-            ->chunk(10, function($sales) use(&$tmpRes) {
-                foreach($sales as $sale)
-                {
-                    $tmpRes['sales'][$sale->ESTABLECIMIENTO] = [
-                        'sales' => $sale->VENTAS,
-                        'amount' => $sale->MONTO_VENTA,
-                        'avg_sale' => $sale->MONTO_VENTA / $sale->VENTAS
-                    ];
-                }
-            });
-
-            return $tmpRes;
+            ->get()
+            ->toArray();
         });
+        if(count($result))
+        {
+            return ['sales' => $result[0]->sales, 'amount' => $result[0]->amount ];
+        }
 
-        return $result;
+        return ['sales' => '0', 'amount' => '0.00' ];
     }
 
-    function getDetailSales($filters)
+    function getSales($filters)
     {
         $tokDB = DB::connection('reportes');
         $filters['node'] = fnGetTokencashNode($filters['store']);
@@ -95,7 +86,7 @@ trait Sales
 
         $result = cache()->remember('datail-sales-report' . $reportId, $rememberReport, function() use($tokDB, $filters){
             $tmpRes = [];
-            $totalSales = ['sales' => 0, 'ammount' => 0];
+            $totalSales = ['sales' => 0, 'amount' => 0];
             $tokDB->table('doc_dbm_ventas')
             ->join('cat_dbm_nodos_usuarios', 'doc_dbm_ventas.VEN_NODO', '=', 'cat_dbm_nodos_usuarios.NOD_USU_NODO')
             ->select(DB::raw('DATE_FORMAT(VEN_FECHA_HORA, "%d/%m/%Y") DIA, COUNT(VEN_ID) VENTAS, SUM(VEN_MONTO) MONTO_VENTA'))
@@ -109,7 +100,7 @@ trait Sales
                 foreach($sales as $sale)
                 {
                     $totalSales['sales'] += $sale->VENTAS;
-                    $totalSales['ammount'] += $sale->MONTO_VENTA;
+                    $totalSales['amount'] += $sale->MONTO_VENTA;
                     $tmpRes['sales'][$sale->DIA] = [
                         'date' => $sale->DIA,
                         'sales' => $sale->VENTAS,
@@ -118,7 +109,7 @@ trait Sales
                 }
             });
             $tmpRes['totals'] = $totalSales;
-            $tmpRes['totals']['average_sale'] = $totalSales['ammount'] / $totalSales['sales'];
+            $tmpRes['totals']['average_sale'] = $totalSales['amount'] / $totalSales['sales'];
             return $tmpRes;
         });
 

@@ -115,6 +115,7 @@ trait Scores
 			"count1" => 0,
 			"count0" => 0,
 			"countX" => 0,
+            "totalComments" => 0,
             "comments" => []
 		);
 
@@ -130,6 +131,7 @@ trait Scores
 
                 if(isset($comment['comment']) && !empty($comment['comment']))
                 {
+                    $stars['totalComments']++;
                     $stars['count' . $comment['score']]++;
                     if(!str_contains('Escribe tus comentarios', $comment['comment']))
                         $stars['comments'][$comment['score']][] = $comment;

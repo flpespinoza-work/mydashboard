@@ -32,7 +32,6 @@ class ScoreFilters extends Component
         if(!is_null($store))
         {
             $this->sellers = fnGetSellers($store);
-            //dd($this->sellers);
         }
     }
 
@@ -46,5 +45,6 @@ class ScoreFilters extends Component
         ];
 
         $this->emitTo('score.index', 'getScore', $filters);
+        $this->reset();
     }
 }

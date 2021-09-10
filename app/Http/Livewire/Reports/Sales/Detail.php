@@ -17,5 +17,6 @@ class Detail extends BaseSalesReport
     public function generateReport($filters)
     {
         $this->result = $this->getDetailSales($filters);
+        //dd($this->result);
     }
 }

@@ -10,7 +10,7 @@
 
         @if(!is_null($scores) && !empty($scores))
         <div class="space-y-4">
-            <div class="grid grid-cols-2 gap-4 sm:w-1/2 md:w-1/3">
+            <div class="grid grid-cols-3 gap-4 md:w-3/5">
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
                     <h5 class="text-sm font-semibold text-gray-400">Calificaciones totales:</h5>
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ $scores['totalScores'] }} </span>
@@ -19,17 +19,23 @@
                     <h5 class="text-sm font-semibold text-gray-400">Promedio:</h5>
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ $scores['scorePromedio'] }}% </span>
                 </div>
+                <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
+                    <h5 class="text-sm font-semibold text-gray-400">Porcentaje de comentarios:</h5>
+                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ number_format($scores['totalComments'] * 100 / $scores['totalScores'],2) }}% </span>
+                </div>
             </div>
             <div id="charts" class="grid grid-cols-2 gap-4">
                 <div class="col-span-2 md:col-span-1 h-60 md:h-96">
-                    <div class="flex-flex-col">
-                        <x-scores.5 class="w-12 h-12" />
-                        <x-scores.4 class="w-12 h-12" />
-                        <x-scores.3 class="w-12 h-12" />
-                        <x-scores.2 class="w-12 h-12" />
-                        <x-scores.1 class="w-12 h-12" />
+                    <div class="flex items-center h-full">
+                        <div class="justify-between space-y-3 flex-flex-col">
+                            <x-scores.5 class="w-12 h-12" />
+                            <x-scores.4 class="w-12 h-12" />
+                            <x-scores.3 class="w-12 h-12" />
+                            <x-scores.2 class="w-12 h-12" />
+                            <x-scores.1 class="w-12 h-12" />
+                        </div>
+                        <livewire:livewire-column-chart key="{{ $columnChartModel->reactiveKey() }}" :column-chart-model="$columnChartModel"/>
                     </div>
-                    <livewire:livewire-column-chart key="{{ $columnChartModel->reactiveKey() }}" :column-chart-model="$columnChartModel"/>
                 </div>
                 <div class="col-span-2 md:col-span-1 h-60 md:h-96">
                     <livewire:livewire-column-chart key="{{ $columnChartModelScore->reactiveKey() }}" :column-chart-model="$columnChartModelScore"/>
@@ -100,7 +106,7 @@
                                             <div class="p-3 mt-3 rounded-sm bg-gray-50">
                                                 <p class="text-sm font-medium text-gray-500 md:text-sm">{{ $comment['comment'] }}</p>
                                             </div>
-                                            <div class="p-1" x-data="{showReply:false}">
+                                            <div class="hidden p-1" x-data="{showReply:false}">
                                                 <span @click="showReply = !showReply" class="rounded-full inline-block py-0.5 px-3 bg-gray-100 hover:bg-gray-200">
                                                     <x-heroicon-o-dots-horizontal class="w-4 h-4"/>
                                                 </span>

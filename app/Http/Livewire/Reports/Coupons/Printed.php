@@ -30,9 +30,11 @@ class Printed extends BaseCouponsReport
                 ->setXAxisVisible(true)
             );
 
-            $amountChartModel = $coupons->reduce(function (AreaChartModel $amountChartModel, $data, $key) use($coupons) {
+            $acumulado = 0.00;
+            $amountChartModel = $coupons->reduce(function (AreaChartModel $amountChartModel, $data, $key) use($coupons, &$aculumado) {
                 $coupon = $coupons[$key];
-                return $amountChartModel->addPoint($key, $coupon['amount']);
+                $aculumado += $coupon['amount'];
+                return $amountChartModel->addPoint($key, round($aculumado));
             }, (new AreaChartModel())
                 ->setTitle('Dinero impreso')
                 ->setAnimated(true)

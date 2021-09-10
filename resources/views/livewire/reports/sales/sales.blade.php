@@ -15,28 +15,17 @@
         @if (!is_null($result) && !empty($result))
             <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400">Cupones impresos</h5>
-                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ $result['totals']['printed_coupons'] }} </span>
+                    <h5 class="text-sm font-semibold text-gray-400">Ventas totales</h5>
+                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ $result['totals']['sales'] }} </span>
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400">Dinero impreso:</h5>
-                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['printed_amount'], 3) }} </span>
-                </div>
-                <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400">Promedio por cupón:</h5>
-                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ $result['totals']['average_amount'] }} </span>
-                </div>
-                <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400">Promedio de venta:</h5>
-                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ $result['totals']['average_sale'] }} </span>
+                    <h5 class="text-sm font-semibold text-gray-400">Monto total:</h5>
+                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['amount'], 3) }} </span>
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4 mt-8">
                 <div class="h-40 col-span-2 p-4 border rounded-md shadow-sm bg-gray-25 border-gray-50 md:col-span-1 md:h-80">
-                    <livewire:livewire-area-chart :area-chart-model="$couponsChartModel" :wire:key="time()"/>
-                </div>
-                <div class="h-40 col-span-2 p-4 border rounded-md shadow-sm bg-gray-25 border-gray-50 md:col-span-1 md:h-80">
-                    <livewire:livewire-area-chart :area-chart-model="$amountChartModel" :wire:key="time()"/>
+                    <livewire:livewire-area-chart :area-chart-model="$salesChartModel" :wire:key="time()"/>
                 </div>
             </div>
 
@@ -50,36 +39,24 @@
                                         Fecha
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
-                                        Cupones impresos
+                                        Ventas
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
-                                        Monto
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
-                                        Promedio de cupón
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
-                                        Promedio de venta
+                                        Monto de ventas
                                     </th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                @forelse ($result['coupons'] as $data)
+                                @forelse ($result['sales'] as $day => $data)
                                 <tr>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        {{ $data['day'] }}
+                                        {{ $data['date'] }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        {{ $data['count'] }}
+                                        {{ number_format($data['sales']) }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        ${{ number_format($data['amount'], 3) }}
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        ${{ $data['average_coupon'] }}
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        ${{ $data['average_sale'] }}
+                                        ${{ number_format($data['amount'], 2) }}
                                     </td>
                                 </tr>
                                 @empty
@@ -94,16 +71,10 @@
                                 <tr>
                                     <td>&nbsp;</td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        <span class="font-semibold text-gray-darker">Cupones totales: {{ $result['totals']['printed_coupons']}}</span>
+                                        <span class="font-semibold text-gray-darker">Ventas totales: {{ number_format($result['totals']['sales']) }}</span>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        <span class="font-semibold text-gray-darker">Monto total: ${{ number_format($result['totals']['printed_amount'], 2) }}</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        <span class="font-semibold text-gray-darker">Promedio cupón: ${{ number_format($result['totals']['average_amount'], 3) }}</span>
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        <span class="font-semibold text-gray-darker">Promedio cupón: ${{ number_format($result['totals']['average_sale'], 3) }}</span>
+                                        <span class="font-semibold text-gray-darker">Monto total de venta: ${{ number_format($result['totals']['amount'], 2) }}</span>
                                     </td>
                                 </tr>
                                 @endif
