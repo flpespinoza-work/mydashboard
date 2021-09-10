@@ -56,9 +56,9 @@ trait Scores
                         'user' => $score->NOD_USU_NODO,
                         'store' => $score->COM_ESTABLECIMIENTO_ID,
                         'action' => ($score->COM_TIPO == 'CANJE') ? 'Canje de cupon' : 'Pago con Tokencash',
-                        'comment' => $score->COM_COMENTARIO,
+                        'comment' => utf8_encode($score->COM_COMENTARIO),
                         'score' => $score->COM_CALIFICACION,
-                        'seller' => $score->COM_VENDEDOR,
+                        'seller' => utf8_encode($score->COM_VENDEDOR),
                         'aditional' => $score->COM_ADICIONAL
                     ];
                 }

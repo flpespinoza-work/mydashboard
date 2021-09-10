@@ -7,8 +7,8 @@ use App\Models\Store;
 
 class ScoreFilters extends Component
 {
-    protected $stores;
-    public $sellers;
+    protected $stores = [];
+    public $sellers = [];
     public $initial_date;
     public $final_date;
     public $selectedStore;
@@ -29,10 +29,11 @@ class ScoreFilters extends Component
 
     public function updatedSelectedStore($store)
     {
-        /*if(!is_null($store))
+        if(!is_null($store))
         {
             $this->sellers = fnGetSellers($store);
-        }*/
+            //dd($this->sellers);
+        }
     }
 
     public function sendFiltersToReport()
@@ -41,7 +42,7 @@ class ScoreFilters extends Component
             'store' => $this->selectedStore,
             'initial_date' => $this->initial_date,
             'final_date' => $this->final_date,
-            'seller' => 'VALENTIN RODRIGUEZ'
+            'seller' => $this->selectedSeller
         ];
 
         $this->emitTo('score.index', 'getScore', $filters);

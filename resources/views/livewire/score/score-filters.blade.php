@@ -17,14 +17,18 @@
         class="w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
         <x-heroicon-o-calendar class="absolute right-0 w-5 h-5 mr-2 text-gray-400 transform -translate-y-1/2 top-1/2"/>
     </div>
-    <!-- div class="md:w-5/12 lg:w-5/12 xl:w-6/12">
-        <select wire:model="selectedSeller"
+    <div class="md:w-5/12 lg:w-5/12 xl:w-6/12">
+        <select wire:model.defer="selectedSeller"
             id="store"
             class="w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
             <option value="" selected>Seleccione un vendedor</option>
-
+            @if(!empty($sellers))
+                @foreach ($sellers as $seller)
+                    <option value="{{ $seller }}">{{ $seller }}</option>
+                @endforeach
+            @endif
         </select>
-    </div -->
+    </div>
     <div class="md:w-2/12">
         <button type="submit"
             class="w-full py-2 text-xs font-semibold text-white border rounded-md border-orange-light bg-orange">Buscar</button>

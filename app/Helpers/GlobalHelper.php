@@ -63,13 +63,15 @@ if(!function_exists('fnGetSellers'))
 {
     function fnGetSellers($store)
     {
-        $node = fnGetTokencashNode($store);
+        /*$node = fnGetTokencashNode($store);
         $tokDB =DB::connection('reportes');
         return $tokDB->table('cat_dbm_nodos_usuarios')
         ->selectRaw('NOD_USU_NUMERO phone, NOD_USU_NOMBRE name')
         ->where('NOD_USU_NODO', $node)
         ->orderBy('name')
-        ->get();
+        ->get();*/
+        $store = Store::find($store);
+        return $store->sellers()->pluck('name');
     }
 }
 
