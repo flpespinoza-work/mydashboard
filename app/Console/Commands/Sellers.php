@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Store;
 use App\Models\Seller;
 
-class StoreUsers extends Command
+class Sellers extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'store:users';
+    protected $signature = 'command:sellers';
 
     /**
      * The console command description.
@@ -43,27 +43,27 @@ class StoreUsers extends Command
         //Iniciar conexion con reportes
         $tokDB = DB::connection('reportes');
         //Recorrer los establecimientos
-        foreach(Store::all('node') as $store)
+        foreach(Store::all(['node', 'id']) as $store)
         {
             //Buscar vendedores por establecimiento en la tabla de dat_comentarios de tokencash
             $sellers = $store->sellers()->pluck('name')->toArray();
             $day = date('Y-m-d 00:00:00', strtotime('-7 days'));
             $tokSellers = $tokDB->table('dat_comentarios')
-            ->selectRaw('DISTINT COM_VENDEDOR')
+            ->selectRaw('DISTINCT COM_VENDEDOR')
             ->where('COM_FECHA_HORA', '>', $day)
             ->where('COM_ESTABLECIMIENTO_ID', $store->node)
             ->whereNotIn('COM_VENDEDOR', $sellers)
             ->where('COM_VENDEDOR', '!=', '')
             ->orderBy('COM_VENDEDOR')
-            ->get()
-            ->toArray();
+            ->get();
 
             if(count($tokSellers))
             {
                 //Guardar vendedores en tabla sellers
                 foreach($tokSellers as $seller)
                 {
-                    Seller::create(['store_id' => $store->id, 'name' => $seller['COM_VENDEDOR']]);
+                    $name = mb_convert_encoding($seller->COM_VENDEDOR, 'UTF-8', 'UTF-8');
+                    Seller::create(['store_id' => $store->id, 'name' => $name]);
                 }
             }
         }

@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        'App\Console\Commands\StoreUsers'
+        'App\Console\Commands\Sellers'
     ];
 
     /**
@@ -24,8 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->exec('store:users');
-        //$schedule->command('store:users')->dailyAt('03:00');
+        $schedule->command('sellers')->dailyAt('03:00');
     }
 
     /**
