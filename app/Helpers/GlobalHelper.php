@@ -3,6 +3,27 @@
 use Illuminate\Support\Facades\DB;
 use App\Models\Store;
 use Illuminate\Support\Facades\Date;
+use Maatwebsite\Excel\Concerns\ToArray;
+
+//Obtener los establecimientos asignados a cada usuario
+if(!function_exists('fnGetMyStores'))
+{
+    function fnGetMyStores()
+    {
+        if(auth()->user()->isSuperAdmin())
+        {
+            return Store::orderBy('name')->pluck('name', 'id')->toArray();
+        }
+        elseif(auth()->user()->isGroupOwner())
+        {
+            return auth()->user()->group->stores->pluck('name', 'id')->sort();
+        }
+        else
+        {
+            return auth()->user()->stores->pluck('name', 'id')->sort();
+        }
+    }
+}
 
 //Obtener presupuestos
 if(!function_exists('fnGetBudget'))
@@ -22,7 +43,7 @@ if(!function_exists('fnGetBudgetFull'))
     }
 }
 
-//Obtener giftcards
+//Obtener giftcard
 if(!function_exists('fnGetGiftcard'))
 {
     function fnGetGiftcard($store)
@@ -31,12 +52,62 @@ if(!function_exists('fnGetGiftcard'))
     }
 }
 
-//Obtener giftcards con GIFTCARD_
+//Obtener giftcard con GIFTCARD_
 if(!function_exists('fnGetGiftcardFull'))
 {
     function fnGetGiftcardFull($store)
     {
         return "GIFTCARD_" . fnGetGiftcard($store);
+    }
+}
+
+//Obtener todas las giftcards del usuario
+if(!function_exists('fnGetAllGiftcards'))
+{
+    function fnGetAllGiftcards()
+    {
+        $myStores = array_keys(fnGetMyStores());
+        return Store::whereIn('id', $myStores)->pluck('giftcard')->toArray();
+    }
+}
+
+//Obtener todas los presupuestos del usuario
+if(!function_exists('fnGetAllBudgets'))
+{
+    function fnGetAllBudgets()
+    {
+        $myStores = array_keys(fnGetMyStores());
+        return Store::whereIn('id', $myStores)->pluck('budget')->toArray();
+    }
+}
+
+//Obtener todas las giftcards del usuario con GIFTCARD_
+if(!function_exists('fnGetAllGiftcardsFull'))
+{
+    function fnGetAllGiftcardsFull()
+    {
+        $myStores = array_keys(fnGetMyStores());
+        $giftcards =  Store::whereIn('id', $myStores)->pluck('giftcard')->toArray();
+        array_walk($giftcards, function(&$giftcard, $key){
+            $giftcard = 'GIFTCARD_' . $giftcard;
+        });
+
+        return $giftcards;
+    }
+}
+
+//Obtener todas los persupuestos del usuario con PRESUPUESTO_
+if(!function_exists('fnGetAllBudgetsFull'))
+{
+    function fnGetAllBudgetsFull()
+    {
+        $myStores = array_keys(fnGetMyStores());
+        $budgets =  Store::whereIn('id', $myStores)->pluck('budget')->toArray();
+        array_walk($budgets, function(&$budget, $key){
+            $budget = 'PRESUPUESTO_' . $budget;
+        });
+
+        return $budgets;
     }
 }
 
@@ -50,11 +121,12 @@ if(!function_exists('fnGetTokencashNode'))
 }
 
 //Obtener la informacion de los establecimientos que tiene asignado el usuario
-if(!function_exists('fnGetMyStoresData'))
+if(!function_exists('fnGetMyStoresNodes'))
 {
-    function getMyStoresData()
+    function fnGetMyStoresNodes()
     {
-
+        $myStores = array_keys(fnGetMyStores());
+        return Store::whereIn('id', $myStores)->pluck('node')->toArray();
     }
 }
 
@@ -63,13 +135,6 @@ if(!function_exists('fnGetSellers'))
 {
     function fnGetSellers($store)
     {
-        /*$node = fnGetTokencashNode($store);
-        $tokDB =DB::connection('reportes');
-        return $tokDB->table('cat_dbm_nodos_usuarios')
-        ->selectRaw('NOD_USU_NUMERO phone, NOD_USU_NOMBRE name')
-        ->where('NOD_USU_NODO', $node)
-        ->orderBy('name')
-        ->get();*/
         $store = Store::find($store);
         return $store->sellers()->pluck('name');
     }

@@ -8,9 +8,9 @@ trait Sales
     function getDetailSales($filters)
     {
         $tokDB = DB::connection('reportes');
+        $reportId = fnGenerateReportId($filters);
         $filters['node'] = fnGetTokencashNode($filters['store']);
         $filters['giftcard'] = fnGetGiftcardFull($filters['store']);
-        $reportId = fnGenerateReportId($filters);
         $rememberReport = fnRememberReportTime($filters['final_date']);
 
         $result = cache()->remember('sales-report' . $reportId, $rememberReport, function() use($tokDB, $filters){
@@ -56,10 +56,9 @@ trait Sales
     function getHistorySales($filters) //Revisar si es posible solo traer desde el 2020
     {
         $tokDB = DB::connection('reportes');
+        $rememberReport = fnRememberReportTime(date('Y-m-d'));
         $filters['node'] = fnGetTokencashNode($filters['store']);
         $reportId = fnGenerateReportId($filters);
-        $rememberReport = fnRememberReportTime(date('Y-m-d'));
-
         $result = cache()->remember('history-sales-report' . $reportId, $rememberReport, function() use($tokDB, $filters){
             return $tokDB->table('doc_dbm_ventas')
             ->join('cat_dbm_nodos_usuarios', 'doc_dbm_ventas.VEN_NODO', '=', 'cat_dbm_nodos_usuarios.NOD_USU_NODO')
@@ -81,8 +80,9 @@ trait Sales
     function getSales($filters)
     {
         $tokDB = DB::connection('reportes');
-        $filters['node'] = fnGetTokencashNode($filters['store']);
         $reportId = fnGenerateReportId($filters);
+        $filters['node'] = fnGetTokencashNode($filters['store']);
+
         $rememberReport = fnRememberReportTime($filters['final_date']);
 
         $result = cache()->remember('datail-sales-report' . $reportId, $rememberReport, function() use($tokDB, $filters){

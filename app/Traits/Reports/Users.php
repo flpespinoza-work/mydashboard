@@ -8,8 +8,8 @@ trait Users
     function getNewUsers($filters)
     {
         $tokDB = DB::connection('reportes');
-        $filters['giftcard'] = fnGetGiftcardFull($filters['store']);
         $reportId = fnGenerateReportId($filters);
+        $filters['giftcard'] = fnGetGiftcardFull($filters['store']);
         $rememberReport = fnRememberReportTime($filters['final_date']);
         //dd($filters);
         $result = cache()->remember('new-users-report' . $reportId, $rememberReport, function() use($tokDB, $filters){
@@ -47,8 +47,8 @@ trait Users
     function getHistoryUsers($filters)
     {
         $tokDB = DB::connection('reportes');
-        $filters['giftcard'] = fnGetGiftcard($filters['store']);
         $reportId = md5(session()->getId() . $filters['store']);
+        $filters['giftcard'] = fnGetGiftcard($filters['store']);
         $rememberReport = 600;
 
         $result = cache()->remember('history-users-report' . $reportId, $rememberReport, function() use($tokDB, $filters){

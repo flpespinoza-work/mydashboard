@@ -3,11 +3,14 @@
 namespace App\Http\Livewire\Reports\Globals;
 
 use App\Http\Livewire\Reports\BaseGlobalsReport;
+use App\Traits\Reports\Globals;
 
 class Redeems extends BaseGlobalsReport
 {
+    use Globals;
     public $reportName = 'reports.globals.redeems';
     protected $listeners = ['generateReport'];
+    public $result = null;
 
     public function render()
     {
@@ -16,6 +19,7 @@ class Redeems extends BaseGlobalsReport
 
     public function generateReport($filters)
     {
-
+        $this->result = $this->getRedeems($filters);
+        //dd($this->result);
     }
 }

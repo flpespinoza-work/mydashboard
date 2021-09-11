@@ -46,16 +46,24 @@ class User extends Authenticatable
         return $this->BelongsToMany(Store::class);
     }
 
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
     public function isSuperAdmin()
     {
         return $this->hasRole('superadmin');
     }
 
-    public function getStores()
+    public function isGroupOwner()
     {
-        if($this->isSuperAdmin())
-        {
-
-        }
+        return $this->hasRole('group-owner');
     }
+
+    public function isStoreManager()
+    {
+        return $this->hasRole('store-manager');
+    }
+
 }

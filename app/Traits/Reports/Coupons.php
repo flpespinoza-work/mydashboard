@@ -8,8 +8,8 @@ trait Coupons
     function getPrintedCoupons($filters)
     {
         $tokDB = DB::connection('reportes');
-        $filters['budget'] = fnGetBudget($filters['store']);
         $reportId = fnGenerateReportId($filters);
+        $filters['budget'] = fnGetBudget($filters['store']);
         $rememberReport = fnRememberReportTime($filters['final_date']);
 
         $result = cache()->remember('reporte-cupones-impresos' . $reportId, $rememberReport, function() use($tokDB, $filters){
@@ -52,8 +52,8 @@ trait Coupons
     function getRedeemedCoupons($filters)
     {
         $tokDB = DB::connection('reportes');
-        $filters['giftcard'] = fnGetGiftcard($filters['store']);
         $reportId = fnGenerateReportId($filters);
+        $filters['giftcard'] = fnGetGiftcard($filters['store']);
         $rememberReport = fnRememberReportTime($filters['final_date']);
 
         $result = cache()->remember('reporte-cupones-canjeados' . $reportId, $rememberReport, function() use($tokDB, $filters){
@@ -96,9 +96,9 @@ trait Coupons
     function getDetailRedeemedCoupons($filters)
     {
         $tokDB = DB::connection('reportes');
+        $reportId = fnGenerateReportId($filters);
         $filters['budget'] = fnGetBudget($filters['store']);
         $filters['giftcard'] = fnGetGiftcardFull($filters['store']);
-        $reportId = fnGenerateReportId($filters);
         $rememberReport = fnRememberReportTime($filters['final_date']);
 
         $result = cache()->remember('reporte-cupones-canjeados-detalle' . $reportId, $rememberReport, function() use($tokDB, $filters){
@@ -182,8 +182,8 @@ trait Coupons
     function getRedeemedHistoryCoupons($filters)
     {
         $tokDB = DB::connection('reportes');
-        $filters['giftcard'] = fnGetGiftcard($filters['store']);
         $reportId = fnGenerateReportId($filters);
+        $filters['giftcard'] = fnGetGiftcard($filters['store']);
         $rememberReport = fnRememberReportTime(date('Y-m-d'));
 
         $result = cache()->remember('reporte-cupones-canjeados' . $reportId, $rememberReport, function() use($tokDB, $filters){
