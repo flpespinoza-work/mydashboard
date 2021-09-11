@@ -16,11 +16,11 @@
             <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
                     <h5 class="text-sm font-semibold text-gray-400">Ventas totales</h5>
-                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ $result['totals']['sales'] }} </span>
+                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ number_format($result['totals']['sales']) }} </span>
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
                     <h5 class="text-sm font-semibold text-gray-400">Monto total:</h5>
-                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['amount'], 3) }} </span>
+                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['amount']) }} </span>
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4 mt-8">
@@ -74,7 +74,7 @@
                                         <span class="font-semibold text-gray-darker">Ventas totales: {{ number_format($result['totals']['sales']) }}</span>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        <span class="font-semibold text-gray-darker">Monto total de venta: ${{ number_format($result['totals']['amount'], 2) }}</span>
+                                        <span class="font-semibold text-gray-darker">Monto total de venta: ${{ number_format($result['totals']['amount']) }}</span>
                                     </td>
                                 </tr>
                                 @endif

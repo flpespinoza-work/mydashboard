@@ -33,7 +33,7 @@
                                 {{ number_format($result['sales']) }}
                             </td>
                             <td class="px-6 py-4 text-sm text-gray-500 lg:text-lg whitespace-nowrap">
-                                ${{ number_format($result['amount'],2) }}
+                                ${{ number_format($result['amount']) }}
                             </td>
                         </tr>
                     </tbody>

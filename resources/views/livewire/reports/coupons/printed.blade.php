@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
                     <h5 class="text-sm font-semibold text-gray-400">Dinero impreso:</h5>
-                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['printed_amount'],2) }} </span>
+                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['printed_amount']) }} </span>
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
                     <h5 class="text-sm font-semibold text-gray-400">Promedio por cupón:</h5>
@@ -28,7 +28,7 @@
                 </div>
                 <div class="hidden col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
                     <h5 class="text-sm font-semibold text-gray-400">Promedio de venta:</h5>
-                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ $result['totals']['average_sale'] }} </span>
+                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['average_sale'],2) }} </span>
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4 mt-8">
@@ -67,13 +67,13 @@
                                         {{ $data['day'] }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        {{ $data['count'] }}
+                                        {{ number_format($data['count']) }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        ${{ number_format($data['amount'], 3) }}
+                                        ${{ number_format($data['amount'], 2) }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        ${{ $data['average_coupon'] }}
+                                        ${{ number_format($data['average_coupon'],2)}}
                                     </td>
                                 </tr>
                                 @empty
@@ -88,7 +88,7 @@
                                 <tr>
                                     <td>&nbsp;</td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        <span class="font-semibold text-gray-darker">Cupones totales: {{ $result['totals']['printed_coupons']}}</span>
+                                        <span class="font-semibold text-gray-darker">Cupones totales: {{ number_format($result['totals']['printed_coupons']) }}</span>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                         <span class="font-semibold text-gray-darker">Monto total: ${{ number_format($result['totals']['printed_amount'], 2) }}</span>
