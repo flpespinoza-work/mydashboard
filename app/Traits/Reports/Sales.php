@@ -9,6 +9,7 @@ trait Sales
     {
         $tokDB = DB::connection('reportes');
         $filters['node'] = fnGetTokencashNode($filters['store']);
+        $filters['giftcard'] = fnGetGiftcardFull($filters['store']);
         $reportId = fnGenerateReportId($filters);
         $rememberReport = fnRememberReportTime($filters['final_date']);
 
@@ -21,13 +22,13 @@ trait Sales
             ->select(DB::raw('NOD_USU_NODO, VEN_ID, VEN_FECHA_HORA, VEN_MONTO MONTO_VENTA'))
             ->where('VEN_DESTINO', $filters['node'])
             ->where('VEN_ESTADO', '=', 'VIGENTE')
-            ->where('VEN_BOLSA', 'LIKE', 'GIFTCARD_%')
+            ->where('VEN_BOLSA', '=', $filters['giftcard'])
             ->whereBetween('VEN_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->whereRaw("(BINARY NOD_USU_CERTIFICADO REGEXP '[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]' OR NOD_USU_CERTIFICADO = '')")
             ->groupBy('VEN_ID')
             ->orderBy('VEN_FECHA_HORA', 'desc')
             ->orderBy('NOD_USU_NODO')
-            ->chunk(10, function($sales) use(&$tmpRes, &$totalSales) {
+            ->chunk(100, function($sales) use(&$tmpRes, &$totalSales) {
                 foreach($sales as $sale)
                 {
                     $totalSales['sales'] += 1;

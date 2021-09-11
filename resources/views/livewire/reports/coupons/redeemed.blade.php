@@ -14,28 +14,28 @@
         @if (!is_null($result) && !empty($result))
             <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400">Cupones canjeados</h5>
+                    <h5 class="text-xs md:text-sm font-semibold text-gray-400">Cupones canjeados</h5>
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ number_format($result['totals']['redeemed_coupons']) }} </span>
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400">Dinero canjeado:</h5>
+                    <h5 class="text-xs md:text-sm font-semibold text-gray-400">Dinero canjeado:</h5>
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['redeemed_amount']) }} </span>
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400">Promedio de canje:</h5>
+                    <h5 class="text-xs md:text-sm font-semibold text-gray-400">Promedio de canje:</h5>
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['average_amount'], 2) }} </span>
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400">Ticket de carga promedio:</h5>
+                    <h5 class="text-xs md:text-sm font-semibold text-gray-400">Ticket de carga promedio:</h5>
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['average_amount'] / 0.029, 2) }} </span>
                 </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4 mt-8">
-                <div class="h-40 col-span-2 p-4 border rounded-md shadow-sm bg-gray-25 border-gray-50 md:col-span-1 md:h-80">
+                <div class="h-64 col-span-2 p-4 border rounded-md shadow-sm bg-gray-25 border-gray-50 md:col-span-1 md:h-80 lg:h-96">
                     <livewire:livewire-area-chart :area-chart-model="$couponsChartModel" :wire:key="time()"/>
                 </div>
-                <div class="h-40 col-span-2 p-4 border rounded-md shadow-sm bg-gray-25 border-gray-50 md:col-span-1 md:h-80">
+                <div class="h-64 col-span-2 p-4 border rounded-md shadow-sm bg-gray-25 border-gray-50 md:col-span-1 md:h-80 lg:h-96">
                     <livewire:livewire-area-chart :area-chart-model="$amountChartModel" :wire:key="time()"/>
                 </div>
             </div>

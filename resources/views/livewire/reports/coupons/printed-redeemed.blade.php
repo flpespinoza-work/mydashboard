@@ -14,25 +14,25 @@
         @if (!is_null($result) && !empty($result))
             <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400"><span class="text-gray-700">{{ number_format($result['totals']['printed']) }}</span> Cupones impresos</h5>
+                    <h5 class="text-xs md:text-sm font-semibold text-gray-400"><span class="text-gray-700">{{ number_format($result['totals']['printed']) }}</span> Cupones impresos</h5>
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['printed_amount']) }} </span>
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400">Promedio por cupón impreso:</h5>
+                    <h5 class="text-xs md:text-sm font-semibold text-gray-400">Promedio por cupón impreso:</h5>
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['avg_printed'],2) }} </span>
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400"><span class="text-gray-700">{{ number_format($result['totals']['redeemed']) }}</span> Cupones canjeados</h5>
+                    <h5 class="text-xs md:text-sm font-semibold text-gray-400"><span class="text-gray-700">{{ number_format($result['totals']['redeemed']) }}</span> Cupones canjeados</h5>
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['redeemed_amount']) }} </span>
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400">Promedio por cupón canjeado:</h5>
+                    <h5 class="text-xs md:text-sm font-semibold text-gray-400">Promedio por cupón canjeado:</h5>
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['avg_redeemed'], 2) }} </span>
                 </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4 mt-8">
-                <div class="h-40 col-span-2 p-4 border rounded-md shadow-sm bg-gray-25 border-gray-50 md:h-80">
+                <div class="h-64 col-span-2 p-4 border rounded-md shadow-sm bg-gray-25 border-gray-50 md:h-80 lg:h-96">
                     <livewire:livewire-line-chart :line-chart-model="$couponsChartModel" :wire:key="time()"/>
                 </div>
             </div>

@@ -15,16 +15,16 @@
         @if (!is_null($result) && !empty($result))
             <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400">Ventas totales</h5>
-                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ number_format($result['totals']['sales']) }} </span>
+                    <h5 class="text-xs sm:text-sm font-semibold text-gray-400">Ventas totales</h5>
+                    <span class="inline-block mt-2 text-sm sm:text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ number_format($result['totals']['sales']) }} </span>
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400">Monto total:</h5>
-                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['amount']) }} </span>
+                    <h5 class="text-xs md:text-sm font-semibold text-gray-400">Monto total:</h5>
+                    <span class="inline-block mt-2 text-sm sm:text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['amount']) }} </span>
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4 mt-8">
-                <div class="h-40 col-span-2 p-4 border rounded-md shadow-sm bg-gray-25 border-gray-50 md:col-span-1 md:h-80">
+                <div class="h-64 col-span-2 p-4 border rounded-md shadow-sm bg-gray-25 border-gray-50 md:h-96">
                     <livewire:livewire-area-chart :area-chart-model="$salesChartModel" :wire:key="time()"/>
                 </div>
             </div>
