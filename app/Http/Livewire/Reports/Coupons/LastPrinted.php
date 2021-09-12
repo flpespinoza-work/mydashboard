@@ -19,6 +19,6 @@ class LastPrinted extends Component
 
     public function exportReport()
     {
-        return (new LastPrintedCouponExport(collect($this->coupons['REGISTROS'])))->download('reporte_ultimo_cupon_impreso.xlsx');
+        //return (new LastPrintedCouponExport(collect($this->result)))->download('reporte_ultimo_cupon_impreso.xlsx');
     }
 }

@@ -32,8 +32,8 @@ class PrintedRedeemedCouponsExport implements FromCollection, WithHeadings, With
         return [
             'Fecha',
             'Cupones impresos',
-            'Monto impreso',
             'Cupones canjeados',
+            'Monto impreso',
             'Monto canjeado'
         ];
     }

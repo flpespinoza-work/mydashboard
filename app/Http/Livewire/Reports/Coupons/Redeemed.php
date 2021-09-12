@@ -57,6 +57,6 @@ class Redeemed extends BaseCouponsReport
 
     public function exportReport()
     {
-        return (new RedeemedCouponsExport(collect($this->result['REGISTROS'])))->download('reporte_cupones_canjeados.xlsx');
+        return (new RedeemedCouponsExport(collect($this->result['coupons'])))->download('reporte_cupones_canjeados.xlsx');
     }
 }

@@ -57,6 +57,6 @@ class Printed extends BaseCouponsReport
 
     public function exportReport()
     {
-        return (new PrintedCouponsExport(collect($this->result['REGISTROS'])))->download('reporte_cupones_impresos.xlsx');
+        return (new PrintedCouponsExport(collect($this->result['coupons'])))->download('reporte_cupones_impresos.xlsx');
     }
 }

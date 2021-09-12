@@ -57,6 +57,6 @@ class PrintedRedeemed extends BaseCouponsReport
 
     public function exportReport()
     {
-        return (new PrintedRedeemedCouponsExport(collect($this->result['REGISTROS'])))->download('reporte_cupones_canjeados_impresos.xlsx');
+        return (new PrintedRedeemedCouponsExport(collect($this->result['coupons'])))->download('reporte_cupones_canjeados_impresos.xlsx');
     }
 }

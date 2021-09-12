@@ -18,7 +18,7 @@ trait Coupons
             $tmpRes = [];
             $totales = [ 'printed_coupons' => 0, 'printed_amount' => 0, 'printed_sale' => 0];
             $tokDB->table('dat_reporte_cupones_impresos')
-            ->selectRaw('DATE_FORMAT(REP_IMP_CUPON_FECHA_HORA, "%d/%m/%Y") DIA, COUNT(REP_IMP_ID) CUPONES, SUM(REP_IMP_CUPON_MONTO) MONTO, SUM(REP_IMP_CUPON_PRECIO_VENTA) PRECIO, AVG(REP_IMP_CUPON_MONTO) PROMEDIO_CUPON')
+            ->selectRaw('DATE_FORMAT(REP_IMP_CUPON_FECHA_HORA, "%d/%m/%Y") day, COUNT(REP_IMP_ID) coupons, SUM(REP_IMP_CUPON_MONTO) amount')
             ->where('REP_IMP_CUPON_PRESUPUESTO', $filters['budget'])
             ->whereBetween('REP_IMP_CUPON_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->groupBy('DIA')
@@ -26,14 +26,13 @@ trait Coupons
             ->chunk(10, function($coupons) use(&$tmpRes, &$totales) {
                 foreach($coupons as $coupon)
                 {
-                    $totales['printed_coupons'] += $coupon->CUPONES;
-                    $totales['printed_amount'] += $coupon->MONTO;
+                    $totales['printed_coupons'] += $coupon->coupons;
+                    $totales['printed_amount'] += $coupon->amount;
                     $totales['printed_sale'] += $coupon->PRECIO;
-                    $tmpRes['coupons'][$coupon->DIA] = [
-                        'day' => $coupon->DIA,
-                        'count' => $coupon->CUPONES,
-                        'amount' => $coupon->MONTO,
-                        'average_coupon' => $coupon->PROMEDIO_CUPON
+                    $tmpRes['coupons'][$coupon->day] = [
+                        'day' => $coupon->day,
+                        'count' => $coupon->coupons,
+                        'amount' => $coupon->amount
                     ];
                 }
             });
@@ -123,10 +122,10 @@ trait Coupons
                     $totales['redeemed_amount'] += $coupon->CANJE_MONTO;
 
                     $tmpRes['coupons'][] = [
-                        'date_coupon' => $coupon->CUPON_FECHA_HORA,
-                        'date_redeem' => $coupon->CANJE_FECHA_HORA,
                         'user' => $coupon->USUARIO_NODO,
                         'coupon_code' => $coupon->CODIGO_CUPON,
+                        'date_coupon' => $coupon->CUPON_FECHA_HORA,
+                        'date_redeem' => $coupon->CANJE_FECHA_HORA,
                         'amount_redeem' => $coupon->CANJE_MONTO,
                         'user_balance' => $coupon->SALDO_USUARIO
                     ];
