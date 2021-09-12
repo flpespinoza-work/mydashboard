@@ -21,6 +21,7 @@ class CreateMenusTable extends Migration
             $table->string('route-group', 100)->nullable()->default(null);
             $table->integer('order')->default(0);
             $table->string('icon')->nullable()->default(null);
+            $table->boolean('active')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

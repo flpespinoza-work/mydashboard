@@ -48,7 +48,7 @@ trait Users
     {
         $tokDB = DB::connection('reportes');
         $reportId = md5(session()->getId() . $filters['store']);
-        $filters['giftcard'] = fnGetGiftcard($filters['store']);
+        $filters['giftcard'] = fnGetGiftcardFull($filters['store']);
         $rememberReport = 600;
 
         $result = cache()->remember('history-users-report' . $reportId, $rememberReport, function() use($tokDB, $filters){
@@ -56,7 +56,7 @@ trait Users
             $tokDB->table('cat_dbm_nodos_usuarios')
             ->join('bal_tae_saldos', 'cat_dbm_nodos_usuarios.NOD_USU_NODO', '=', 'bal_tae_saldos.TAE_SAL_NODO')
             ->select(DB::raw('TAE_SAL_BOLSA BOLSA, SUM(TAE_SAL_MONTO) MONTO, COUNT(NOD_USU_ID) USUARIOS'))
-            ->whereIn('TAE_SAL_BOLSA', $filters['giftcard'])
+            ->where('TAE_SAL_BOLSA', $filters['giftcard'])
             ->whereRaw("(BINARY NOD_USU_CERTIFICADO REGEXP '[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]' OR NOD_USU_CERTIFICADO = '')")
             ->groupBy('TAE_SAL_BOLSA')
             ->orderBy('TAE_SAL_BOLSA')

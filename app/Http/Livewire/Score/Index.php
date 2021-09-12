@@ -27,13 +27,14 @@ class Index extends Component
             ->addColumn('', $this->scores['stars_3'], '#F7DA38')
             ->addColumn('', $this->scores['stars_2'], '#F7A038')
             ->addColumn('', $this->scores['stars_1'], '#F54924')
+            ->withoutLegend()
             ;
 
             $columnChartModelScore = (new ColumnChartModel())
                 ->setTitle('Calificaciones - Comentarios')
                 ->setDataLabelsEnabled(false)
                 ->addColumn('Califico', $this->scores['totalScores'], '#53ADF4')
-                ->addColumn('No califico, pero comentó', $this->scores['stars_N'], '#F17061');
+                ->addColumn('% comentarios', number_format($this->scores['totalComments'] * 100 / $this->scores['totalScores'],2), '#F17061');
 
 
             return view('livewire.score.index')->with(['columnChartModelScore' => $columnChartModelScore, 'columnChartModel' => $columnChartModel]);

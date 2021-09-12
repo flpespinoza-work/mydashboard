@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -64,6 +65,25 @@ class User extends Authenticatable
     public function isStoreManager()
     {
         return $this->hasRole('store-manager');
+    }
+
+    public static function search($search)
+    {
+        return empty($search) ? static::query()
+            : static::query()
+              ->where('name', 'like', '%' . $search . '%')
+              ->orWhere('email', 'like', '%' . $search . '%')
+              ->orWhere('phone_number', 'like', '%' . $search . '%');
+    }
+
+    public function getLastLoginAtAttribute($value)
+    {
+        if($value !== null)
+        {
+            return Carbon::parse($value)->diffForHumans();
+        }
+
+        return 'Sin actividad';
     }
 
 }

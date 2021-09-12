@@ -10,6 +10,7 @@ trait Globals
     function getRedeems($filters)
     {
         //sin periodo la fecha inicial es 2018-01-01
+        $result = [];
         $tokDB = DB::connection('reportes');
         $reportId = fnGenerateReportId($filters);
         if($filters['store'] == 'all')
@@ -44,19 +45,22 @@ trait Globals
             return $tmpRes;
         });
 
-        foreach($result['redeems'] as &$redeem)
+        if(count($result))
         {
-            $name = Store::where('giftcard', $redeem['giftcard'])->first()->name;
-            $redeem['store_name'] = $name;
-        }
-        //Ordenar alfabeticamente
-        usort($result['redeems'], function($a, $b) {
-            return $a['store_name'] <=> $b['store_name'];
-        });
+            foreach($result['redeems'] as &$redeem)
+            {
+                $name = Store::where('giftcard', $redeem['giftcard'])->first()->name;
+                $redeem['store_name'] = $name;
+            }
+            //Ordenar alfabeticamente
+            usort($result['redeems'], function($a, $b) {
+                return $a['store_name'] <=> $b['store_name'];
+            });
 
-        usort($result['redeems'], function($a, $b) {
-            return $a['day'] <=> $b['day'];
-        });
+            usort($result['redeems'], function($a, $b) {
+                return $a['day'] <=> $b['day'];
+            });
+        }
 
         return $result;
     }
@@ -64,6 +68,7 @@ trait Globals
     function getRegisters($filters)
     {
         //sin periodo la fecha inicial es 2018-01-01
+        $result = [];
         $tokDB = DB::connection('reportes');
         $reportId = fnGenerateReportId($filters);
         if($filters['store'] == 'all')
@@ -105,22 +110,23 @@ trait Globals
             return $tmpRes;
         });
 
-
-
-        foreach($result['registers'] as &$register)
+        if(count($result))
         {
-            $name = Store::where('giftcard', str_replace('GIFTCARD_', '', $register['bag']))->first()->name;
-            $register['store_name'] = $name;
+            foreach($result['registers'] as &$register)
+            {
+                $name = Store::where('giftcard', str_replace('GIFTCARD_', '', $register['bag']))->first()->name;
+                $register['store_name'] = $name;
+            }
+
+            //Ordenar alfabeticamente
+            usort($result['registers'], function($a, $b) {
+                return $a['store_name'] <=> $b['store_name'];
+            });
+
+            usort($result['registers'], function($a, $b) {
+                return $a['day'] <=> $b['day'];
+            });
         }
-
-        //Ordenar alfabeticamente
-        usort($result['registers'], function($a, $b) {
-            return $a['store_name'] <=> $b['store_name'];
-        });
-
-        usort($result['registers'], function($a, $b) {
-            return $a['day'] <=> $b['day'];
-        });
 
         return $result;
     }

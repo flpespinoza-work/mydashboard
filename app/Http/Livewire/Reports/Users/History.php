@@ -17,5 +17,6 @@ class History extends BaseUsersReport
     public function generateReport($filters)
     {
         $this->result = $this->getHistoryUsers($filters);
+        //dd($this->result);
     }
 }

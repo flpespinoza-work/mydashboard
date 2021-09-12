@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Traits\Reports;
+
+use App\Models\Store;
 use Illuminate\Support\Facades\DB;
 
 trait Coupons
@@ -202,6 +204,30 @@ trait Coupons
 
     function getLastPrintedCoupon()
     {
+        $tokDB = DB::connection('reportes');
+        $filters['budgets'] = fnGetAllBudgets();
 
+        $result = cache()->remember('last-printed-coupon-report', 60*5, function() use($tokDB, $filters){
+            return $tokDB->table('dat_reporte_cupones_impresos')
+            ->selectRaw('MAX(REP_IMP_CUPON_FECHA_HORA) date, REP_IMP_CUPON_PRESUPUESTO')
+            ->whereIn('REP_IMP_CUPON_PRESUPUESTO', $filters['budgets'])
+            ->groupBy('REP_IMP_CUPON_PRESUPUESTO')
+            ->orderBy('date')
+            ->get()
+            ->toArray();
+        });
+
+        //Obtener los nombres
+        foreach($result as &$coupon)
+        {
+            $name = Store::where('budget', $coupon->REP_IMP_CUPON_PRESUPUESTO)->first()->name;
+            $coupon->store_name = $name;
+        }
+        //Ordenar alfabeticamente
+        usort($result, function($a, $b) {
+            return $a->store_name <=> $b->store_name;
+        });
+
+        return $result;
     }
 }

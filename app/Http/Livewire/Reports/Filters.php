@@ -8,6 +8,8 @@ use Livewire\Component;
 class Filters extends Component
 {
     public $report;
+    public $hideDates = false;
+    public $hideStores = false;
 
     protected $rules = [
         'filters.store' => 'required',
@@ -21,8 +23,10 @@ class Filters extends Component
         'final_date' => null
     ];
 
-    public function mount($report)
+    public function mount($report, $hideDates = false, $hideStores = false)
     {
+        $this->hideDates = $hideDates;
+        $this->hideStores = $hideStores;
         $this->report = $report;
         $this->filters['initial_date'] = date('Y-m-d');
         $this->filters['final_date'] = date('Y-m-d');

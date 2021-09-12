@@ -1,7 +1,7 @@
 <div>
 
     <x-slot name="actions">
-        <livewire:reports.filters :report="$reportName"/>
+        <livewire:reports.filters :report="$reportName" :hideDates="true"/>
     </x-slot>
 
     <div class="min-h-full mt-14">

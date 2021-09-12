@@ -17,7 +17,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 0,
                 'icon' => null,
                 'route' => null,
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => null,
@@ -25,7 +26,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 1,
                 'icon' => null,
                 'route' => null,
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => null,
@@ -33,7 +35,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 2,
                 'icon' => null,
                 'route' => null,
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 1,
@@ -41,7 +44,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 0,
                 'icon' => 'heroicon-s-view-grid',
                 'route' => 'dashboard',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 1,
@@ -49,7 +53,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 1,
                 'icon' => 'heroicon-s-bell',
                 'route' => 'notifications',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 1,
@@ -57,7 +62,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 2,
                 'icon' => 'heroicon-s-star',
                 'route' => 'scores',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 2, //7
@@ -65,7 +71,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 0,
                 'icon' => 'heroicon-s-users',
                 'route' => null,
-                'route-group' => 'reports.users'
+                'route-group' => 'reports.users',
+                'active' => true
             ],
             [
                 'menu_id' => 2,
@@ -73,7 +80,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 1,
                 'icon' => 'heroicon-s-tag',
                 'route' => null,
-                'route-group' => 'reports.coupons'
+                'route-group' => 'reports.coupons',
+                'active' => true
             ],
             [
                 'menu_id' => 2,
@@ -81,7 +89,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 2,
                 'icon' => 'heroicon-s-currency-dollar',
                 'route' => null,
-                'route-group' => 'reports.sales'
+                'route-group' => 'reports.sales',
+                'active' => true
             ],
             [
                 'menu_id' => 2,
@@ -89,7 +98,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 3,
                 'icon' => 'heroicon-s-globe',
                 'route' => null,
-                'route-group' => 'reports.globals'
+                'route-group' => 'reports.globals',
+                'active' => true
             ],
             [
                 'menu_id' => 2,
@@ -97,7 +107,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 4,
                 'icon' => 'heroicon-s-credit-card',
                 'route' => 'reports.balance',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 3,
@@ -105,7 +116,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 0,
                 'icon' => 'heroicon-s-user-circle',
                 'route' => 'users.index',
-                'route-group' => null
+                'route-group' => null,
+                'active' => false
             ],
             [
                 'menu_id' => 3,
@@ -113,7 +125,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 1,
                 'icon' => 'heroicon-s-identification',
                 'route' => 'roles.index',
-                'route-group' => null
+                'route-group' => null,
+                'active' => false
             ],
             [
                 'menu_id' => 3,
@@ -121,7 +134,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 2,
                 'icon' => 'heroicon-s-lock-closed',
                 'route' => 'permissions.index',
-                'route-group' => null
+                'route-group' => null,
+                'active' => false
             ],
             [
                 'menu_id' => 3,
@@ -129,7 +143,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 3,
                 'icon' => 'heroicon-s-office-building',
                 'route' => 'groups.index',
-                'route-group' => null
+                'route-group' => null,
+                'active' => false
             ],
             [
                 'menu_id' => 3,
@@ -137,7 +152,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 4,
                 'icon' => 'heroicon-s-home',
                 'route' => 'stores.index',
-                'route-group' => null
+                'route-group' => null,
+                'active' => false
             ],
             [
                 'menu_id' => 3,
@@ -145,7 +161,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 5,
                 'icon' => 'heroicon-s-menu-alt-2',
                 'route' => null,
-                'route-group' => null
+                'route-group' => null,
+                'active' => false
             ],
             [
                 'menu_id' => 3,
@@ -153,7 +170,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 6,
                 'icon' => 'heroicon-s-chat-alt',
                 'route' => 'response.index',
-                'route-group' => null
+                'route-group' => null,
+                'active' => false
             ],
             [
                 'menu_id' => 7,
@@ -161,7 +179,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 0,
                 'icon' => null,
                 'route' => 'reports.users.new',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 7,
@@ -169,7 +188,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 1,
                 'icon' => null,
                 'route' => 'reports.users.history',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 8,
@@ -177,7 +197,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 0,
                 'icon' => null,
                 'route' => 'reports.coupons.printed',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 8,
@@ -185,7 +206,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 1,
                 'icon' => null,
                 'route' => 'reports.coupons.redeemed',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 8,
@@ -193,7 +215,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 2,
                 'icon' => null,
                 'route' => 'reports.coupons.detail-redeemed',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 8,
@@ -201,7 +224,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 3,
                 'icon' => null,
                 'route' => 'reports.coupons.last-printed',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 8,
@@ -209,7 +233,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 4,
                 'icon' => null,
                 'route' => 'reports.coupons.printed-redeemed',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 8,
@@ -217,7 +242,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 5,
                 'icon' => null,
                 'route' => 'reports.coupons.printed-redeemed-history',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 9,
@@ -225,7 +251,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 0,
                 'icon' => null,
                 'route' => 'reports.sales.detail',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 9,
@@ -233,7 +260,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 1,
                 'icon' => null,
                 'route' => 'reports.sales.history',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 9,
@@ -241,7 +269,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 2,
                 'icon' => null,
                 'route' => 'reports.sales.sales',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 10,
@@ -249,7 +278,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 0,
                 'icon' => null,
                 'route' => 'reports.globals.redeems',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
             [
                 'menu_id' => 10,
@@ -257,7 +287,8 @@ class MenusTableSeeder extends Seeder
                 'order' => 1,
                 'icon' => null,
                 'route' => 'reports.globals.registers',
-                'route-group' => null
+                'route-group' => null,
+                'active' => true
             ],
         ];
 

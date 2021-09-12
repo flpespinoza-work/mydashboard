@@ -78,7 +78,6 @@ trait Scores
     //Ordenar calificaciones y comentarios
     function orderScores($scores, $finalDate)
     {
-
         //Ordenar por calificacion de mayor a menor
         usort($scores['data'], function($a, $b) {
             return $a['score'] <=> $b['score'];
