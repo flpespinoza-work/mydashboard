@@ -5,9 +5,9 @@
             <div class="p-2 rounded-full bg-orange">
                 <x-icons.message class="w-3 h-3 text-gray-50"/>
             </div>
-            <span class="ml-2 text-gray-800">Respuestas predefinidas</span>
+            <span class="ml-2 text-gray-800">Permisos de Usuario</span>
         </div>
     </x-slot>
-    <x-slot name="description">Administra las respuestas que serán enviadas al usuario en el módulo de calificaciones</x-slot>
-    <livewire:response.index/>
+    <x-slot name="description"></x-slot>
+    <livewire:permission.index/>
 </x-app-layout>
