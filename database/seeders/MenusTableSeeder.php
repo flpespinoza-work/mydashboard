@@ -10,7 +10,8 @@ class MenusTableSeeder extends Seeder
 
     public function run()
     {
-        $groups = [
+        //Crear titulos de secciones
+        $titles = [
             [
                 'menu_id' => null,
                 'name' => 'Principal',
@@ -37,9 +38,17 @@ class MenusTableSeeder extends Seeder
                 'route' => null,
                 'route-group' => null,
                 'active' => true
-            ],
+            ]
+        ];
+        DB::table('menus')->insert($titles);
+
+        //Crear grupos principales
+        $principal = DB::table('menus')->where('name', 'Principal')->first()->id;
+        $reportes = DB::table('menus')->where('name', 'Reportes')->first()->id;
+        $admin = DB::table('menus')->where('name', 'Administración')->first()->id;
+        $groups = [
             [
-                'menu_id' => 1,
+                'menu_id' => $principal,
                 'name' => 'Dashboard',
                 'order' => 0,
                 'icon' => 'heroicon-s-view-grid',
@@ -48,7 +57,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 1,
+                'menu_id' => $principal,
                 'name' => 'Campañas',
                 'order' => 1,
                 'icon' => 'heroicon-s-bell',
@@ -57,7 +66,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 1,
+                'menu_id' => $principal,
                 'name' => 'Calificaciones',
                 'order' => 2,
                 'icon' => 'heroicon-s-star',
@@ -66,7 +75,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 2, //7
+                'menu_id' => $reportes, //7
                 'name' => 'Usuarios',
                 'order' => 0,
                 'icon' => 'heroicon-s-users',
@@ -75,7 +84,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 2,
+                'menu_id' => $reportes,
                 'name' => 'Cupones', //8
                 'order' => 1,
                 'icon' => 'heroicon-s-tag',
@@ -84,7 +93,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 2,
+                'menu_id' => $reportes,
                 'name' => 'Ventas', //9
                 'order' => 2,
                 'icon' => 'heroicon-s-currency-dollar',
@@ -93,7 +102,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 2,
+                'menu_id' => $reportes,
                 'name' => 'Globales', //10
                 'order' => 3,
                 'icon' => 'heroicon-s-globe',
@@ -102,7 +111,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 2,
+                'menu_id' => $reportes,
                 'name' => 'Saldo disponible', //11
                 'order' => 4,
                 'icon' => 'heroicon-s-credit-card',
@@ -111,7 +120,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 3,
+                'menu_id' => $admin,
                 'name' => 'Usuarios',
                 'order' => 0,
                 'icon' => 'heroicon-s-user-circle',
@@ -120,7 +129,7 @@ class MenusTableSeeder extends Seeder
                 'active' => false
             ],
             [
-                'menu_id' => 3,
+                'menu_id' => $admin,
                 'name' => 'Roles',
                 'order' => 1,
                 'icon' => 'heroicon-s-identification',
@@ -129,7 +138,7 @@ class MenusTableSeeder extends Seeder
                 'active' => false
             ],
             [
-                'menu_id' => 3,
+                'menu_id' => $admin,
                 'name' => 'Permisos',
                 'order' => 2,
                 'icon' => 'heroicon-s-lock-closed',
@@ -138,7 +147,7 @@ class MenusTableSeeder extends Seeder
                 'active' => false
             ],
             [
-                'menu_id' => 3,
+                'menu_id' => $admin,
                 'name' => 'Grupos',
                 'order' => 3,
                 'icon' => 'heroicon-s-office-building',
@@ -147,7 +156,7 @@ class MenusTableSeeder extends Seeder
                 'active' => false
             ],
             [
-                'menu_id' => 3,
+                'menu_id' => $admin,
                 'name' => 'Establecimientos',
                 'order' => 4,
                 'icon' => 'heroicon-s-home',
@@ -156,7 +165,7 @@ class MenusTableSeeder extends Seeder
                 'active' => false
             ],
             [
-                'menu_id' => 3,
+                'menu_id' => $admin,
                 'name' => 'Menús',
                 'order' => 5,
                 'icon' => 'heroicon-s-menu-alt-2',
@@ -165,16 +174,26 @@ class MenusTableSeeder extends Seeder
                 'active' => false
             ],
             [
-                'menu_id' => 3,
+                'menu_id' => $admin,
                 'name' => 'Respuestas',
                 'order' => 6,
                 'icon' => 'heroicon-s-chat-alt',
                 'route' => 'response.index',
                 'route-group' => null,
                 'active' => false
-            ],
+            ]
+        ];
+        DB::table('menus')->insert($groups);
+
+        //Crear links dentro de grupos
+        $r_usuarios = DB::table('menus')->where('route-group', 'reports.users')->first()->id;
+        $r_cupones = DB::table('menus')->where('route-group', 'reports.coupons')->first()->id;
+        $r_ventas = DB::table('menus')->where('route-group', 'reports.sales')->first()->id;
+        $r_globales = DB::table('menus')->where('route-group', 'reports.globals')->first()->id;
+
+        $reportes_links = [
             [
-                'menu_id' => 7,
+                'menu_id' => $r_usuarios,
                 'name' => 'Nuevos usuarios',
                 'order' => 0,
                 'icon' => null,
@@ -183,7 +202,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 7,
+                'menu_id' => $r_usuarios,
                 'name' => 'Acumulado',
                 'order' => 1,
                 'icon' => null,
@@ -192,7 +211,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 8,
+                'menu_id' => $r_cupones,
                 'name' => 'Impresos',
                 'order' => 0,
                 'icon' => null,
@@ -201,7 +220,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 8,
+                'menu_id' => $r_cupones,
                 'name' => 'Canjeados',
                 'order' => 1,
                 'icon' => null,
@@ -210,7 +229,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 8,
+                'menu_id' => $r_cupones,
                 'name' => 'Detallado de cupones canjeados',
                 'order' => 2,
                 'icon' => null,
@@ -219,7 +238,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 8,
+                'menu_id' => $r_cupones,
                 'name' => 'Último cupón',
                 'order' => 3,
                 'icon' => null,
@@ -228,7 +247,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 8,
+                'menu_id' => $r_cupones,
                 'name' => 'Impresos vs Canjeados',
                 'order' => 4,
                 'icon' => null,
@@ -237,7 +256,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 8,
+                'menu_id' => $r_cupones,
                 'name' => 'Acumulado canjeados e impresos',
                 'order' => 5,
                 'icon' => null,
@@ -246,7 +265,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 9,
+                'menu_id' => $r_ventas,
                 'name' => 'Detallado',
                 'order' => 0,
                 'icon' => null,
@@ -255,7 +274,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 9,
+                'menu_id' => $r_ventas,
                 'name' => 'Acumulado',
                 'order' => 1,
                 'icon' => null,
@@ -264,7 +283,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 9,
+                'menu_id' => $r_ventas,
                 'name' => 'Ventas realizadas',
                 'order' => 2,
                 'icon' => null,
@@ -273,7 +292,7 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 10,
+                'menu_id' => $r_globales,
                 'name' => 'Canjes diarios',
                 'order' => 0,
                 'icon' => null,
@@ -282,16 +301,16 @@ class MenusTableSeeder extends Seeder
                 'active' => true
             ],
             [
-                'menu_id' => 10,
+                'menu_id' => $r_globales,
                 'name' => 'Altas diarias',
                 'order' => 1,
                 'icon' => null,
                 'route' => 'reports.globals.registers',
                 'route-group' => null,
                 'active' => true
-            ],
+            ]
         ];
 
-        DB::table('menus')->insert($groups);
+        DB::table('menus')->insert($reportes_links);
     }
 }
