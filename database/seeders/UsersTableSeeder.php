@@ -24,10 +24,11 @@ class UsersTableSeeder extends Seeder
             'phone_number' => 3333333330,
             'group_id' => 1
         ]);
+
         $role = Role::find(1);
         $user->assignRole($role);
 
-
+        /*
         $user = User::create([
             'name' => 'administrador de grupo',
             'email' => 'groupadmin@tokencash.mx',
@@ -35,6 +36,7 @@ class UsersTableSeeder extends Seeder
             'phone_number' => 3333333331,
             'group_id' => 2
         ]);
+
         $role = Role::find(2);
         $user->assignRole($role);
 
@@ -46,9 +48,10 @@ class UsersTableSeeder extends Seeder
             'phone_number' => 3333333332,
             'group_id' => 3
         ]);
+
         $role = Role::find(2);
         $user->assignRole($role);
-
+        */
     }
 }
 
