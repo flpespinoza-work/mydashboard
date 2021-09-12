@@ -21,8 +21,8 @@ trait Coupons
             ->selectRaw('DATE_FORMAT(REP_IMP_CUPON_FECHA_HORA, "%d/%m/%Y") day, COUNT(REP_IMP_ID) coupons, SUM(REP_IMP_CUPON_MONTO) amount')
             ->where('REP_IMP_CUPON_PRESUPUESTO', $filters['budget'])
             ->whereBetween('REP_IMP_CUPON_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
-            ->groupBy('DIA')
-            ->orderBy('DIA')
+            ->groupBy('day')
+            ->orderBy('day')
             ->chunk(10, function($coupons) use(&$tmpRes, &$totales) {
                 foreach($coupons as $coupon)
                 {
