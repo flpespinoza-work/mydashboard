@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'asset_url' => env('APP_URL', 'https://dashboard.tokencash.mx'),
+    'asset_url' => env('APP_URL', 'https://dashboard.tokencash.m/public'),
 
     /*
     |--------------------------------------------------------------------------
