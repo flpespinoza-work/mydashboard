@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Traits\Reports;
+
+use App\Models\Store;
 use Illuminate\Support\Facades\DB;
 
 trait Globals
@@ -18,7 +20,6 @@ trait Globals
         $rememberReport = fnRememberReportTime(date('Y-m-d'));
         $result = cache()->remember('global-redeems-report' . $reportId, 60*60*24, function() use($tokDB, $filters){
             $tmpRes= [];
-            $totals = ['redeems' =>0, 'amount' => 0];
             $query =  $tokDB->table('dat_reporte_cupones_canjeados')
             ->selectRaw('DATE_FORMAT(REP_CAN_CUPON_CANJE_FECHA_HORA, "%Y/%m/%d") day, COUNT(1) redeems, SUM(REP_CAN_CUPON_MONTO) amount, REP_CAN_CUPON_GIFTCARD giftcard');
             if(is_array($filters['giftcards']))
@@ -26,26 +27,37 @@ trait Globals
             else
                 $query->where('REP_CAN_CUPON_GIFTCARD', $filters['giftcards']);
 
-            $query->whereBetween('REP_CAN_CUPON_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
+            $query->whereBetween('REP_CAN_CUPON_CANJE_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
+            ->groupBy('day','REP_CAN_CUPON_GIFTCARD')
             ->orderBy('day')
-            ->groupBy('REP_CAN_CUPON_GIFTCARD')
-            ->chunk(50, function($redeems) use(&$tmpRes, &$totals){
+            ->chunk(50, function($redeems) use(&$tmpRes){
                 foreach($redeems as $redeem)
                 {
-                    $tmpRes['redeems'][$redeem->giftcard][$redeem->day] = [
+                    $tmpRes['redeems'][] = [
                         'day' => $redeem->day,
+                        'giftcard' => $redeem->giftcard,
                         'redeems' => $redeem->redeems,
                         'amount' => $redeem->amount
                     ];
-                    $totals['redeems'] += $redeem->redeems;
-                    $totals['amount'] += $redeem->amount;
                 }
             });
-            if(count($tmpRes))
-                $tmpRes['totals'] = $totals;
             return $tmpRes;
         });
-        dd($result);
+
+        foreach($result['redeems'] as &$redeem)
+        {
+            $name = Store::where('giftcard', $redeem['giftcard'])->first()->name;
+            $redeem['store_name'] = $name;
+        }
+        //Ordenar alfabeticamente
+        usort($result['redeems'], function($a, $b) {
+            return $a['store_name'] <=> $b['store_name'];
+        });
+
+        usort($result['redeems'], function($a, $b) {
+            return $a['day'] <=> $b['day'];
+        });
+
         return $result;
     }
 
@@ -65,7 +77,7 @@ trait Globals
             $totals = ['users' => 0];
             $query = $tokDB->table('bal_tae_saldos')
             ->join('cat_dbm_nodos_usuarios', 'bal_tae_saldos.TAE_SAL_NODO', '=', 'cat_dbm_nodos_usuarios.NOD_USU_NODO')
-            ->selectRaw('DATE_FORMAT(TAE_SAL_TS, "%Y/%m/%d") day, COUNT(1) users')
+            ->selectRaw('DATE_FORMAT(TAE_SAL_TS, "%Y/%m/%d") day, COUNT(1) users, TAE_SAL_BOLSA bag')
             ->whereRaw("(BINARY NOD_USU_CERTIFICADO REGEXP '[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]' OR NOD_USU_CERTIFICADO = '')");
 
             if(is_array($filters['giftcards']))
@@ -80,15 +92,34 @@ trait Globals
                 foreach($registers as $register)
                 {
                     $tmpRes['registers'][] = [
+                        'bag'=> $register->bag,
                         'day' => $register->day,
                         'users' => $register->users
                     ];
+
                     $totals['users'] += $register->users;
                 }
             });
             if(count($tmpRes))
                 $tmpRes['totals'] = $totals;
             return $tmpRes;
+        });
+
+
+
+        foreach($result['registers'] as &$register)
+        {
+            $name = Store::where('giftcard', str_replace('GIFTCARD_', '', $register['bag']))->first()->name;
+            $register['store_name'] = $name;
+        }
+
+        //Ordenar alfabeticamente
+        usort($result['registers'], function($a, $b) {
+            return $a['store_name'] <=> $b['store_name'];
+        });
+
+        usort($result['registers'], function($a, $b) {
+            return $a['day'] <=> $b['day'];
         });
 
         return $result;

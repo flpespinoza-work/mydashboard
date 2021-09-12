@@ -13,26 +13,18 @@
         </div>
 
         @if (!is_null($result) && !empty($result))
-            <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
-                <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400">Usuarios</h5>
-                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">
-                        {{ number_format($result['totals']['users']) }}
-                    </span>
-                </div>
-            </div>
-            <div class="grid grid-cols-2 gap-4 mt-8">
-
-            </div>
-
             <div class="mt-8 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
+                    <h5 class="text-sm font-medium text-gray-500 md:text-base">Altas diarias</h5>
+                    <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg mt-7">
                         <table class="min-w-full divide-y divide-gray-200">
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
                                         Fecha
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
+                                        Establecimiento
                                     </th>
                                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
                                         Usuarios
@@ -46,7 +38,10 @@
                                         {{ $data['day'] }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        {{ $data['users'] }}
+                                        {{ $data['store_name'] }}
+                                    </td>
+                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                        {{ number_format($data['users']) }}
                                     </td>
                                 </tr>
                                 @empty
@@ -56,15 +51,6 @@
                                     </td>
                                 </tr>
                                 @endforelse
-
-                                @if ($result['totals'])
-                                <tr>
-                                    <td>&nbsp;</td>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        <span class="font-semibold text-gray-darker">Usuarios totales: {{ $result['totals']['users']}}</span>
-                                    </td>
-                                </tr>
-                                @endif
                             </tbody>
                         </table>
                     </div>

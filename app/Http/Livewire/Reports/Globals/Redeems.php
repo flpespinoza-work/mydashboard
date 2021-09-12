@@ -20,6 +20,5 @@ class Redeems extends BaseGlobalsReport
     public function generateReport($filters)
     {
         $this->result = $this->getRedeems($filters);
-        //dd($this->result);
     }
 }
