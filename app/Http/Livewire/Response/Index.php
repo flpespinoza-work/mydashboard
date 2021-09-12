@@ -10,7 +10,8 @@ class Index extends Component
 {
     use WithPagination;
 
-    public Response $response;
+    //public Response $response;
+    public $response;
     public $search;
     public $showModal = false;
 
