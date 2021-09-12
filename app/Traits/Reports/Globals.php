@@ -20,19 +20,19 @@ trait Globals
             $tmpRes= [];
             $totals = ['redeems' =>0, 'amount' => 0];
             $query =  $tokDB->table('dat_reporte_cupones_canjeados')
-            ->selectRaw('DATE_FORMAT(REP_CAN_CUPON_CANJE_FECHA_HORA, "%Y/%m/%d") day, COUNT(1) redeems, SUM(REP_CAN_CUPON_MONTO) amount');
+            ->selectRaw('DATE_FORMAT(REP_CAN_CUPON_CANJE_FECHA_HORA, "%Y/%m/%d") day, COUNT(1) redeems, SUM(REP_CAN_CUPON_MONTO) amount, REP_CAN_CUPON_GIFTCARD giftcard');
             if(is_array($filters['giftcards']))
                 $query->whereIn('REP_CAN_CUPON_GIFTCARD', $filters['giftcards']);
             else
                 $query->where('REP_CAN_CUPON_GIFTCARD', $filters['giftcards']);
 
             $query->whereBetween('REP_CAN_CUPON_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
-            ->groupBy('day')
             ->orderBy('day')
+            ->groupBy('REP_CAN_CUPON_GIFTCARD')
             ->chunk(50, function($redeems) use(&$tmpRes, &$totals){
                 foreach($redeems as $redeem)
                 {
-                    $tmpRes['redeems'][] = [
+                    $tmpRes['redeems'][$redeem->giftcard][$redeem->day] = [
                         'day' => $redeem->day,
                         'redeems' => $redeem->redeems,
                         'amount' => $redeem->amount
@@ -45,7 +45,7 @@ trait Globals
                 $tmpRes['totals'] = $totals;
             return $tmpRes;
         });
-
+        dd($result);
         return $result;
     }
 

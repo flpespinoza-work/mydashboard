@@ -3,19 +3,18 @@
 namespace App\Http\Livewire\Reports\Balance;
 
 use App\Http\Livewire\Reports\BaseBalanceReport;
+use App\Traits\Reports\Balance as ReportsBalance;
 
 class Balance extends BaseBalanceReport
 {
-    public $reportName = 'reports.coupons.printed';
-    protected $listeners = ['generateReport'];
+    use ReportsBalance;
+
+    public $result = null;
 
     public function render()
     {
+        $this->result =  $this->getStoresBalance();
+        //dd($this->result);
         return view('livewire.reports.balance.balance');
-    }
-
-    public function generateReport()
-    {
-
     }
 }
