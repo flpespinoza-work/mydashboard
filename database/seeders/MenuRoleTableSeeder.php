@@ -20,11 +20,11 @@ class MenuRoleTableSeeder extends Seeder
         {
             for($x=1; $x<=$menuItems; $x++)
             {
-                if($i == 1)
-                {
+                /*if($i == 1)
+                {*/
                     $menu_role = ['menu_id' => $x, 'role_id' => $i];
                     DB::table('menu_role')->insert($menu_role);
-                }
+                /*}
                 else
                 {
                     $add = random_int(0,1);
@@ -33,7 +33,7 @@ class MenuRoleTableSeeder extends Seeder
                         $menu_role = ['menu_id' => $x, 'role_id' => $i];
                         DB::table('menu_role')->insert($menu_role);
                     }
-                }
+                }*/
             }
         }
 

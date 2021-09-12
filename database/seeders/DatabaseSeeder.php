@@ -19,10 +19,10 @@ class DatabaseSeeder extends Seeder
             //StatesTableSeeder::class,
             //MunicipalitiesTableSeeder::class,
             MenusTableSeeder::class,
-            MenuRoleTableSeeder::class,
             GroupsTableSeeder::class,
             StoreTableSeeder::class,
             UsersTableSeeder::class,
+            MenuRoleTableSeeder::class,
         ]);
     }
 }
