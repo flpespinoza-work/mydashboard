@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Reports\Coupons;
 
+use App\Exports\PrintedCouponsExport;
 use App\Http\Livewire\Reports\BaseCouponsReport;
 use Asantibanez\LivewireCharts\Models\AreaChartModel;
 
@@ -52,5 +53,10 @@ class Printed extends BaseCouponsReport
     public function generateReport($filters)
     {
         $this->result = $this->getPrintedCoupons($filters);
+    }
+
+    public function exportReport()
+    {
+        return (new PrintedCouponsExport(collect($this->result['REGISTROS'])))->download('reporte_cupones_impresos.xlsx');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Reports\Coupons;
 
+use App\Exports\PrintedRedeemedCouponsExport;
 use App\Http\Livewire\Reports\BaseCouponsReport;
 use Asantibanez\LivewireCharts\Models\LineChartModel;
 
@@ -52,5 +53,10 @@ class PrintedRedeemed extends BaseCouponsReport
     public function generateReport($filters)
     {
         $this->result = $this->getPrintedRedeemedCoupons($filters);
+    }
+
+    public function exportReport()
+    {
+        return (new PrintedRedeemedCouponsExport(collect($this->result['REGISTROS'])))->download('reporte_cupones_canjeados_impresos.xlsx');
     }
 }

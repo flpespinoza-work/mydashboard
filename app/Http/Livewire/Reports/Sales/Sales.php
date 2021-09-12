@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Reports\Sales;
 
+use App\Exports\SalesExport;
 use App\Http\Livewire\Reports\BaseSalesReport;
 use Asantibanez\LivewireCharts\Models\AreaChartModel;
 
@@ -40,5 +41,10 @@ class Sales extends BaseSalesReport
     {
         $this->result = $this->getSales($filters);
         //dd($this->result);
+    }
+
+    public function exportReport()
+    {
+        return (new SalesExport(collect($this->result['REGISTROS'])))->download('reporte_ventas.xlsx');
     }
 }
