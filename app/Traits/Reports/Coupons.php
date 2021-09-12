@@ -28,7 +28,7 @@ trait Coupons
                 {
                     $totales['printed_coupons'] += $coupon->coupons;
                     $totales['printed_amount'] += $coupon->amount;
-                    $totales['printed_sale'] += $coupon->PRECIO;
+                    $totales['printed_sale'] += $coupon->amount;
                     $tmpRes['coupons'][$coupon->day] = [
                         'day' => $coupon->day,
                         'count' => $coupon->coupons,
