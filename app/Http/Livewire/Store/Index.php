@@ -9,7 +9,8 @@ use Livewire\Component;
 class Index extends Component
 {
     public $groups;
-    public Store $store;
+    //public Store $store;
+    public $store;
     public $showModal = false;
 
     public function mount()

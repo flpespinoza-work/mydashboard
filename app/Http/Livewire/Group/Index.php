@@ -10,7 +10,8 @@ class Index extends Component
 {
     use WithPagination;
 
-    public Group $group;
+    //public Group $group;
+    public $group;
     public $showModal = false;
 
     protected $rules = [
