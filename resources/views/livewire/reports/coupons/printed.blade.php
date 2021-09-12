@@ -15,19 +15,19 @@
         @if (!is_null($result) && !empty($result))
             <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-xs md:text-sm font-semibold text-gray-400">Cupones impresos</h5>
+                    <h5 class="text-xs font-semibold text-gray-400 md:text-sm">Cupones impresos</h5>
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ number_format($result['totals']['printed_coupons']) }} </span>
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-xs md:text-sm font-semibold text-gray-400">Dinero impreso:</h5>
+                    <h5 class="text-xs font-semibold text-gray-400 md:text-sm">Dinero impreso:</h5>
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['printed_amount']) }} </span>
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-xs md:text-sm font-semibold text-gray-400">Promedio por cupón:</h5>
+                    <h5 class="text-xs font-semibold text-gray-400 md:text-sm">Promedio por cupón:</h5>
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['average_amount'],2) }} </span>
                 </div>
                 <div class="hidden col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-xs md:text-sm font-semibold text-gray-400">Promedio de venta:</h5>
+                    <h5 class="text-xs font-semibold text-gray-400 md:text-sm">Promedio de venta:</h5>
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['average_sale'],2) }} </span>
                 </div>
             </div>
@@ -55,9 +55,6 @@
                                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
                                         Monto
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
-                                        Promedio de cupón
-                                    </th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
@@ -71,9 +68,6 @@
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                         ${{ number_format($data['amount'], 2) }}
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        ${{ number_format($data['average_coupon'],2)}}
                                     </td>
                                 </tr>
                                 @empty
