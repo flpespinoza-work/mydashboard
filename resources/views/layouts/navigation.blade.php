@@ -17,7 +17,7 @@ class="absolute top-0 left-0 z-40 flex-shrink-0 inline-block h-screen max-h-full
             @include('components.menugroup', [ 'menuGroup' => $menuGroup ])
         @endforeach
     </div>
-    <div class="absolute bottom-0 left-0 w-full p-6">
+    <div class="p-6 mt-10">
         <form method="POST" action="{{ route('logout') }}" role="none" >
             @csrf
             <button type="submit" class="block w-full px-4 py-2 text-xs font-semibold text-center text-gray-600 bg-gray-100 rounded-md"

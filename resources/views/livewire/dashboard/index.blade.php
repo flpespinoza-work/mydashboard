@@ -9,7 +9,8 @@
         </p>
     </div>
     <div class="flex flex-col mt-7">
-        <div class="grid grid-cols-4 gap-2 md:gap-4 lg:gap-5">
+        <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $store_name }}</h3>
+        <div class="grid grid-cols-4 gap-2 mt-4 md:gap-4 lg:gap-5">
             <div class="col-span-2 p-3 rounded-md drop-shadow-sm bg-gray-50 sm:col-span-2 md:col-span-1 ">
                 <h5 class="text-xs font-light text-gray-500 lg:text-sm">Cupones impresos</h5>
                 <p class="mt-2 text-sm font-semibold md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl">{{ number_format($result['printed_coupons']['coupons']) }}</p>

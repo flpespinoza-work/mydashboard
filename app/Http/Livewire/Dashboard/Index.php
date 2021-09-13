@@ -2,9 +2,11 @@
 
 namespace App\Http\Livewire\Dashboard;
 
+use App\Models\Store;
 use App\Traits\Dashboard\Data;
 use Livewire\Component;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
+use Stringable;
 
 class Index extends Component
 {
@@ -18,6 +20,7 @@ class Index extends Component
         'sales' => ['sales' => 0, 'amount' => 0],
         'users' => ['totals' => 0]
     ];
+    public $store_name;
 
     protected $listeners = ['generateReport'];
 
@@ -25,7 +28,8 @@ class Index extends Component
     {
         $stores = fnGetMyStores();
         $store = array_key_first($stores);
-        $filters = ['initial_date' => date('Y-m-d'), 'final_date' => date('Y-m-d'), 'store' => $store];
+        $this->store_name = $stores[$store];
+        $filters = ['initial_date' => date('Y-m-d', strtotime('-7 days')), 'final_date' => date('Y-m-d'), 'store' => $store];
         $this->generateReport($filters);
     }
 
@@ -50,6 +54,7 @@ class Index extends Component
 
     public function generateReport($filters)
     {
+        $this->store_name = Store::find($filters['store'])->name;
         $this->result = $this->getData($filters);
         //dd($this->result);
         //$this->emitTo('dashboard.balance', 'showData', $filters);
