@@ -1,7 +1,7 @@
 <sidebar :class="{ '-translate-x-72': !sidebarOpen }" id="sidebar"
 class="absolute top-0 left-0 z-40 flex-shrink-0 inline-block h-screen max-h-full py-4 overflow-y-scroll transition-transform duration-200 ease-in-out transform bg-white border-r border-gray-150 w-72 lg:static lg:left-auto lg:top-auto lg:translate-x-0 lg:overflow-y-auto no-scrollbar">
     <div class="flex items-center px-6 pr-3 mb-10">
-        <button class="mr-4 outline-none text-gray-25 lg:hidden"
+        <button class="mr-4 text-gray-600 outline-none lg:hidden"
         aria-controls="sidebar" aria-expanded="false" @click="sidebarOpen = !sidebarOpen">
             <span class="sr-only">Close sidebar</span>
             <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
