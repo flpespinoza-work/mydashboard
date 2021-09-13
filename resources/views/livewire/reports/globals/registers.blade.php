@@ -13,6 +13,13 @@
         </div>
 
         @if (!is_null($result) && !empty($result))
+        <div wire:loading.remove>
+            <div class="w-full mt-8 h-60 md:h-96 bg-gray-50">
+                <livewire:livewire-area-chart
+                key="{{ $usersChartModel->reactiveKey() }}"
+                :area-chart-model="$usersChartModel"
+                />
+            </div>
             <div class="mt-8 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                     <h5 class="text-sm font-medium text-gray-500 md:text-base">Altas diarias</h5>
@@ -56,6 +63,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         @else
             <div wire:loading.remove>
                 @if (!is_null($result) && empty($result))

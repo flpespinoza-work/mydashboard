@@ -13,7 +13,8 @@
         </div>
 
         @if (!is_null($result) && !empty($result))
-            <div class="w-full mt-8 md:w-2/3 h-60 md:h-96 bg-gray-50">
+        <div wire:loading.remove>
+            <div class="w-full mt-8 h-60 md:h-96 bg-gray-50">
                 <livewire:livewire-column-chart
                 key="{{ $redeemsChartModel->reactiveKey() }}"
                 :column-chart-model="$redeemsChartModel"
@@ -67,6 +68,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         @else
             <div wire:loading.remove>
                 @if (!is_null($result) && empty($result))
