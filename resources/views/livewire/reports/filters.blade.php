@@ -1,6 +1,6 @@
 <form wire:submit.prevent="sendFiltersToReport" class="items-center space-y-2 md:space-y-0 md:space-x-4 xl:justify-end md:flex">
-    <div class="md:w-6/12 lg:w-5/12 xl:w-5/12 @if($hideStores) hidden @endif">
-        <select wire:model="filters.store" id="store" class="{{ $errors->has('filters.store') ? 'border-red-300 bg-red-50' : '' }} w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
+    <div wire:ignore class="md:w-6/12 lg:w-5/12 xl:w-5/12 @if($hideStores) hidden @endif">
+        <select id="selectStores" id="store" class="{{ $errors->has('filters.store') ? 'border-red-300 bg-red-50' : '' }} w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
             <option value="">Seleccione un establecimiento</option>
             @foreach ($stores as $id => $store)
             <option value="{{ $id }}">{{ $store }}</option>
@@ -18,6 +18,7 @@
 
 @push('styles')
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
         .daterangepicker .ranges li.active {
             background: #0a1410;
@@ -32,9 +33,20 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script>
     $(function() {
+        $('#selectStores').select2({
+                placeholder: 'Seleccione un establecimiento',
+                allowClear: true
+            });
+        $('#selectStores').on('change', function (e) {
+            var data = $(this).select2("val");
+            @this.set('filters.store', data);
+        });
+
+
         $('#date_range').daterangepicker({
             ranges: {
                 'Hoy': [moment(), moment()],

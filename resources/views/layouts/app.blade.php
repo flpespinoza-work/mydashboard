@@ -86,7 +86,7 @@
             </div>
         </div>
         <livewire:scripts />
-        @livewireChartsScripts
+        <script src="/vendor/livewire-charts/app.js"></script>
         @stack('scripts')
     </body>
 </html>

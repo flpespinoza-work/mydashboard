@@ -2,12 +2,17 @@
 
 namespace App\Http\Livewire\Role;
 
+use App\Models\Role;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
+
     public function render()
     {
-        return view('livewire.role.index');
+        $roles = Role::with(['permissions'])->paginate();
+        return view('livewire.role.index', compact('roles'));
     }
 }
