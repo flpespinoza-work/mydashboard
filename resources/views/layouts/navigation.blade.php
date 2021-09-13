@@ -16,17 +16,12 @@ class="absolute top-0 left-0 z-40 flex-shrink-0 inline-block h-screen max-h-full
         @foreach($menuSidebar as $menuGroup)
             @include('components.menugroup', [ 'menuGroup' => $menuGroup ])
         @endforeach
-        <form method="POST" action="{{ route('logout') }}" role="none">
-            @csrf
-            <button type="submit" class="block w-full px-4 py-2 text-sm text-left text-white" role="menuitem" tabindex="-1" id="menu-item-3">
-            Cerrar sesión
-            </button>
-        </form>
     </div>
-    <div class="self-end mt-auto">
+    <div class="absolute bottom-0 left-0 w-full p-6">
         <form method="POST" action="{{ route('logout') }}" role="none" >
             @csrf
-            <button type="submit" class="block w-full px-4 py-2 text-sm text-center text-gray-700" role="menuitem" tabindex="-1" id="menu-item-3">
+            <button type="submit" class="block w-full px-4 py-2 text-xs font-semibold text-center text-gray-600 bg-gray-100 rounded-md"
+            role="menuitem" tabindex="-1" id="menu-item-3">
             Cerrar sesión
             </button>
         </form>

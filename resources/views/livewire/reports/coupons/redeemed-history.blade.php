@@ -1,6 +1,6 @@
 <div>
     <x-slot name="actions">
-        <livewire:reports.filters :report="$reportName"/>
+        <livewire:reports.filters :hideDates="true" :report="$reportName"/>
     </x-slot>
     <div wire:loading.delay class="w-full">
         <p class="text-xs font-semibold text-center md:text-sm">

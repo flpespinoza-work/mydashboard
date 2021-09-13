@@ -16,7 +16,7 @@
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @forelse ($result['balances'] as $store)
-                            <tr>
+                            <tr class="@if ($store['balance'] <= 50000) bg-red-50 @endif">
                                 <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                     {{ $store['store_name'] }}
                                 </td>

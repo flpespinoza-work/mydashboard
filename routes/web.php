@@ -13,6 +13,8 @@ use App\Http\Controllers\SaleReportController;
 use App\Http\Controllers\BalanceReportController;
 use App\Http\Controllers\GlobalReportController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\PermissionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
