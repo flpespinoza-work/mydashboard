@@ -140,7 +140,7 @@ trait Coupons
                     $totales['redeemed_coupons'] += 1;
                     $totales['redeemed_amount'] += $coupon->CANJE_MONTO;
 
-                    $tmpRes['coupons'][$coupon->CUPON_FECHA_HORA] = [
+                    $tmpRes['coupons'][] = [
                         'user' => $coupon->USUARIO_NODO,
                         'coupon_code' => $coupon->CODIGO_CUPON,
                         'date_coupon' => $coupon->CUPON_FECHA_HORA,
@@ -160,8 +160,9 @@ trait Coupons
             return $tmpRes;
         });
 
-        uksort($result['coupons'], function($a, $b){
-            return strtotime($a) - strtotime($b);
+        /** REVISAR EL FORMATO DE LA FECHA */
+        usort($result['coupons'], function($a, $b){
+            return strtotime(str_replace('/', '-', $a['date_coupon'])) - strtotime(str_replace('/', '-', $b['date_coupon']));
         });
 
 
