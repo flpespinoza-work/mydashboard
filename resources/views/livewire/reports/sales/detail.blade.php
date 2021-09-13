@@ -13,59 +13,61 @@
         </div>
 
         @if (!is_null($result) && !empty($result))
-            <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
-                <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400">Ventas totales</h5>
-                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ number_format($result['totals']['sales']) }} </span>
+            <div wire:loading.remove>
+                <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
+                    <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
+                        <h5 class="text-sm font-semibold text-gray-400">Ventas totales</h5>
+                        <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ number_format($result['totals']['sales']) }} </span>
+                    </div>
+                    <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
+                        <h5 class="text-sm font-semibold text-gray-400">Monto total</h5>
+                        <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['amount']) }} </span>
+                    </div>
                 </div>
-                <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-sm font-semibold text-gray-400">Monto total</h5>
-                    <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['amount']) }} </span>
+                <div class="grid grid-cols-2 gap-4 mt-8">
+
                 </div>
-            </div>
-            <div class="grid grid-cols-2 gap-4 mt-8">
 
-            </div>
-
-            <div class="mt-8 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
-                                        Fecha de Venta
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
-                                        Usuario
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
-                                        Monto de venta
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                @forelse ($result['sales'] as $data)
-                                <tr>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        {{ $data['date'] }}
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        {{ $data['user'] }}
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        ${{ number_format($data['amount'],2) }}
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        No existen registros para esta búsqueda
-                                    </td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+                <div class="mt-8 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                        <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
+                                            Fecha de Venta
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
+                                            Usuario
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
+                                            Monto de venta
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @forelse ($result['sales'] as $data)
+                                    <tr>
+                                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            {{ $data['date'] }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            {{ $data['user'] }}
+                                        </td>
+                                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            ${{ number_format($data['amount'],2) }}
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            No existen registros para esta búsqueda
+                                        </td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

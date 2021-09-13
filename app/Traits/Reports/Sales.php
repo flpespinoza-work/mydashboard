@@ -50,13 +50,16 @@ trait Sales
             return $tmpRes;
         });
 
-        uksort($result['sales'], function($a, $b){
-            return strtotime($a) - strtotime($b);
-        });
-
-        foreach($result['sales'] as &$sale)
+        if(count($result))
         {
-            $sale['date'] = date('d/m/Y', strtotime($sale['date']));
+            uksort($result['sales'], function($a, $b){
+                return strtotime($a) - strtotime($b);
+            });
+
+            foreach($result['sales'] as &$sale)
+            {
+                $sale['date'] = date('d/m/Y', strtotime($sale['date']));
+            }
         }
         return $result;
     }
@@ -122,13 +125,16 @@ trait Sales
             return $tmpRes;
         });
 
-        uksort($result['sales'], function($a, $b){
-            return strtotime($a) - strtotime($b);
-        });
-
-        foreach($result['sales'] as &$sale)
+        if(count($result))
         {
-            $sale['date'] = date('d/m/Y', strtotime($sale['date']));
+            uksort($result['sales'], function($a, $b){
+                return strtotime($a) - strtotime($b);
+            });
+
+            foreach($result['sales'] as &$sale)
+            {
+                $sale['date'] = date('d/m/Y', strtotime($sale['date']));
+            }
         }
 
         return $result;
