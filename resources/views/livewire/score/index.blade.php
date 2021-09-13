@@ -97,14 +97,21 @@
                             @if (isset($scores['comments'][$value]))
                                 <div id="score-{{$value}}" x-show="openTab === {{ $value }}" class="space-y-4">
                                     @foreach ($scores['comments'][$value] as $comment)
+                                        @if(strpos($comment['comment'], 'tus comentarios') !== true)
                                         <div class="p-3 mx-auto border rounded-md md:w-3/4 border-gray-150">
                                             <div class="flex flex-wrap items-center">
                                                 <span class="text-xs font-semibold text-gray-500">Usuario: {{ $comment['user']}}</span>
                                                 <span class="mx-6 font-medium text-gray-400 text-xxs md:text-xs">{{ $comment['date']}}</span>
-                                                <span
-                                                    class="text-xxs tracking-wide font-medium py-0.5 px-3 bg-gray-100 rounded-full text-gray-400">
-                                                    {{ Str::lower($comment['action']) }}
-                                                </span>
+                                                @if (strpos($comment['action'], 'Pago') !== false)
+                                                    <span class="text-xxs tracking-wide font-medium py-0.5 px-3 rounded-full bg-red-100 text-red-500">
+                                                        {{ Str::lower($comment['action']) }}
+                                                    </span>
+                                                @else
+                                                    <span class="text-xxs tracking-wide font-medium py-0.5 px-3 rounded-full bg-green-100 text-green-500">
+                                                        {{ Str::lower($comment['action']) }}
+                                                    </span>
+                                                @endif
+
                                                 <span class="font-medium text-gray-400 md:ml-auto text-xxs">Atendio: {{ $comment['seller']}}</span>
                                             </div>
                                             <div class="p-3 mt-3 rounded-sm bg-gray-50">
@@ -119,6 +126,7 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        @endif
                                     @endforeach
                                 </div>
                             @else

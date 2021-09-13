@@ -10,18 +10,24 @@
                                 Establecimiento
                             </th>
                             <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
-                                Último cupón impreso
+                                Fecha-Hora último cupón impreso
+                            </th>
+                            <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
+                                Monto del cupón
                             </th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         @forelse ($result as $coupon)
-                        <tr>
+                        <tr class="@if($coupon->diff >= 10) bg-red-50 @endif">
                             <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
                                 {{ $coupon->store_name }}
                             </td>
-                            <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                            <td class="px-6 py-4 text-sm whitespace-nowraptext-gray-500">
                                 {{ $coupon->date }}
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                ${{ number_format($coupon->amount, 2) }}
                             </td>
                         </tr>
                         @empty

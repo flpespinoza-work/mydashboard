@@ -1,6 +1,6 @@
 <form wire:submit.prevent="sendFiltersToReport" class="items-center space-y-2 md:space-y-0 md:space-x-4 xl:justify-end md:flex">
     <div wire:ignore class="md:w-6/12 lg:w-5/12 xl:w-5/12 @if($hideStores) hidden @endif">
-        <select id="selectStores" id="store" class="{{ $errors->has('filters.store') ? 'border-red-300 bg-red-50' : '' }} w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
+        <select wire:model="filters.store" id="selectStores" id="store" class="{{ $errors->has('filters.store') ? 'border-red-300 bg-red-50' : '' }} w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
             <option value="">Seleccione un establecimiento</option>
             @foreach ($stores as $id => $store)
             <option value="{{ $id }}">{{ $store }}</option>
@@ -37,14 +37,14 @@
 
     <script>
     $(function() {
-        $('#selectStores').select2({
+        /*$('#selectStores').select2({
                 placeholder: 'Seleccione un establecimiento',
                 allowClear: true
             });
         $('#selectStores').on('change', function (e) {
             var data = $(this).select2("val");
             @this.set('filters.store', data);
-        });
+        });*/
 
 
         $('#date_range').daterangepicker({

@@ -3,6 +3,7 @@
 namespace App\Traits\Reports;
 
 use App\Models\Store;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 trait Coupons
@@ -208,7 +209,7 @@ trait Coupons
 
         $result = cache()->remember('last-printed-coupon-report', 60*5, function() use($tokDB, $filters){
             return $tokDB->table('dat_reporte_cupones_impresos')
-            ->selectRaw('MAX(REP_IMP_CUPON_FECHA_HORA) date, REP_IMP_CUPON_PRESUPUESTO')
+            ->selectRaw('MAX(REP_IMP_CUPON_FECHA_HORA) date, REP_IMP_CUPON_PRESUPUESTO budget, REP_IMP_CUPON_MONTO amount')
             ->whereIn('REP_IMP_CUPON_PRESUPUESTO', $filters['budgets'])
             ->groupBy('REP_IMP_CUPON_PRESUPUESTO')
             ->orderBy('date')
@@ -216,12 +217,16 @@ trait Coupons
             ->toArray();
         });
 
-        //Obtener los nombres
+        //Obtener los nombres y diferencia de tiempo
+        $now = strtotime(date('Y-m-d H:i:s'));
         foreach($result as &$coupon)
         {
-            $name = Store::where('budget', $coupon->REP_IMP_CUPON_PRESUPUESTO)->first()->name;
+            $name = Store::where('budget', $coupon->budget)->first()->name;
             $coupon->store_name = $name;
+            $coupon_printed = strtotime($coupon->date);
+            $coupon->diff = round(($now-$coupon_printed) / 60);
         }
+
         //Ordenar alfabeticamente
         usort($result, function($a, $b) {
             return $a->store_name <=> $b->store_name;
