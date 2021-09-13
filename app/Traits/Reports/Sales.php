@@ -26,7 +26,7 @@ trait Sales
             ->whereBetween('VEN_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->whereRaw("(BINARY NOD_USU_CERTIFICADO REGEXP '[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]' OR NOD_USU_CERTIFICADO = '')")
             ->groupBy('VEN_ID')
-            ->orderBy('VEN_FECHA_HORA', 'desc')
+            ->orderBy('VEN_FECHA_HORA')
             ->orderBy('NOD_USU_NODO')
             ->chunk(100, function($sales) use(&$tmpRes, &$totalSales) {
                 foreach($sales as $sale)
@@ -112,6 +112,10 @@ trait Sales
             $tmpRes['totals'] = $totalSales;
             $tmpRes['totals']['average_sale'] = $totalSales['amount'] / $totalSales['sales'];
             return $tmpRes;
+        });
+
+        uksort($result['sales'], function($a, $b){
+            return strtotime($a) - strtotime($b);
         });
 
         return $result;

@@ -48,6 +48,10 @@ trait Coupons
             return $tmpRes;
         });
 
+        uksort($result['coupons'], function($a, $b){
+            return strtotime($a) - strtotime($b);
+        });
+
         return $result;
     }
 
@@ -92,6 +96,10 @@ trait Coupons
             return $tmpRes;
         });
 
+        uksort($result['coupons'], function($a, $b){
+            return strtotime($a) - strtotime($b);
+        });
+
         return $result;
     }
 
@@ -114,7 +122,7 @@ trait Coupons
             ->where('REP_CAN_CUPON_PRESUPUESTO', $filters['budget'])
             ->where('TAE_SAL_BOLSA', $filters['giftcard'])
             ->whereBetween('REP_CAN_CUPON_CANJE_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
-            ->orderBy('CANJE_FECHA_HORA', 'desc')
+            ->orderBy('CANJE_FECHA_HORA')
             ->orderBy('USUARIO_NODO')
             ->chunk(100, function($coupons) use(&$tmpRes, &$totales) {
                 foreach($coupons as $coupon)
@@ -153,6 +161,10 @@ trait Coupons
             $printed = $this->getPrintedCoupons($filters);
             $redeemed = $this->getRedeemedCoupons($filters);
             $coupons = array_merge_recursive($printed, $redeemed);
+
+            uksort($coupons['coupons'], function($a, $b){
+                return strtotime($a) - strtotime($b);
+            });
 
             foreach($coupons['coupons'] as $day => $data)
             {

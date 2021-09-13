@@ -45,6 +45,6 @@ class ScoreFilters extends Component
         ];
 
         $this->emitTo('score.index', 'getScore', $filters);
-        $this->reset();
+        //$this->reset();
     }
 }
