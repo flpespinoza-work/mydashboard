@@ -13,6 +13,7 @@
         </div>
 
         @if (!is_null($result) && !empty($result))
+        <div wire:loading.remove>
             <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
                     <h5 class="text-sm font-semibold text-gray-400">Usuarios totales</h5>
@@ -62,6 +63,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         @else
             <div wire:loading.remove>
                 @if (!is_null($result) && empty($result))
