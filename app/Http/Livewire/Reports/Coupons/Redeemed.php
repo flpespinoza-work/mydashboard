@@ -22,7 +22,7 @@ class Redeemed extends BaseCouponsReport
 
             $couponsChartModel = $coupons->reduce(function (AreaChartModel $couponsChartModel, $data, $key) use($coupons) {
                 $coupon = $coupons[$key];
-                return $couponsChartModel->addPoint($key, $coupon['count']);
+                return $couponsChartModel->addPoint($coupon['day'], $coupon['count']);
             }, (new AreaChartModel())
                 ->setTitle('Cupones canjeados')
                 ->setAnimated(true)
@@ -35,7 +35,7 @@ class Redeemed extends BaseCouponsReport
             $amountChartModel = $coupons->reduce(function (AreaChartModel $amountChartModel, $data, $key) use($coupons, &$amount) {
                 $coupon = $coupons[$key];
                 $amount += $coupon['amount'];
-                return $amountChartModel->addPoint($key, round($amount));
+                return $amountChartModel->addPoint($coupon['day'], round($amount));
             }, (new AreaChartModel())
                 ->setTitle('Dinero canjeado')
                 ->setAnimated(true)

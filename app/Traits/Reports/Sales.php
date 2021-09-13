@@ -90,7 +90,7 @@ trait Sales
             $totalSales = ['sales' => 0, 'amount' => 0];
             $tokDB->table('doc_dbm_ventas')
             ->join('cat_dbm_nodos_usuarios', 'doc_dbm_ventas.VEN_NODO', '=', 'cat_dbm_nodos_usuarios.NOD_USU_NODO')
-            ->select(DB::raw('DATE_FORMAT(VEN_FECHA_HORA, "%d/%m/%Y") DIA, COUNT(VEN_ID) VENTAS, SUM(VEN_MONTO) MONTO_VENTA'))
+            ->select(DB::raw('DATE_FORMAT(VEN_FECHA_HORA, "%Y-%m-%d") DIA, COUNT(VEN_ID) VENTAS, SUM(VEN_MONTO) MONTO_VENTA'))
             ->where('VEN_DESTINO', $filters['node'])
             ->where('VEN_ESTADO', '=', 'VIGENTE')
             ->whereBetween('VEN_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
@@ -117,6 +117,11 @@ trait Sales
         uksort($result['sales'], function($a, $b){
             return strtotime($a) - strtotime($b);
         });
+
+        foreach($result['sales'] as &$coupon)
+        {
+            $coupon['date'] = date('d/m/Y', strtotime($coupon['date']));
+        }
 
         return $result;
     }
