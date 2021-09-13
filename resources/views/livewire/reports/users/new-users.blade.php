@@ -19,8 +19,11 @@
                     <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ number_format($result['totals']) }} </span>
                 </div>
             </div>
-            <div class="grid grid-cols-2 gap-4 mt-8">
-
+            <div class="w-full mt-8 md:w-2/3 h-60 md:h-96 bg-gray-50">
+                <livewire:livewire-column-chart
+                key="{{ $usersChartModel->reactiveKey() }}"
+                :column-chart-model="$usersChartModel"
+                />
             </div>
 
             <div class="mt-8 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

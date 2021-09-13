@@ -19,7 +19,7 @@ trait Globals
             $filters['giftcards'] = fnGetGiftcard($filters['store']);
 
         $rememberReport = fnRememberReportTime(date('Y-m-d'));
-        $result = cache()->remember('global-redeems-report' . $reportId, 60*60*24, function() use($tokDB, $filters){
+        $result = cache()->remember('global-redeems-report' . $reportId, $rememberReport, function() use($tokDB, $filters){
             $tmpRes= [];
             $query =  $tokDB->table('dat_reporte_cupones_canjeados')
             ->selectRaw('DATE_FORMAT(REP_CAN_CUPON_CANJE_FECHA_HORA, "%Y/%m/%d") day, COUNT(1) redeems, SUM(REP_CAN_CUPON_MONTO) amount, REP_CAN_CUPON_GIFTCARD giftcard');
@@ -77,7 +77,7 @@ trait Globals
             $filters['giftcards'] = fnGetGiftcardFull($filters['store']);
 
         $rememberReport = fnRememberReportTime(date('Y-m-d'));
-        $result = cache()->remember('global-registers-report' . $reportId, 60*60*24, function() use($tokDB, $filters){
+        $result = cache()->remember('global-registers-report' . $reportId, $rememberReport, function() use($tokDB, $filters){
             $tmpRes = [];
             $totals = ['users' => 0];
             $query = $tokDB->table('bal_tae_saldos')

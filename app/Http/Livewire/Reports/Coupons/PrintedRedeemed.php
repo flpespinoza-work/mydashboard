@@ -18,14 +18,13 @@ class PrintedRedeemed extends BaseCouponsReport
             $couponsChartModel = null;
             $mount = 0.00;
             $coupons = collect($this->result['coupons']);
-            $couponsChartModel = $coupons->reduce(function (LineChartModel $couponsChartModel, $data, $key) use($coupons, &$mount) {
-                $coupon = $coupons[$key];
-                $couponsChartModel->addSeriesPoint('Cupones impresos', $key, $coupon['printed']);
+            $couponsChartModel = $coupons->reduce(function (LineChartModel $couponsChartModel, $data, $key) use(&$mount) {
+                $couponsChartModel->addSeriesPoint('Cupones impresos', $key, $data['printed']);
 
                 if(isset($coupon['redeemed']))
                 {
-                    $mount += $coupon['redeemed'];
-                    $couponsChartModel->addSeriesPoint('Cupones canjeados', $key, $coupon['redeemed']);
+                    $mount += $data['redeemed'];
+                    $couponsChartModel->addSeriesPoint('Cupones canjeados', $key, $data['redeemed']);
                 }
                 else
                 {

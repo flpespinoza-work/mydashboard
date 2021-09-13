@@ -13,14 +13,18 @@
         </div>
 
         @if (!is_null($result) && !empty($result))
-            <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
+            <div class="grid grid-cols-3 gap-4 mt-8 md:grid-cols-4">
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-xs sm:text-sm font-semibold text-gray-400">Ventas totales</h5>
-                    <span class="inline-block mt-2 text-sm sm:text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ number_format($result['totals']['sales']) }} </span>
+                    <h5 class="text-xs font-semibold text-gray-400 sm:text-sm">Ventas totales</h5>
+                    <span class="inline-block mt-2 text-sm font-semibold sm:text-lg text-gray-darker md:text-xl xl:text-3xl">{{ number_format($result['totals']['sales']) }} </span>
                 </div>
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                    <h5 class="text-xs md:text-sm font-semibold text-gray-400">Monto total:</h5>
-                    <span class="inline-block mt-2 text-sm sm:text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['amount']) }} </span>
+                    <h5 class="text-xs font-semibold text-gray-400 md:text-sm">Monto total:</h5>
+                    <span class="inline-block mt-2 text-sm font-semibold sm:text-lg text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['amount']) }} </span>
+                </div>
+                <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
+                    <h5 class="text-xs font-semibold text-gray-400 md:text-sm">Venta promedio</h5>
+                    <span class="inline-block mt-2 text-sm font-semibold sm:text-lg text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['amount'] /$result['totals']['sales'], 2) }} </span>
                 </div>
             </div>
             <div class="grid grid-cols-2 gap-4 mt-8">
