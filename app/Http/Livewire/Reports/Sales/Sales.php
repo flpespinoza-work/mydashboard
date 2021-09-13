@@ -22,7 +22,7 @@ class Sales extends BaseSalesReport
 
             $couponsChartModel = $coupons->reduce(function (AreaChartModel $couponsChartModel, $data, $key) use($coupons) {
                 $coupon = $coupons[$key];
-                return $couponsChartModel->addPoint($key, $coupon['sales']);
+                return $couponsChartModel->addPoint($coupon['date'], $coupon['sales']);
             }, (new AreaChartModel())
                 ->setTitle('Ventas realizadas')
                 ->setAnimated(true)

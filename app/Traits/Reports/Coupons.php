@@ -19,7 +19,7 @@ trait Coupons
             $tmpRes = [];
             $totales = [ 'printed_coupons' => 0, 'printed_amount' => 0, 'printed_sale' => 0];
             $tokDB->table('dat_reporte_cupones_impresos')
-            ->selectRaw('DATE_FORMAT(REP_IMP_CUPON_FECHA_HORA, "%d/%m/%Y") day, COUNT(REP_IMP_ID) coupons, SUM(REP_IMP_CUPON_MONTO) amount')
+            ->selectRaw('DATE_FORMAT(REP_IMP_CUPON_FECHA_HORA, "%Y-%m-%d") day, COUNT(REP_IMP_ID) coupons, SUM(REP_IMP_CUPON_MONTO) amount')
             ->where('REP_IMP_CUPON_PRESUPUESTO', $filters['budget'])
             ->whereBetween('REP_IMP_CUPON_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->groupBy('day')
@@ -52,6 +52,11 @@ trait Coupons
             return strtotime($a) - strtotime($b);
         });
 
+        foreach($result['coupons'] as &$coupon)
+        {
+            $coupon['day'] = date('d/m/Y', strtotime($coupon['day']));
+        }
+
         return $result;
     }
 
@@ -67,11 +72,11 @@ trait Coupons
             $totales = [ 'redeemed_coupons' => 0, 'redeemed_amount' => 0];
 
             $tokDB->table('dat_reporte_cupones_canjeados')
-            ->selectRaw('DATE_FORMAT(REP_CAN_CUPON_CANJE_FECHA_HORA, "%d/%m/%Y") DIA, COUNT(REP_CAN_ID) CANJES, SUM(REP_CAN_CUPON_MONTO) MONTO, AVG(REP_CAN_CUPON_MONTO) PROMEDIO_CANJE')
+            ->selectRaw('DATE_FORMAT(REP_CAN_CUPON_CANJE_FECHA_HORA, "%Y-%m-%d") DIA, COUNT(REP_CAN_ID) CANJES, SUM(REP_CAN_CUPON_MONTO) MONTO, AVG(REP_CAN_CUPON_MONTO) PROMEDIO_CANJE')
             ->where('REP_CAN_CUPON_GIFTCARD', $filters['giftcard'])
             ->whereBetween('REP_CAN_CUPON_CANJE_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->groupBy('DIA')
-            ->orderBy('DIA')
+            ->orderBy('DIA', 'asc')
             ->chunk(10, function($coupons) use(&$tmpRes, &$totales) {
                 foreach($coupons as $coupon)
                 {
@@ -99,6 +104,11 @@ trait Coupons
         uksort($result['coupons'], function($a, $b){
             return strtotime($a) - strtotime($b);
         });
+
+        foreach($result['coupons'] as &$coupon)
+        {
+            $coupon['day'] = date('d/m/Y', strtotime($coupon['day']));
+        }
 
         return $result;
     }
