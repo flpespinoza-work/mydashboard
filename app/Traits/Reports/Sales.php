@@ -33,7 +33,7 @@ trait Sales
                 {
                     $totalSales['sales'] += 1;
                     $totalSales['amount'] += $sale->MONTO_VENTA;
-                    $tmpRes['sales'][] = [
+                    $tmpRes['sales'][$sale->VEN_FECHA_HORA] = [
                         'date' => $sale->VEN_FECHA_HORA,
                         'user' => $sale->NOD_USU_NODO,
                         'amount' => $sale->MONTO_VENTA
@@ -50,6 +50,14 @@ trait Sales
             return $tmpRes;
         });
 
+        uksort($result['sales'], function($a, $b){
+            return strtotime($a) - strtotime($b);
+        });
+
+        foreach($result['sales'] as &$sale)
+        {
+            $sale['date'] = date('d/m/Y', strtotime($sale['date']));
+        }
         return $result;
     }
 
@@ -118,9 +126,9 @@ trait Sales
             return strtotime($a) - strtotime($b);
         });
 
-        foreach($result['sales'] as &$coupon)
+        foreach($result['sales'] as &$sale)
         {
-            $coupon['date'] = date('d/m/Y', strtotime($coupon['date']));
+            $sale['date'] = date('d/m/Y', strtotime($sale['date']));
         }
 
         return $result;
