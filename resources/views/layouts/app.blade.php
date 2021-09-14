@@ -26,8 +26,8 @@
         <noscript>{{ __('You need to enable JavaScript to run this app.') }}</noscript>
         <div class="flex h-screen overflow-hidden">
             <div class="lg:w-72">
-                <div x-show="sidebarOpen" :class="{ 'opacity-100' : sidebarOpen }"
-                class="fixed inset-0 z-40 transition-opacity duration-200 bg-black bg-opacity-25 opacity-0 pointer-events-none lg:hidden lg:z-auto"
+                <div @click="sidebarOpen = !sidebarOpen" x-show="sidebarOpen" :class="{ 'opacity-100' : sidebarOpen }"
+                class="fixed inset-0 z-40 transition-opacity duration-200 bg-black bg-opacity-25 opacity-0 lg:hidden lg:z-auto"
                 aria-hidden="true"></div>
                 @include('layouts.navigation')
             </div>
