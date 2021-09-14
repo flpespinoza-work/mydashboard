@@ -19,7 +19,7 @@ trait Coupons
             $tmpRes = [];
             $totales = [ 'printed_coupons' => 0, 'printed_amount' => 0, 'printed_sale' => 0];
             $tokDB->table('dat_reporte_cupones_impresos')
-            ->selectRaw('DATE_FORMAT(REP_IMP_CUPON_FECHA_HORA, "%Y-%m-%d") day, COUNT(REP_IMP_ID) coupons, SUM(REP_IMP_CUPON_MONTO) amount')
+            ->selectRaw('DATE_FORMAT(REP_IMP_CUPON_FECHA_HORA, "%d/%m/%Y") day, COUNT(REP_IMP_ID) coupons, SUM(REP_IMP_CUPON_MONTO) amount')
             ->where('REP_IMP_CUPON_PRESUPUESTO', $filters['budget'])
             ->whereBetween('REP_IMP_CUPON_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->groupBy('day')
@@ -48,13 +48,11 @@ trait Coupons
             return $tmpRes;
         });
 
-        uksort($result['coupons'], function($a, $b){
-            return strtotime($a) - strtotime($b);
-        });
-
-        foreach($result['coupons'] as &$coupon)
+        if(count($result))
         {
-            $coupon['day'] = date('d/m/Y', strtotime($coupon['day']));
+            uksort($result['coupons'], function($a, $b){
+                return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
+            });
         }
 
         return $result;
@@ -72,7 +70,7 @@ trait Coupons
             $totales = [ 'redeemed_coupons' => 0, 'redeemed_amount' => 0];
 
             $tokDB->table('dat_reporte_cupones_canjeados')
-            ->selectRaw('DATE_FORMAT(REP_CAN_CUPON_CANJE_FECHA_HORA, "%Y-%m-%d") DIA, COUNT(REP_CAN_ID) CANJES, SUM(REP_CAN_CUPON_MONTO) MONTO, AVG(REP_CAN_CUPON_MONTO) PROMEDIO_CANJE')
+            ->selectRaw('DATE_FORMAT(REP_CAN_CUPON_CANJE_FECHA_HORA, "%d/%m/%Y") DIA, COUNT(REP_CAN_ID) CANJES, SUM(REP_CAN_CUPON_MONTO) MONTO, AVG(REP_CAN_CUPON_MONTO) PROMEDIO_CANJE')
             ->where('REP_CAN_CUPON_GIFTCARD', $filters['giftcard'])
             ->whereBetween('REP_CAN_CUPON_CANJE_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->groupBy('DIA')
@@ -101,13 +99,11 @@ trait Coupons
             return $tmpRes;
         });
 
-        uksort($result['coupons'], function($a, $b){
-            return strtotime($a) - strtotime($b);
-        });
-
-        foreach($result['coupons'] as &$coupon)
+        if(count($result))
         {
-            $coupon['day'] = date('d/m/Y', strtotime($coupon['day']));
+            uksort($result['coupons'], function($a, $b){
+                return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
+            });
         }
 
         return $result;
@@ -160,7 +156,6 @@ trait Coupons
             return $tmpRes;
         });
 
-        /** REVISAR EL FORMATO DE LA FECHA */
         usort($result['coupons'], function($a, $b){
             return strtotime(str_replace('/', '-', $a['date_coupon'])) - strtotime(str_replace('/', '-', $b['date_coupon']));
         });

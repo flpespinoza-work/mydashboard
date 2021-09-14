@@ -19,7 +19,7 @@ trait Sales
 
             $tokDB->table('doc_dbm_ventas')
             ->join('cat_dbm_nodos_usuarios', 'doc_dbm_ventas.VEN_NODO', '=', 'cat_dbm_nodos_usuarios.NOD_USU_NODO')
-            ->select(DB::raw('NOD_USU_NODO, VEN_ID, VEN_FECHA_HORA, VEN_MONTO MONTO_VENTA'))
+            ->select(DB::raw('NOD_USU_NODO, VEN_ID, DATE_FORMAT(VEN_FECHA_HORA, "%d/%m/%Y %H:%i:%s") VEN_FECHA_HORA, VEN_MONTO MONTO_VENTA'))
             ->where('VEN_DESTINO', $filters['node'])
             ->where('VEN_ESTADO', '=', 'VIGENTE')
             ->where('VEN_BOLSA', '=', $filters['giftcard'])
@@ -53,14 +53,10 @@ trait Sales
         if(count($result))
         {
             uksort($result['sales'], function($a, $b){
-                return strtotime($a) - strtotime($b);
+                return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
             });
-
-            foreach($result['sales'] as &$sale)
-            {
-                $sale['date'] = date('d/m/Y', strtotime($sale['date']));
-            }
         }
+
         return $result;
     }
 
@@ -101,7 +97,7 @@ trait Sales
             $totalSales = ['sales' => 0, 'amount' => 0];
             $tokDB->table('doc_dbm_ventas')
             ->join('cat_dbm_nodos_usuarios', 'doc_dbm_ventas.VEN_NODO', '=', 'cat_dbm_nodos_usuarios.NOD_USU_NODO')
-            ->select(DB::raw('DATE_FORMAT(VEN_FECHA_HORA, "%Y-%m-%d") DIA, COUNT(VEN_ID) VENTAS, SUM(VEN_MONTO) MONTO_VENTA'))
+            ->select(DB::raw('DATE_FORMAT(VEN_FECHA_HORA, "%d/%m/%Y") DIA, COUNT(VEN_ID) VENTAS, SUM(VEN_MONTO) MONTO_VENTA'))
             ->where('VEN_DESTINO', $filters['node'])
             ->where('VEN_ESTADO', '=', 'VIGENTE')
             ->whereBetween('VEN_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
@@ -133,13 +129,8 @@ trait Sales
         if(count($result))
         {
             uksort($result['sales'], function($a, $b){
-                return strtotime($a) - strtotime($b);
+                return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
             });
-
-            foreach($result['sales'] as &$sale)
-            {
-                $sale['date'] = date('d/m/Y', strtotime($sale['date']));
-            }
         }
 
         return $result;

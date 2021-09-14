@@ -22,7 +22,7 @@ trait Globals
         $result = cache()->remember('global-redeems-report' . $reportId, $rememberReport, function() use($tokDB, $filters){
             $tmpRes= [];
             $query =  $tokDB->table('dat_reporte_cupones_canjeados')
-            ->selectRaw('DATE_FORMAT(REP_CAN_CUPON_CANJE_FECHA_HORA, "%Y/%m/%d") day, COUNT(1) redeems, SUM(REP_CAN_CUPON_MONTO) amount, REP_CAN_CUPON_GIFTCARD giftcard');
+            ->selectRaw('DATE_FORMAT(REP_CAN_CUPON_CANJE_FECHA_HORA, "%d/%m/%Y") day, COUNT(1) redeems, SUM(REP_CAN_CUPON_MONTO) amount, REP_CAN_CUPON_GIFTCARD giftcard');
             if(is_array($filters['giftcards']))
                 $query->whereIn('REP_CAN_CUPON_GIFTCARD', $filters['giftcards']);
             else
@@ -57,8 +57,8 @@ trait Globals
                 return $a['store_name'] <=> $b['store_name'];
             });
 
-            usort($result['redeems'], function($a, $b) {
-                return $a['day'] <=> $b['day'];
+            usort($result['redeems'], function($a, $b){
+                return strtotime(str_replace('/', '-', $a['day'])) - strtotime(str_replace('/', '-', $b['day']));
             });
         }
 
@@ -82,7 +82,7 @@ trait Globals
             $totals = ['users' => 0];
             $query = $tokDB->table('bal_tae_saldos')
             ->join('cat_dbm_nodos_usuarios', 'bal_tae_saldos.TAE_SAL_NODO', '=', 'cat_dbm_nodos_usuarios.NOD_USU_NODO')
-            ->selectRaw('DATE_FORMAT(TAE_SAL_TS, "%Y/%m/%d") day, COUNT(1) users, TAE_SAL_BOLSA bag')
+            ->selectRaw('DATE_FORMAT(TAE_SAL_TS, "%d/%m/%Y") day, COUNT(1) users, TAE_SAL_BOLSA bag')
             ->whereRaw("(BINARY NOD_USU_CERTIFICADO REGEXP '[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]' OR NOD_USU_CERTIFICADO = '')");
 
             if(is_array($filters['giftcards']))
@@ -123,8 +123,9 @@ trait Globals
                 return $a['store_name'] <=> $b['store_name'];
             });
 
+            //Ordenar por dia
             usort($result['registers'], function($a, $b) {
-                return $a['day'] <=> $b['day'];
+                return strtotime(str_replace('/', '-', $a['day'])) - strtotime(str_replace('/', '-', $b['day']));
             });
         }
 

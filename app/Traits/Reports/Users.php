@@ -18,7 +18,7 @@ trait Users
 
             $tokDB->table('cat_dbm_nodos_usuarios')
             ->join('bal_tae_saldos', 'cat_dbm_nodos_usuarios.NOD_USU_NODO', '=', 'bal_tae_saldos.TAE_SAL_NODO')
-            ->select(DB::raw('DATE_FORMAT(TAE_SAL_TS, "%Y/%m/%d") day, COUNT(NOD_USU_ID) users'))
+            ->select(DB::raw('DATE_FORMAT(TAE_SAL_TS, "%d/%m/%Y") day, COUNT(NOD_USU_ID) users'))
             ->where('TAE_SAL_BOLSA', $filters['giftcard'])
             ->whereBetween('TAE_SAL_TS', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->whereRaw("(BINARY NOD_USU_CERTIFICADO REGEXP '[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]' OR NOD_USU_CERTIFICADO = '')")
@@ -41,6 +41,14 @@ trait Users
             return $tmpResult;
 
         });
+
+        if(count($result))
+        {
+            usort($result['data'], function($a, $b){
+                return strtotime(str_replace('/', '-', $a['day'])) - strtotime(str_replace('/', '-', $b['day']));
+            });
+        }
+
         return $result;
     }
 
