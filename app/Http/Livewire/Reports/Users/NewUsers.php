@@ -9,6 +9,7 @@ use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 class NewUsers extends BaseUsersReport
 {
     public $reportName = 'reports.users.new-users';
+    public $store_name;
     protected $listeners = ['generateReport'];
 
     public function render()
@@ -37,6 +38,7 @@ class NewUsers extends BaseUsersReport
 
     public function generateReport($filters)
     {
+        $this->store_name = fnGetStoreNAme($filters['store']);
         $this->result = $this->getNewUsers($filters);
     }
 

@@ -10,6 +10,7 @@ class Redeems extends BaseGlobalsReport
 {
     use Globals;
     public $reportName = 'reports.globals.redeems';
+    public $store_name;
     protected $listeners = ['generateReport'];
     public $result = null;
 
@@ -39,6 +40,7 @@ class Redeems extends BaseGlobalsReport
 
     public function generateReport($filters)
     {
+        $this->store_name = fnGetStoreNAme($filters['store']);
         $this->result = $this->getRedeems($filters);
     }
 }

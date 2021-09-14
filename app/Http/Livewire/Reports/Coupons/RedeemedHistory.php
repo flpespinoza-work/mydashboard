@@ -7,6 +7,7 @@ use App\Http\Livewire\Reports\BaseCouponsReport;
 class RedeemedHistory extends BaseCouponsReport
 {
     public $reportName = 'reports.coupons.redeemed-history';
+    public $store_name;
     protected $listeners = ['generateReport'];
 
     public function render()
@@ -16,6 +17,7 @@ class RedeemedHistory extends BaseCouponsReport
 
     public function generateReport($filters)
     {
+        $this->store_name = fnGetStoreNAme($filters['store']);
         $this->result = $this->getRedeemedHistoryCoupons($filters);
         //dd($this->result);
     }

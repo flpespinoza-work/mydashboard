@@ -9,6 +9,7 @@ use Asantibanez\LivewireCharts\Models\LineChartModel;
 class PrintedRedeemed extends BaseCouponsReport
 {
     public $reportName = 'reports.coupons.printed-redeemed';
+    public $store_name;
     protected $listeners = ['generateReport'];
 
     public function render()
@@ -51,6 +52,7 @@ class PrintedRedeemed extends BaseCouponsReport
 
     public function generateReport($filters)
     {
+        $this->store_name = fnGetStoreNAme($filters['store']);
         $this->result = $this->getPrintedRedeemedCoupons($filters);
     }
 

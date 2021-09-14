@@ -8,6 +8,7 @@ use App\Http\Livewire\Reports\BaseSalesReport;
 class Detail extends BaseSalesReport
 {
     public $reportName = 'reports.sales.detail';
+    public $store_name;
     protected $listeners = ['generateReport'];
 
     public function render()
@@ -17,6 +18,7 @@ class Detail extends BaseSalesReport
 
     public function generateReport($filters)
     {
+        $this->store_name = fnGetStoreNAme($filters['store']);
         $this->result = $this->getDetailSales($filters);
         //dd($this->result);
     }

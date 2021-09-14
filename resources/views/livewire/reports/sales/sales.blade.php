@@ -4,7 +4,7 @@
         <livewire:reports.filters :report="$reportName"/>
     </x-slot>
 
-    <div class="min-h-full mt-14">
+    <div class="min-h-full mt-4 lg:mt-8">
         <div wire:loading.delay class="w-full">
             <p class="text-xs font-semibold text-center md:text-sm">
                 <x-loader class="w-10 h-10" />
@@ -14,6 +14,7 @@
 
         @if (!is_null($result) && !empty($result))
         <div wire:loading.remove>
+            <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $store_name }}</h3>
             <div class="grid grid-cols-3 gap-4 mt-8 md:grid-cols-4">
                 <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
                     <h5 class="text-xs font-semibold text-gray-400 sm:text-sm">Ventas totales</h5>

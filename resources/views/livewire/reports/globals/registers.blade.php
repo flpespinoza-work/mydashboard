@@ -14,6 +14,7 @@
 
         @if (!is_null($result) && !empty($result))
         <div wire:loading.remove>
+            <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $store_name }}</h3>
             <div class="w-full mt-8 h-60 md:h-96 bg-gray-50">
                 <livewire:livewire-area-chart
                 key="{{ $usersChartModel->reactiveKey() }}"

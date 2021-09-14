@@ -9,6 +9,7 @@ use Asantibanez\LivewireCharts\Models\AreaChartModel;
 class Sales extends BaseSalesReport
 {
     public $reportName = 'reports.sales.sales';
+    public $store_name;
     protected $listeners = ['generateReport'];
 
     public function render()
@@ -39,6 +40,7 @@ class Sales extends BaseSalesReport
 
     public function generateReport($filters)
     {
+        $this->store_name = fnGetStoreNAme($filters['store']);
         $this->result = $this->getSales($filters);
         //dd($this->result);
     }

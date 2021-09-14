@@ -8,6 +8,7 @@ use App\Http\Livewire\Reports\BaseCouponsReport;
 class DetailRedeemed extends BaseCouponsReport
 {
     public $reportName = 'reports.coupons.detail-redeemed';
+    public $store_name;
     protected $listeners = ['generateReport'];
 
     public function render()
@@ -17,6 +18,7 @@ class DetailRedeemed extends BaseCouponsReport
 
     public function generateReport($filters)
     {
+        $this->store_name = fnGetStoreNAme($filters['store']);
         $this->result = $this->getDetailRedeemedCoupons($filters);
     }
 

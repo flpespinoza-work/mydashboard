@@ -11,6 +11,7 @@ class Registers extends BaseGlobalsReport
     use Globals;
 
     public $reportName = 'reports.globals.registers';
+    public $store_name;
     protected $listeners = ['generateReport'];
     public $result = null;
 
@@ -39,6 +40,7 @@ class Registers extends BaseGlobalsReport
 
     public function generateReport($filters)
     {
+        $this->store_name = fnGetStoreNAme($filters['store']);
         $this->result = $this->getRegisters($filters);
     }
 }

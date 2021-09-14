@@ -9,6 +9,7 @@ use Asantibanez\LivewireCharts\Models\AreaChartModel;
 class Redeemed extends BaseCouponsReport
 {
     public $reportName = 'reports.coupons.redeemed';
+    public $store_name;
     protected $listeners = ['generateReport'];
 
     public function render()
@@ -52,6 +53,7 @@ class Redeemed extends BaseCouponsReport
 
     public function generateReport($filters)
     {
+        $this->store_name = fnGetStoreNAme($filters['store']);
         $this->result = $this->getRedeemedCoupons($filters);
     }
 

@@ -8,6 +8,7 @@ use App\Http\Livewire\Reports\BaseUsersReport;
 class History extends BaseUsersReport
 {
     public $reportName = 'reports.users.history';
+    public $store_name;
     protected $listeners = ['generateReport'];
 
     public function render()
@@ -17,12 +18,13 @@ class History extends BaseUsersReport
 
     public function generateReport($filters)
     {
+        $this->store_name = fnGetStoreNAme($filters['store']);
         $this->result = $this->getHistoryUsers($filters);
         //dd($this->result);
     }
 
     public function exportReport()
     {
-        return (new UsersExport(collect($this->result['REGISTROS'])))->download('reporte_nuevos_usuarios.xlsx');
+        //return (new UsersExport(collect($this->result['REGISTROS'])))->download('reporte_nuevos_usuarios.xlsx');
     }
 }
