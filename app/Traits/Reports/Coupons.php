@@ -174,7 +174,7 @@ trait Coupons
             $coupons = array_merge_recursive($printed, $redeemed);
 
             uksort($coupons['coupons'], function($a, $b){
-                return strtotime($a) - strtotime($b);
+                return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
             });
 
             foreach($coupons['coupons'] as $day => $data)

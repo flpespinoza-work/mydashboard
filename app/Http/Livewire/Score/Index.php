@@ -11,6 +11,7 @@ class Index extends Component
     use Scores;
 
     public $scores = null;
+    public $store_name;
 
     protected $listeners = ['getScore'];
 
@@ -47,6 +48,7 @@ class Index extends Component
 
     public function getScore($filters)
     {
+        $this->store_name = fnGetStoreNAme($filters['store']);
         $this->scores = $this->getScores($filters);
     }
 }
