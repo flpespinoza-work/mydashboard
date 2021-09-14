@@ -22,19 +22,19 @@ trait Scores
         if(!empty($scores))
         {
             $scores = $this->orderScores($scores, $filters['final_date']);
-        }
-
-        //Eliminar comentarios que contengan "Escribe tus comentarios aquí"
-        foreach($scores['comments'] as $score => $commentList)
-        {
-            foreach($commentList as $key => $comment)
+            //Eliminar comentarios que contengan "Escribe tus comentarios aquí"
+            foreach($scores['comments'] as $score => $commentList)
             {
-                if($comment['comment'] == 'Escribe tus comentarios aquí')
+                foreach($commentList as $key => $comment)
                 {
-                    unset($scores['comments'][$score][$key]);
+                    if($comment['comment'] == 'Escribe tus comentarios aquí')
+                    {
+                        unset($scores['comments'][$score][$key]);
+                    }
                 }
             }
         }
+
         return $scores;
     }
 
