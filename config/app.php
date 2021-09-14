@@ -52,9 +52,9 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'https://dashboard.tokencash.mx'),
+    'url' => env('APP_URL', 'http://new.dashboard.tokencash.mx'),
 
-    'asset_url' => env('ASSET_URL', 'https://dashboard.tokencash.mx'),
+    'asset_url' => env('ASSET_URL', 'http://new.dashboard.tokencash.mx'),
 
     /*
     |--------------------------------------------------------------------------
