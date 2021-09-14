@@ -16,21 +16,17 @@
             <div wire:loading.remove>
                 <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $store_name }}</h3>
                 <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
-                    <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
+                    <div class="col-span-1 p-4 border border-gray-100 rounded-sm bg-gray-50">
                         <h5 class="text-xs font-semibold text-gray-400 md:text-sm">Cupones impresos</h5>
                         <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ number_format($result['totals']['printed_coupons']) }} </span>
                     </div>
-                    <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
+                    <div class="col-span-1 p-4 border border-gray-100 rounded-sm bg-gray-50">
                         <h5 class="text-xs font-semibold text-gray-400 md:text-sm">Dinero impreso:</h5>
                         <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['printed_amount']) }} </span>
                     </div>
-                    <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
+                    <div class="col-span-1 p-4 border border-gray-100 rounded-sm bg-gray-50">
                         <h5 class="text-xs font-semibold text-gray-400 md:text-sm">Promedio por cupón:</h5>
                         <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['average_amount'],2) }} </span>
-                    </div>
-                    <div class="hidden col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
-                        <h5 class="text-xs font-semibold text-gray-400 md:text-sm">Promedio de venta:</h5>
-                        <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['average_sale'],2) }} </span>
                     </div>
                 </div>
                 <div class="grid grid-cols-2 gap-4 mt-8">

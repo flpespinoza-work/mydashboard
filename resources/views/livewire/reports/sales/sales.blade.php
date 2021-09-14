@@ -16,15 +16,15 @@
         <div wire:loading.remove>
             <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $store_name }}</h3>
             <div class="grid grid-cols-3 gap-4 mt-8 md:grid-cols-4">
-                <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
+                <div class="col-span-1 p-4 border border-gray-100 rounded-sm bg-gray-50">
                     <h5 class="text-xs font-semibold text-gray-400 sm:text-sm">Ventas totales</h5>
                     <span class="inline-block mt-2 text-sm font-semibold sm:text-lg text-gray-darker md:text-xl xl:text-3xl">{{ number_format($result['totals']['sales']) }} </span>
                 </div>
-                <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
+                <div class="col-span-1 p-4 border border-gray-100 rounded-sm bg-gray-50">
                     <h5 class="text-xs font-semibold text-gray-400 md:text-sm">Monto total:</h5>
                     <span class="inline-block mt-2 text-sm font-semibold sm:text-lg text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['amount']) }} </span>
                 </div>
-                <div class="col-span-1 p-4 bg-white border border-gray-100 rounded-md shadow-sm">
+                <div class="col-span-1 p-4 border border-gray-100 rounded-sm bg-gray-50">
                     <h5 class="text-xs font-semibold text-gray-400 md:text-sm">Venta promedio</h5>
                     <span class="inline-block mt-2 text-sm font-semibold sm:text-lg text-gray-darker md:text-xl xl:text-3xl">${{ number_format($result['totals']['amount'] /$result['totals']['sales'], 2) }} </span>
                 </div>
