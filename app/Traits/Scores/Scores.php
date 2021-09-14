@@ -24,6 +24,17 @@ trait Scores
             $scores = $this->orderScores($scores, $filters['final_date']);
         }
 
+        //Eliminar comentarios que contengan "Escribe tus comentarios aquí"
+        foreach($scores['comments'] as $score => $commentList)
+        {
+            foreach($commentList as $key => $comment)
+            {
+                if($comment['comment'] == 'Escribe tus comentarios aquí')
+                {
+                    unset($scores['comments'][$score][$key]);
+                }
+            }
+        }
         return $scores;
     }
 

@@ -18,6 +18,9 @@ class Index extends Component
     {
         if(!is_null($this->scores) && !empty($this->scores))
         {
+            $columnChartModel = null;
+            $columnChartModelScore = null;
+
             $columnChartModel = (new ColumnChartModel())
             ->setTitle('Calificaciones')
             ->setHorizontal(true)
@@ -36,7 +39,6 @@ class Index extends Component
                 ->addColumn('Califico', $this->scores['totalScores'], '#53ADF4')
                 ->addColumn('Comentarios', number_format($this->scores['totalComments']), '#F17061');
 
-
             return view('livewire.score.index')->with(['columnChartModelScore' => $columnChartModelScore, 'columnChartModel' => $columnChartModel]);
         }
 
@@ -46,6 +48,5 @@ class Index extends Component
     public function getScore($filters)
     {
         $this->scores = $this->getScores($filters);
-        //dd($this->scores);
     }
 }

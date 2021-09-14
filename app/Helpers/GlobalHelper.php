@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
 use App\Models\Store;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
-use Maatwebsite\Excel\Concerns\ToArray;
 
 //Obtener los establecimientos asignados a cada usuario
 if(!function_exists('fnGetMyStores'))
@@ -12,16 +11,18 @@ if(!function_exists('fnGetMyStores'))
     {
         if(auth()->user()->isSuperAdmin())
         {
-            return Store::orderBy('name')->pluck('name', 'id')->toArray();
+            $stores = Cache::remember('stores-' . auth()->user()->id, 60*60*12, function(){ return Store::orderBy('name')->pluck('name', 'id')->toArray(); });
         }
         elseif(auth()->user()->isGroupOwner())
         {
-            return auth()->user()->group->stores->pluck('name', 'id')->sort();
+            $stores = Cache::remember('stores-' . auth()->user()->id, 60*60*12, function(){ return auth()->user()->group->stores->pluck('name', 'id')->sort(); });
         }
         else
         {
-            return auth()->user()->stores->pluck('name', 'id')->sort();
+            $stores = Cache::remember('stores-' . auth()->user()->id, 60*60*12, function(){ return auth()->user()->stores->pluck('name', 'id')->sort(); });
         }
+
+        return $stores;
     }
 }
 
