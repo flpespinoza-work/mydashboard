@@ -18,7 +18,7 @@ class RedeemedHistory extends BaseCouponsReport
     public function generateReport($filters)
     {
         $this->store_name = fnGetStoreNAme($filters['store']);
-        $this->result = $this->getRedeemedHistoryCoupons($filters);
-        //dd($this->result);
+        $this->result['printed'] = $this->getPrintedHistoryCoupons($filters);
+        $this->result['redeems'] = $this->getRedeemedHistoryCoupons($filters);
     }
 }

@@ -213,7 +213,7 @@ trait Coupons
         $filters['giftcard'] = fnGetGiftcard($filters['store']);
         $rememberReport = fnRememberReportTime(date('Y-m-d'));
 
-        $result = cache()->remember('reporte-cupones-canjeados' . $reportId, $rememberReport, function() use($tokDB, $filters){
+        $result = cache()->remember('reporte-cupones-canjeados-historico' . $reportId, $rememberReport, function() use($tokDB, $filters){
             return $tokDB->table('dat_reporte_cupones_canjeados')
             ->selectRaw('COUNT(1) redeems, SUM(REP_CAN_CUPON_MONTO) amount')
             ->where('REP_CAN_CUPON_GIFTCARD', $filters['giftcard'])
@@ -225,6 +225,27 @@ trait Coupons
             return ['redeems' => $result[0]->redeems, 'amount' =>$result[0]->amount ];
 
         return ['redeems' => '0', 'amount' => '0'];
+    }
+
+    function getPrintedHistoryCoupons($filters)
+    {
+        $tokDB = DB::connection('reportes');
+        $reportId = fnGenerateReportId($filters);
+        $filters['budget'] = fnGetGiftcard($filters['store']);
+        $rememberReport = fnRememberReportTime(date('Y-m-d'));
+
+        $result = cache()->remember('reporte-cupones-impresos-historio' . $reportId, $rememberReport, function() use($tokDB, $filters){
+            return $tokDB->table('dat_reporte_cupones_impresos')
+            ->selectRaw('COUNT(1) printed, SUM(REP_IMP_CUPON_MONTO) amount')
+            ->where('REP_IMP_CUPON_PRESUPUESTO', $filters['budget'])
+            ->get()
+            ->toArray();
+        });
+
+        if(count($result))
+            return ['printed' => $result[0]->printed, 'amount' =>$result[0]->amount ];
+
+        return ['printed' => '0', 'amount' => '0'];
     }
 
     function getLastPrintedCoupon()
