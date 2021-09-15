@@ -1,5 +1,8 @@
 <div>
-    <livewire:score.score-filters />
+    <x-slot name="actions">
+        <livewire:score.score-filters />
+    </x-slot>
+
     <div class="min-h-full mt-14">
         <div wire:loading.delay class="w-full">
             <p class="text-xs font-semibold text-center md:text-sm">
@@ -40,11 +43,11 @@
                                 <x-scores.2 class="w-12 h-12" />
                                 <x-scores.1 class="w-12 h-12" />
                             </div>
-                            <livewire:livewire-column-chart :wire:key="time()" key="{{ $columnChartModel->reactiveKey() }}" :column-chart-model="$columnChartModel"/>
+                            <livewire:livewire-column-chart key="{{ $columnChartModel->reactiveKey() }}" :column-chart-model="$columnChartModel"/>
                         </div>
                     </div>
                     <div class="col-span-2 md:col-span-1 h-60 md:h-96">
-                        <livewire:livewire-column-chart :wire:key="time()" key="{{ $columnChartModelScore->reactiveKey() }}" :column-chart-model="$columnChartModelScore"/>
+                        <livewire:livewire-column-chart key="{{ $columnChartModelScore->reactiveKey() }}" :column-chart-model="$columnChartModelScore"/>
                     </div>
                 </div>
             </div>
@@ -97,10 +100,10 @@
                         <div class="px-4 py-8 border border-t-0 border-gray-150">
                             @foreach (range(5,0) as $value)
                                 @if (isset($scores['comments'][$value]))
-                                    <div id="score-{{$value}}" x-show="openTab === {{ $value }}" class="space-y-4">
+                                    <div id="score-{{$value}}" x-show="openTab === {{ $value }}">
                                         @foreach ($scores['comments'][$value] as $comment)
                                             @if(strpos($comment['comment'], 'tus comentarios') !== true)
-                                            <div class="p-3 mx-auto border rounded-md md:w-3/4 border-gray-150">
+                                            <div class="p-3 mx-auto my-2 border rounded-md md:w-3/4 border-gray-150">
                                                 <div class="flex flex-wrap items-center">
                                                     <span class="text-xs font-semibold text-gray-500">Usuario: {{ $comment['user']}}</span>
                                                     <span class="mx-6 font-medium text-gray-400 text-xxs md:text-xs">{{ $comment['date']}}</span>
@@ -118,14 +121,6 @@
                                                 </div>
                                                 <div class="p-3 mt-3 rounded-sm bg-gray-50">
                                                     <p class="text-sm font-medium text-gray-500 md:text-sm">{{ $comment['comment'] }}</p>
-                                                </div>
-                                                <div class="hidden p-1" x-data="{showReply:false}">
-                                                    <span @click="showReply = !showReply" class="rounded-full inline-block py-0.5 px-3 bg-gray-100 hover:bg-gray-200">
-                                                        <x-heroicon-o-dots-horizontal class="w-4 h-4"/>
-                                                    </span>
-                                                    <div x-show="showReply" class="p-4 mt-2 bg-white border border-gray-100 rounded-md shadow-sm">
-                                                        <livewire:score.reply :user="1" >
-                                                    </div>
                                                 </div>
                                             </div>
                                             @endif

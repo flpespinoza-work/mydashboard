@@ -7,5 +7,5 @@
             <span class="ml-2 text-gray-800">Calificaciones</span>
         </div>
     </x-slot>
-    <livewire:score.index />
+    <livewire:score.index :key="time()"/>
 </x-app-layout>

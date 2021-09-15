@@ -78,6 +78,11 @@
                         </div>
                     </div>
                     <div class="relative px-6 py-5 mx-auto sm:block lg:max-w-4xl xl:max-w-screen-lg 2xl:max-w-screen-xl">
+                        @isset($scoresFilters)
+                            <div>
+                                {{ $scoresFilters }}
+                            </div>
+                        @endisset
                         <div class="pb-4">
                             {{ $slot}}
                         </div>

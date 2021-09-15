@@ -20,8 +20,8 @@
         </div>
 
         <div class="md:w-5/12 lg:w-5/12 xl:w-6/12">
-            <select wire:model="seller"
-                id="store"
+            <select wire:change="selectSeller($event.target.value)"
+                id="seller"
                 class="w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
                 <option value="" selected>Seleccione un vendedor...</option>
                 @if(!empty($sellers))
