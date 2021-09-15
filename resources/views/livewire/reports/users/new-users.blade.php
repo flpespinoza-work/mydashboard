@@ -14,7 +14,14 @@
 
         @if (!is_null($result) && !empty($result))
         <div wire:loading.remove>
-            <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $store_name }}</h3>
+            <div class="flex items-center justify-between">
+                <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $store_name }}</h3>
+                <button class="flex items-center px-3 py-2 space-x-2 text-xs font-bold bg-gray-700 border border-gray-500 rounded-md hover:bg-gray-600 text-gray-50" href="#">
+                    <x-heroicon-o-download class="w-4 h-4"/>
+                    <span class="hidden md:inline-block">Descargar</span>
+                </button>
+            </div>
+
             <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">
                 <div class="col-span-1 p-4 border border-gray-100 rounded-sm bg-gray-50">
                     <h5 class="text-sm font-semibold text-gray-400">Usuarios totales</h5>

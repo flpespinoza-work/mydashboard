@@ -10,7 +10,7 @@ class NewUsers extends BaseUsersReport
 {
     public $reportName = 'reports.users.new-users';
     public $store_name;
-    protected $listeners = ['generateReport'];
+    protected $listeners = ['generateReport', 'exportReport'];
 
     public function render()
     {
@@ -44,6 +44,7 @@ class NewUsers extends BaseUsersReport
 
     public function exportReport()
     {
-        //return (new UsersHistoryExport(collect($this->result['REGISTROS'])))->download('reporte_historico_usuarios.xlsx');
+        dd('Exporta');
+        //return (new UsersHistoryExport(collect($this->result['data'])))->download('reporte_historico_usuarios.xlsx');
     }
 }

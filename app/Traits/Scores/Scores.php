@@ -100,7 +100,7 @@ trait Scores
 
         $a_scoreValue = [
             'score_5' => 5,
-            "score_4" => ($finalDate <= '2019-10-08') ? 2.5 : 3,
+            "score_4" => ($finalDate <= '2021-09-14') ? 3 : 3.3,
             "score_3" => 1,
             "score_2" => 0.5,
             "score_1" => -8
