@@ -21,9 +21,8 @@ class Printed extends BaseCouponsReport
 
             $coupons = collect($this->result['coupons']);
 
-            $couponsChartModel = $coupons->reduce(function (AreaChartModel $couponsChartModel, $data, $key) use($coupons) {
-                $coupon = $coupons[$key];
-                return $couponsChartModel->addPoint($key, $coupon['count']);
+            $couponsChartModel = $coupons->reduce(function (AreaChartModel $couponsChartModel, $data, $key) {
+                return $couponsChartModel->addPoint($key, $data['count']);
             }, (new AreaChartModel())
                 ->setTitle('Cupones impresos')
                 ->setAnimated(true)
@@ -32,11 +31,8 @@ class Printed extends BaseCouponsReport
                 ->setXAxisVisible(true)
             );
 
-            $acumulado = 0.00;
-            $amountChartModel = $coupons->reduce(function (AreaChartModel $amountChartModel, $data, $key) use($coupons, &$aculumado) {
-                $coupon = $coupons[$key];
-                $aculumado += $coupon['amount'];
-                return $amountChartModel->addPoint($key, round($aculumado));
+            $amountChartModel = $coupons->reduce(function (AreaChartModel $amountChartModel, $data, $key) {
+                return $amountChartModel->addPoint($key, round($data['aggr']));
             }, (new AreaChartModel())
                 ->setTitle('Dinero impreso')
                 ->setAnimated(true)
