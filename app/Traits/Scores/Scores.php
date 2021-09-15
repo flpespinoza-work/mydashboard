@@ -132,29 +132,31 @@ trait Scores
         //Recorrer comentarios y obtener totales
         foreach($scores['data'] as $comment)
         {
-            $commentRow++;
-            if($comment['score'] >= 1)
+            if($comment['comment'] != 'Escribe tus comentarios aquí')
             {
-                $stars['totalScores']++;
-                $stars['totalStars'] += $a_scoreValue["score_{$comment['score']}"];
-                $stars['stars_' . $comment['score']]++;
-
-                if(isset($comment['comment']) && !empty($comment['comment']))
+                $commentRow++;
+                if($comment['score'] >= 1)
                 {
-                    $stars['totalComments']++;
-                    $stars['count' . $comment['score']]++;
+                    $stars['totalScores']++;
+                    $stars['totalStars'] += $a_scoreValue["score_{$comment['score']}"];
+                    $stars['stars_' . $comment['score']]++;
+
+                    if(isset($comment['comment']) && !empty($comment['comment']))
+                    {
+                        $stars['totalComments']++;
+                        $stars['count' . $comment['score']]++;
+                        if(!str_contains('Escribe tus comentarios', $comment['comment']))
+                            $stars['comments'][$comment['score']][] = $comment;
+                    }
+                }
+                elseif((isset($comment['comment']) && !empty($comment['comment'])) && $commentRow < $commentsMax)
+                {
+                    $stars['stars_N']++;
+                    $stars['count0']++;
                     if(!str_contains('Escribe tus comentarios', $comment['comment']))
-                        $stars['comments'][$comment['score']][] = $comment;
+                        $stars['comments']['0'][] = $comment;
                 }
             }
-            elseif((isset($comment['comment']) && !empty($comment['comment'])) && $commentRow < $commentsMax)
-            {
-                $stars['stars_N']++;
-                $stars['count0']++;
-                if(!str_contains('Escribe tus comentarios', $comment['comment']))
-                    $stars['comments']['0'][] = $comment;
-            }
-
         }
 
         if($stars['totalStars'] > 0)
