@@ -22,7 +22,8 @@ class Printed extends BaseCouponsReport
             $coupons = collect($this->result['coupons']);
 
             $couponsChartModel = $coupons->reduce(function (AreaChartModel $couponsChartModel, $data, $key) {
-                return $couponsChartModel->addPoint($key, $data['count']);
+                return $couponsChartModel
+                ->addPoint($key, $data['count']);
             }, (new AreaChartModel())
                 ->setTitle('Cupones impresos')
                 ->setAnimated(true)
