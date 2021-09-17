@@ -53,7 +53,7 @@ trait Scores
     {
         $tokDB = DB::connection('reportes');
         $reportID = fnGenerateReportId($filters);
-        $rememberReport = fnRememberReportTime($filters['final_date']);
+        $rememberReport = 60*60*8;
         $scores = cache()->remember('new-scores-report' . $reportID, $rememberReport, function() use($tokDB, $filters) {
             $result = [];
             $query = $tokDB->table('dat_comentarios')
@@ -95,7 +95,7 @@ trait Scores
     {
         $tokDB = DB::connection('reportes');
         $reportID = fnGenerateReportId($filters);
-        $rememberReport = fnRememberReportTime($filters['final_date']);
+        $rememberReport = 60*60*8;
         $filters['giftcard'] = fnGetGiftcardFull($filters['store']);
         $filters['budget'] = fnGetBudgetFull($filters['store']);
         $scores = cache()->remember('old-scores-report' . $reportID, $rememberReport, function() use($tokDB, $filters) {
