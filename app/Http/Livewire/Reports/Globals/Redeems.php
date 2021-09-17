@@ -21,17 +21,33 @@ class Redeems extends BaseGlobalsReport
         if(!is_null($this->result) && !empty($this->result))
         {
             $redeemsChartModel = null;
-            $redeems = collect($this->result['redeems'][$this->selectedStore]);
-            $redeemsChartModel = $redeems->reduce(function (ColumnChartModel $redeemsChartModel, $redeems, $key) {
-                return $redeemsChartModel->addColumn($key, $redeems, '#5CB7DA');
-
-            }, (new ColumnChartModel())
-                ->setTitle('Canjes diarios')
-                ->setAnimated(true)
-                ->withoutLegend()
-                ->withGrid()
-                ->setXAxisVisible(true)
-            );
+            $redeems = collect($this->result['redeems']);
+            dd($redeems);
+            if(count($redeems) > 1)
+            {
+                $redeemsChartModel = $redeems->reduce(function (ColumnChartModel $redeemsChartModel, $redeems, $key) {
+                    dd($redeems);
+                    return $redeemsChartModel->addColumn($key, $redeems, '#5CB7DA');
+                }, (new ColumnChartModel())
+                    ->setTitle('Canjes diarios')
+                    ->setAnimated(true)
+                    ->withoutLegend()
+                    ->withGrid()
+                    ->setXAxisVisible(true)
+                );
+            }
+            else
+            {
+                $redeemsChartModel = $redeems->reduce(function (ColumnChartModel $redeemsChartModel, $redeems, $key) {
+                    return $redeemsChartModel->addColumn($key, $redeems, '#5CB7DA');
+                }, (new ColumnChartModel())
+                    ->setTitle('Canjes diarios')
+                    ->setAnimated(true)
+                    ->withoutLegend()
+                    ->withGrid()
+                    ->setXAxisVisible(true)
+                );
+            }
 
             return view('livewire.reports.globals.redeems')->with(['redeemsChartModel' => $redeemsChartModel]);
         }
@@ -49,7 +65,6 @@ class Redeems extends BaseGlobalsReport
     {
         $this->store_name = ($filters['store'] == 'all') ? 'Todos los establecimientos' : fnGetStoreName($filters['store']);
         $this->result = $this->getRedeems($filters);
-        $this->selectedStore = array_key_first($this->result['redeems']);
         //dd($this->result);
     }
 }

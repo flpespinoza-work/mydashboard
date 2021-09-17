@@ -15,13 +15,6 @@
         @if (!is_null($result) && !empty($result))
         <div wire:loading.remove wire:target="generateReport">
             <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $store_name }}</h3>
-            <div>
-                <select wire:change="selectStoreChart($event.target.value)" class="w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
-                    @foreach(array_keys($result['redeems']) as $store)
-                    <option value="{{ $store }}">{{ $store }}</option>
-                    @endforeach
-                </select>
-            </div>
             <div class="w-full mt-8 h-60 md:h-96 bg-gray-50">
                 <livewire:livewire-column-chart :column-chart-model="$redeemsChartModel" key="{{ $redeemsChartModel->reactiveKey() }}">
             </div>

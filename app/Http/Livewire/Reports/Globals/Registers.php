@@ -21,9 +21,7 @@ class Registers extends BaseGlobalsReport
         if(!is_null($this->result) && !empty($this->result))
         {
             $usersChartModel = null;
-
             $users = collect($this->result['registers'][$this->selectedStore]);
-
             $usersChartModel = $users->reduce(function (AreaChartModel $usersChartModel, $users, $key) {
                 return $usersChartModel->addPoint($key, $users);
             }, (new AreaChartModel())
@@ -43,7 +41,6 @@ class Registers extends BaseGlobalsReport
     {
         $this->store_name = ($filters['store'] == 'all') ? 'Todos los establecimientos' : fnGetStoreName($filters['store']);
         $this->result = $this->getRegisters($filters);
-        $this->selectedStore = array_key_first($this->result['registers']);
         //dd($this->result);
     }
 }

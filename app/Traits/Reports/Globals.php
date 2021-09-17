@@ -42,7 +42,6 @@ trait Globals
             return $tmpRes;
         });
 
-
         if(count($result))
         {
             //Eliminar dias duplicados
@@ -65,6 +64,7 @@ trait Globals
                     return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));;
                 });
             }
+
         }
         return $result;
     }
