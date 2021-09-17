@@ -16,6 +16,7 @@ class Redeems extends BaseGlobalsReport
 
     public function render()
     {
+        /*
         if(!is_null($this->result) && !empty($this->result))
         {
             $redeemsChartModel = null;
@@ -33,14 +34,14 @@ class Redeems extends BaseGlobalsReport
             );
 
             return view('livewire.reports.globals.redeems')->with(['redeemsChartModel' => $redeemsChartModel]);
-        }
+        }*/
 
         return view('livewire.reports.globals.redeems');
     }
 
     public function generateReport($filters)
     {
-        $this->store_name = fnGetStoreNAme($filters['store']);
+        $this->store_name = ($filters['store'] == 'all') ? 'Todos mis establecimientos' : fnGetStoreName($filters['store']);
         $this->result = $this->getRedeems($filters);
     }
 }

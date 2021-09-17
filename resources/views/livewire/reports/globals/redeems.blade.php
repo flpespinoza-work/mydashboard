@@ -16,10 +16,7 @@
         <div wire:loading.remove>
             <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $store_name }}</h3>
             <div class="w-full mt-8 h-60 md:h-96 bg-gray-50">
-                <livewire:livewire-column-chart
-                key="{{ $redeemsChartModel->reactiveKey() }}"
-                :column-chart-model="$redeemsChartModel"
-                />
+
             </div>
             <div class="mt-8 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -28,35 +25,27 @@
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
-                                        Fecha
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
                                         Establecimiento
                                     </th>
+                                    @foreach ($result['days'] as $day)
                                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
-                                        Canjes
+                                        {{ $day }}
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
-                                        Monto
-                                    </th>
+                                    @endforeach
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                @forelse ($result['redeems'] as $data)
-                                <tr>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        {{ $data['day'] }}
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        {{ $data['store_name'] }}
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        {{ number_format($data['redeems']) }}
-                                    </td>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        ${{ number_format($data['amount'], 2) }}
-                                    </td>
-                                </tr>
+                                @forelse ($result['redeems'] as $store => $days)
+                                    <tr>
+                                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            {{ $store }}
+                                        </td>
+                                        @foreach ($days as $redeems)
+                                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            {{ $redeems }}
+                                        </td>
+                                        @endforeach
+                                    </tr>
                                 @empty
                                 <tr>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">

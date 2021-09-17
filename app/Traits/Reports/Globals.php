@@ -22,7 +22,7 @@ trait Globals
         $result = cache()->remember('global-redeems-report' . $reportId, $rememberReport, function() use($tokDB, $filters){
             $tmpRes= [];
             $query =  $tokDB->table('dat_reporte_cupones_canjeados')
-            ->selectRaw('DATE_FORMAT(REP_CAN_CUPON_CANJE_FECHA_HORA, "%d/%m/%Y") day, COUNT(1) redeems, SUM(REP_CAN_CUPON_MONTO) amount, REP_CAN_CUPON_GIFTCARD giftcard');
+            ->selectRaw('DATE_FORMAT(REP_CAN_CUPON_CANJE_FECHA_HORA, "%d/%m/%Y") day, COUNT(1) redeems, REP_CAN_CUPON_GIFTCARD giftcard');
             if(is_array($filters['giftcards']))
                 $query->whereIn('REP_CAN_CUPON_GIFTCARD', $filters['giftcards']);
             else
@@ -30,38 +30,42 @@ trait Globals
 
             $query->whereBetween('REP_CAN_CUPON_CANJE_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->groupBy('day','REP_CAN_CUPON_GIFTCARD')
-            ->orderBy('day')
+            ->orderBy('day', 'asc')
             ->chunk(50, function($redeems) use(&$tmpRes){
                 foreach($redeems as $redeem)
                 {
-                    $tmpRes['redeems'][] = [
-                        'day' => $redeem->day,
-                        'giftcard' => $redeem->giftcard,
-                        'redeems' => $redeem->redeems,
-                        'amount' => $redeem->amount
-                    ];
+                    $name = Store::where('giftcard', $redeem->giftcard)->first()->name;
+                    $tmpRes['days'][] = $redeem->day;
+                    $tmpRes['redeems'][$name][$redeem->day] = $redeem->redeems;
                 }
             });
             return $tmpRes;
         });
 
+
         if(count($result))
         {
-            foreach($result['redeems'] as &$redeem)
-            {
-                $name = Store::where('giftcard', $redeem['giftcard'])->first()->name;
-                $redeem['store_name'] = $name;
-            }
+            //Eliminar dias duplicados
+            $result['days'] = array_values(array_unique($result['days']));
+            usort($result['days'], function($a,$b){
+                return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
+            });
+
+
             //Ordenar alfabeticamente
-            usort($result['redeems'], function($a, $b) {
-                return $a['store_name'] <=> $b['store_name'];
+            uksort($result['redeems'], function($a,$b){
+                return $a <=> $b;
             });
 
-            usort($result['redeems'], function($a, $b){
-                return strtotime(str_replace('/', '-', $a['day'])) - strtotime(str_replace('/', '-', $b['day']));
-            });
+            //Ordenar por fecha
+            foreach($result['redeems'] as $store => &$redeems)
+            {
+                uksort($redeems, function($a, $b){
+
+                    return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));;
+                });
+            }
         }
-
         return $result;
     }
 

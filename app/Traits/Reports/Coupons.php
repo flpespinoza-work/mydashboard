@@ -231,7 +231,7 @@ trait Coupons
     {
         $tokDB = DB::connection('reportes');
         $reportId = fnGenerateReportId($filters);
-        $filters['budget'] = fnGetGiftcard($filters['store']);
+        $filters['budget'] = fnGetBudget($filters['store']);
         $rememberReport = fnRememberReportTime(date('Y-m-d'));
 
         $result = cache()->remember('reporte-cupones-impresos-historio' . $reportId, $rememberReport, function() use($tokDB, $filters){
