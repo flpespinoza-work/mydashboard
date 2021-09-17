@@ -14,6 +14,7 @@ class Registers extends BaseGlobalsReport
     public $store_name;
     protected $listeners = ['generateReport'];
     public $result = null;
+    protected $selectedStore;
 
     public function render()
     {
@@ -21,10 +22,10 @@ class Registers extends BaseGlobalsReport
         {
             $usersChartModel = null;
 
-            $users = collect($this->result['registers']);
+            $users = collect($this->result['registers'][$this->selectedStore]);
 
-            $usersChartModel = $users->reduce(function (AreaChartModel $usersChartModel, $data, $key) {
-                return $usersChartModel->addPoint($data['day'], $data['users']);
+            $usersChartModel = $users->reduce(function (AreaChartModel $usersChartModel, $users, $key) {
+                return $usersChartModel->addPoint($key, $users);
             }, (new AreaChartModel())
                 ->setTitle('Altas diarias')
                 ->setAnimated(true)
@@ -40,7 +41,9 @@ class Registers extends BaseGlobalsReport
 
     public function generateReport($filters)
     {
-        $this->store_name = fnGetStoreNAme($filters['store']);
+        $this->store_name = ($filters['store'] == 'all') ? 'Todos los establecimientos' : fnGetStoreName($filters['store']);
         $this->result = $this->getRegisters($filters);
+        $this->selectedStore = array_key_first($this->result['registers']);
+        //dd($this->result);
     }
 }

@@ -13,17 +13,17 @@ class Redeems extends BaseGlobalsReport
     public $store_name;
     protected $listeners = ['generateReport'];
     public $result = null;
+    private $selectedStore = null;
 
     public function render()
     {
-        /*
+
         if(!is_null($this->result) && !empty($this->result))
         {
             $redeemsChartModel = null;
-            $users = collect($this->result['redeems']);
-
-            $redeemsChartModel = $users->reduce(function (ColumnChartModel $redeemsChartModel, $data, $key) {
-                return $redeemsChartModel->addColumn($data['day'], $data['redeems'], '#5CB7DA');
+            $redeems = collect($this->result['redeems'][$this->selectedStore]);
+            $redeemsChartModel = $redeems->reduce(function (ColumnChartModel $redeemsChartModel, $redeems, $key) {
+                return $redeemsChartModel->addColumn($key, $redeems, '#5CB7DA');
 
             }, (new ColumnChartModel())
                 ->setTitle('Canjes diarios')
@@ -34,14 +34,22 @@ class Redeems extends BaseGlobalsReport
             );
 
             return view('livewire.reports.globals.redeems')->with(['redeemsChartModel' => $redeemsChartModel]);
-        }*/
+        }
 
         return view('livewire.reports.globals.redeems');
     }
 
+    public function selectStoreChart($store)
+    {
+        //dd($store);
+        $this->selectedStore = $store;
+    }
+
     public function generateReport($filters)
     {
-        $this->store_name = ($filters['store'] == 'all') ? 'Todos mis establecimientos' : fnGetStoreName($filters['store']);
+        $this->store_name = ($filters['store'] == 'all') ? 'Todos los establecimientos' : fnGetStoreName($filters['store']);
         $this->result = $this->getRedeems($filters);
+        $this->selectedStore = array_key_first($this->result['redeems']);
+        //dd($this->result);
     }
 }

@@ -29,28 +29,26 @@
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
-                                        Fecha
-                                    </th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
                                         Establecimiento
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
-                                        Usuarios
-                                    </th>
+                                    @foreach ($result['days'] as $day)
+                                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
+                                            {{ $day }}
+                                        </th>
+                                    @endforeach
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
-                                @forelse ($result['registers'] as $data)
+                                @forelse ($result['registers'] as $store => $days)
                                 <tr>
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        {{ $data['day'] }}
+                                        {{ $store }}
                                     </td>
+                                    @foreach($days as $users)
                                     <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        {{ $data['store_name'] }}
+                                        {{ ($users > 0) ? $users : '0' }}
                                     </td>
-                                    <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                        {{ number_format($data['users']) }}
-                                    </td>
+                                    @endforeach
                                 </tr>
                                 @empty
                                 <tr>

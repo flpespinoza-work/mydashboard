@@ -13,11 +13,19 @@
         </div>
 
         @if (!is_null($result) && !empty($result))
-        <div wire:loading.remove>
+        <div wire:loading.remove wire:target="generateReport">
             <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $store_name }}</h3>
-            <div class="w-full mt-8 h-60 md:h-96 bg-gray-50">
-
+            <div>
+                <select wire:change="selectStoreChart($event.target.value)" class="w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
+                    @foreach(array_keys($result['redeems']) as $store)
+                    <option value="{{ $store }}">{{ $store }}</option>
+                    @endforeach
+                </select>
             </div>
+            <div class="w-full mt-8 h-60 md:h-96 bg-gray-50">
+                <livewire:livewire-column-chart :column-chart-model="$redeemsChartModel" key="{{ $redeemsChartModel->reactiveKey() }}">
+            </div>
+
             <div class="mt-8 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                     <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
@@ -28,9 +36,9 @@
                                         Establecimiento
                                     </th>
                                     @foreach ($result['days'] as $day)
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
-                                        {{ $day }}
-                                    </th>
+                                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
+                                            {{ $day }}
+                                        </th>
                                     @endforeach
                                 </tr>
                             </thead>
@@ -42,7 +50,7 @@
                                         </td>
                                         @foreach ($days as $redeems)
                                         <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                            {{ $redeems }}
+                                            {{ ($redeems > 0) ? $redeems : '0' }}
                                         </td>
                                         @endforeach
                                     </tr>

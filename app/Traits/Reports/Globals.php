@@ -100,15 +100,13 @@ trait Globals
             ->chunk(50, function($registers) use (&$tmpRes, &$totals){
                 foreach($registers as $register)
                 {
-                    $tmpRes['registers'][] = [
-                        'bag'=> $register->bag,
-                        'day' => $register->day,
-                        'users' => $register->users
-                    ];
-
+                    $name = Store::where('giftcard', str_replace('GIFTCARD_', '', $register->bag))->first()->name;
+                    $tmpRes['days'][] = $register->day;
+                    $tmpRes['registers'][$name][$register->day] = $register->users;
                     $totals['users'] += $register->users;
                 }
             });
+
             if(count($tmpRes))
                 $tmpRes['totals'] = $totals;
             return $tmpRes;
@@ -116,21 +114,25 @@ trait Globals
 
         if(count($result))
         {
-            foreach($result['registers'] as &$register)
-            {
-                $name = Store::where('giftcard', str_replace('GIFTCARD_', '', $register['bag']))->first()->name;
-                $register['store_name'] = $name;
-            }
+            //Eliminar dias duplicados
+            $result['days'] = array_values(array_unique($result['days']));
+            usort($result['days'], function($a,$b){
+                return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
+            });
 
             //Ordenar alfabeticamente
-            usort($result['registers'], function($a, $b) {
-                return $a['store_name'] <=> $b['store_name'];
+            uksort($result['registers'], function($a, $b) {
+                return $a <=> $b;
             });
 
-            //Ordenar por dia
-            usort($result['registers'], function($a, $b) {
-                return strtotime(str_replace('/', '-', $a['day'])) - strtotime(str_replace('/', '-', $b['day']));
-            });
+            //Ordenar por fecha
+            foreach($result['registers'] as $store => &$redeems)
+            {
+                uksort($redeems, function($a, $b){
+
+                    return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));;
+                });
+            }
         }
 
         return $result;
