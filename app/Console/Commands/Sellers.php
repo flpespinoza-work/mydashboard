@@ -50,7 +50,7 @@ class Sellers extends Command
         {
             //Buscar vendedores por establecimiento en la tabla de dat_comentarios de tokencash
             $sellers = $store->sellers()->pluck('name')->toArray();
-            $day = date('Y-m-d 00:00:00', strtotime('-7 days'));
+            $day = date('Y-m-d 00:00:00', strtotime('-6 months'));
             $tokSellers = $tokDB->table('dat_comentarios')
             ->selectRaw('DISTINCT COM_VENDEDOR')
             ->where('COM_FECHA_HORA', '>', $day)

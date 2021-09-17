@@ -60,7 +60,7 @@ class StoreTableSeeder extends Seeder
                 ],
                 [
                     'name' => 'Gasomax El Refugio',
-                    'node' => '315945',
+                    'node' => '316657',
                     'budget' => '316842',
                     'giftcard' => '4871124410'
                 ],
