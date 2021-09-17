@@ -48,9 +48,8 @@ class Index extends Component
 
     public function getScore($filters)
     {
-        //dd($filters);
         $this->scores = null;
-        $this->store_name = fnGetStoreNAme($filters['store']);
+        $this->store_name = "Establecimiento: " . fnGetStoreNAme($filters['store']);
         $this->scores = $this->getScores($filters);
     }
 }

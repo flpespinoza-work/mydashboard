@@ -7,11 +7,11 @@ trait Scores
 {
     function getScores($filters)
     {
+
         $scores = [];
         $filters['node'] = fnGetTokencashNode($filters['store']);
         $filters['initial_date'] = $filters['initial_date'] . ' 00:00:00';
         $filters['final_date'] = $filters['final_date'] . ' 23:59:59';
-
         if($filters['final_date'] < '2021-06-10')
         {
             $scores = $this->getOldScores($filters);
@@ -60,7 +60,7 @@ trait Scores
             ->join('cat_dbm_nodos_usuarios', 'cat_dbm_nodos_usuarios.NOD_USU_ID', '=', 'dat_comentarios.COM_USUARIO_ID')
             ->select(['NOD_USU_NODO', 'COM_FECHA_HORA', 'COM_ESTABLECIMIENTO_ID', 'COM_TIPO', 'COM_COMENTARIO', 'COM_CALIFICACION', 'COM_VENDEDOR', 'COM_ADICIONAL'])
             ->where('COM_ESTABLECIMIENTO_ID', $filters['node'])
-            ->whereBetween('COM_FECHA_HORA', [$filters['initial_date'] ,$filters['final_date']])
+            ->whereBetween('COM_FECHA_HORA', [$filters['initial_date'], $filters['final_date']])
             ->whereRaw("(BINARY NOD_USU_CERTIFICADO REGEXP '[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]' OR NOD_USU_CERTIFICADO = '')")
             ->orderBy('COM_FECHA_HORA', 'desc');
 
@@ -88,7 +88,6 @@ trait Scores
 
             return mb_convert_encoding($result, 'UTF-8', 'UTF-8');
         });
-
         return $scores;
     }
 

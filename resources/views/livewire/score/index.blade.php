@@ -13,7 +13,7 @@
 
         @if(!is_null($scores) && !empty($scores))
         <div wire:loading.remove>
-            <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $store_name }}</h3>
+            <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">{{ $store_name }}</h3>
             <div class="space-y-4 mt-7">
                 <div class="grid grid-cols-4 gap-4">
                     <div class="col-span-1 p-4 border border-gray-100 rounded-sm bg-gray-50">
