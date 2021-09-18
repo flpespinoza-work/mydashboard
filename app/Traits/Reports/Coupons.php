@@ -171,38 +171,41 @@ trait Coupons
         $reportId = fnGenerateReportId($filters);
         $rememberReport = fnRememberReportTime($filters['final_date']);
         $result = cache()->remember('reporte-cupones-impresos-canjeados' . $reportId, $rememberReport, function() use ($filters){
+            $pr = [];
             $printed = $this->getPrintedCoupons($filters);
             $redeemed = $this->getRedeemedCoupons($filters);
             $coupons = array_merge_recursive($printed, $redeemed);
-
-            uksort($coupons['coupons'], function($a, $b){
-                return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
-            });
-
-            foreach($coupons['coupons'] as $day => $data)
+            if(count($coupons))
             {
-                $pr['coupons'][$day] = [
-                    'day' => $day,
-                    'printed' => $data['count'][0],
-                    'redeemed' => $data['count'][1],
-                    'printed_amount' => $data['amount'][0],
-                    'redeemed_amount' => $data['amount'][1]
+                uksort($coupons['coupons'], function($a, $b){
+                    return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
+                });
+
+                foreach($coupons['coupons'] as $day => $data)
+                {
+                    $pr['coupons'][$day] = [
+                        'day' => $day,
+                        'printed' => $data['count'][0],
+                        'redeemed' => $data['count'][1],
+                        'printed_amount' => $data['amount'][0],
+                        'redeemed_amount' => $data['amount'][1]
+                    ];
+                }
+
+                $pr['totals'] = [
+                    'avg_printed' => $coupons['totals']['average_amount'][0],
+                    'avg_redeemed' => $coupons['totals']['average_amount'][1],
+                    'printed' => $coupons['totals']['printed_coupons'],
+                    'printed_amount' => $coupons['totals']['printed_amount'],
+                    'redeemed' => $coupons['totals']['redeemed_coupons'],
+                    'redeemed_amount' => $coupons['totals']['redeemed_amount']
+
                 ];
             }
 
-            $pr['totals'] = [
-                'avg_printed' => $coupons['totals']['average_amount'][0],
-                'avg_redeemed' => $coupons['totals']['average_amount'][1],
-                'printed' => $coupons['totals']['printed_coupons'],
-                'printed_amount' => $coupons['totals']['printed_amount'],
-                'redeemed' => $coupons['totals']['redeemed_coupons'],
-                'redeemed_amount' => $coupons['totals']['redeemed_amount']
-
-            ];
 
             return $pr;
         });
-
         return $result;
     }
 

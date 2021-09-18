@@ -15,11 +15,11 @@ if(!function_exists('fnGetMyStores'))
         }
         elseif(auth()->user()->isGroupOwner())
         {
-            $stores = Cache::remember('stores-' . auth()->user()->id, 60*60*12, function(){ return auth()->user()->group->stores->pluck('name', 'id')->sort(); });
+            $stores = Cache::remember('stores-' . auth()->user()->id, 60*60*12, function(){ return auth()->user()->group->stores->pluck('name', 'id')->sort()->toArray(); });
         }
         else
         {
-            $stores = Cache::remember('stores-' . auth()->user()->id, 60*60*12, function(){ return auth()->user()->stores->pluck('name', 'id')->sort(); });
+            $stores = Cache::remember('stores-' . auth()->user()->id, 60*60*12, function(){ return auth()->user()->stores->pluck('name', 'id')->sort()->toArray(); });
         }
 
         return $stores;

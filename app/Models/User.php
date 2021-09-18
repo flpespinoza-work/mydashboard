@@ -59,7 +59,7 @@ class User extends Authenticatable
 
     public function isGroupOwner()
     {
-        return $this->hasRole('group-owner');
+        return $this->hasRole(['group-owner', 'groupadmin']);
     }
 
     public function isStoreManager()

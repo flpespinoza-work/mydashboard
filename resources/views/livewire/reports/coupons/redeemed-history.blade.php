@@ -40,7 +40,11 @@
                                             ${{ number_format($result['printed']['amount'],2) }}
                                         </td>
                                         <td class="px-6 py-4 text-sm text-gray-500 lg:text-lg whitespace-nowrap">
+                                            @if($result['printed']['printed'] > 0)
                                             ${{ number_format($result['printed']['amount'] / $result['printed']['printed'] ,2) }}
+                                            @else
+                                            $0.00
+                                            @endif
                                         </td>
                                     </tr>
                                 </tbody>
@@ -76,7 +80,11 @@
                                             ${{ number_format($result['redeems']['amount'],2) }}
                                         </td>
                                         <td class="px-6 py-4 text-sm text-gray-500 lg:text-lg whitespace-nowrap">
+                                            @if($result['redeems']['redeems'] > 0)
                                             ${{ number_format($result['redeems']['amount'] / $result['redeems']['redeems'] ,2) }}
+                                            @else
+                                            $0.00
+                                            @endif
                                         </td>
                                     </tr>
                                 </tbody>

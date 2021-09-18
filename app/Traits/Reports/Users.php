@@ -13,7 +13,7 @@ trait Users
         $rememberReport = fnRememberReportTime($filters['final_date']);
         //dd($filters);
         $result = cache()->remember('new-users-report' . $reportId, $rememberReport, function() use($tokDB, $filters){
-            $tmpResult = [];
+            $tmpRes = [];
             $totalUsers = 0;
 
             $tokDB->table('cat_dbm_nodos_usuarios')
@@ -35,10 +35,10 @@ trait Users
                     ];
                 }
             });
-            $tmpRes['totals'] = $totalUsers;
-            return $tmpRes;
+            if(count($tmpRes))
+                $tmpRes['totals'] = $totalUsers;
 
-            return $tmpResult;
+            return $tmpRes;
 
         });
 
