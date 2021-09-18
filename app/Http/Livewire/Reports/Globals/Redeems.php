@@ -22,11 +22,9 @@ class Redeems extends BaseGlobalsReport
         {
             $redeemsChartModel = null;
             $redeems = collect($this->result['redeems']);
-            dd($redeems);
             if(count($redeems) > 1)
             {
                 $redeemsChartModel = $redeems->reduce(function (ColumnChartModel $redeemsChartModel, $redeems, $key) {
-                    dd($redeems);
                     return $redeemsChartModel->addColumn($key, $redeems, '#5CB7DA');
                 }, (new ColumnChartModel())
                     ->setTitle('Canjes diarios')
