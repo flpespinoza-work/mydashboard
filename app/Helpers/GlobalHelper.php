@@ -124,7 +124,7 @@ if(!function_exists('fnGetTokencashNode'))
 //Obtener el nombre de un establecimiento
 if(!function_exists('fnGetStoreName'))
 {
-    function fnGetStoreNAme($store)
+    function fnGetStoreName($store)
     {
         return Store::find($store)->name;
     }

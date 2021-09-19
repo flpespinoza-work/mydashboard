@@ -10,4 +10,5 @@ class BaseCouponsReport extends Component
     use Coupons;
 
     public $result = null;
+
 }

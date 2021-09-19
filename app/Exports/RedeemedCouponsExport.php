@@ -32,14 +32,16 @@ class RedeemedCouponsExport implements FromCollection, WithHeadings, WithColumnF
         return [
             'Fecha',
             'Cupones canjeados',
-            'Monto'
+            'Monto',
+            'Pormedio de canje'
         ];
     }
 
     public function columnFormats(): array
     {
         return [
-            'C' => NumberFormat::FORMAT_CURRENCY_USD_SIMPLE
+            'C' => NumberFormat::FORMAT_CURRENCY_USD_SIMPLE,
+            'D' => NumberFormat::FORMAT_CURRENCY_USD_SIMPLE
         ];
     }
 }
