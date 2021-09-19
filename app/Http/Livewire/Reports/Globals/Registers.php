@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Reports\Globals;
 
+use App\Exports\GlobalsRegistersExport;
 use App\Http\Livewire\Reports\BaseGlobalsReport;
 use App\Traits\Reports\Globals;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
@@ -11,7 +12,7 @@ class Registers extends BaseGlobalsReport
     use Globals;
 
     public $reportName = 'reports.globals.registers';
-    public $store_name;
+    public $report_data;
     protected $listeners = ['generateReport'];
     public $result = null;
 
@@ -35,7 +36,7 @@ class Registers extends BaseGlobalsReport
             }
             else
             {
-                $users = collect($this->result['registers'][$this->store_name]);
+                $users = collect($this->result['registers'][$this->report_data['store']]);
                 $usersChartModel = $users->reduce(function (ColumnChartModel $usersChartModel, $users, $key) {
                     return $usersChartModel->addColumn($key, $users, '#5CB7DA');
                 }, (new ColumnChartModel())
@@ -55,7 +56,13 @@ class Registers extends BaseGlobalsReport
 
     public function generateReport($filters)
     {
-        $this->store_name = ($filters['store'] == 'all') ? 'Todos los establecimientos' : fnGetStoreName($filters['store']);
+        $this->report_data['store'] = ($filters['store'] == 'all') ? 'Todos mis establecimientos' : fnGetStoreName($filters['store']);
+        $this->report_data['period'] = "Periodo: " . date('d/m/Y', strtotime($filters['initial_date'])) ." al " . date('d/m/Y', strtotime($filters['final_date']));
         $this->result = $this->getRegisters($filters);
+    }
+
+    public function exportReport()
+    {
+        return (new GlobalsRegistersExport($this->result['days'], collect($this->result['registers']), $this->report_data))->download('reporte_global_altas_diarias.xlsx');
     }
 }

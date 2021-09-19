@@ -14,7 +14,19 @@
 
         @if (!is_null($result) && !empty($result))
         <div wire:loading.remove>
-            <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $store_name }}</h3>
+            <div class="flex items-center">
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $report_data['store'] }}</h3>
+                    <h5 class="text-xs font-medium text-gray-500 md:text-base">{{ $report_data['period'] }}</h5>
+                </div>
+
+                <button
+                wire:click.prefetch="exportReport"
+                type="button"
+                class="px-4 py-2 ml-auto text-sm font-semibold bg-gray-800 rounded-md hover:bg-gray-700 text-gray-50">
+                    <x-heroicon-s-document-download class="w-4 h-4 md:h-5 md:w-5" />
+                 </button>
+            </div>
             <div class="w-full mt-8 h-60 md:h-96 bg-gray-50">
                 <livewire:livewire-column-chart
                 key="{{ $usersChartModel->reactiveKey() }}"

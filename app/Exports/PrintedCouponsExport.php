@@ -69,7 +69,7 @@ WithStyles
         return
         [
             [
-                'Reporte de cupones impresos',
+                'Reporte de cupones impresos'
             ],
             [
                 'Establecimiento: ' . $this->report_data['store']

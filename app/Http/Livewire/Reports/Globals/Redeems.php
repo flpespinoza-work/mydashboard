@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Reports\Globals;
 
+use App\Exports\GlobalsRedeemsExport;
 use App\Http\Livewire\Reports\BaseGlobalsReport;
 use App\Traits\Reports\Globals;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
@@ -10,10 +11,9 @@ class Redeems extends BaseGlobalsReport
 {
     use Globals;
     public $reportName = 'reports.globals.redeems';
-    public $store_name;
+    public $report_data;
     protected $listeners = ['generateReport'];
     public $result = null;
-    private $selectedStore = null;
 
     public function render()
     {
@@ -36,7 +36,7 @@ class Redeems extends BaseGlobalsReport
             }
             else
             {
-                $redeems = collect($this->result['redeems'][$this->store_name]);
+                $redeems = collect($this->result['redeems'][$this->report_data['store']]);
                 $redeemsChartModel = $redeems->reduce(function (ColumnChartModel $redeemsChartModel, $redeems, $key) {
                     return $redeemsChartModel->addColumn($key, $redeems, '#5CB7DA');
                 }, (new ColumnChartModel())
@@ -54,16 +54,15 @@ class Redeems extends BaseGlobalsReport
         return view('livewire.reports.globals.redeems');
     }
 
-    public function selectStoreChart($store)
-    {
-        //dd($store);
-        $this->selectedStore = $store;
-    }
-
     public function generateReport($filters)
     {
-        $this->store_name = ($filters['store'] == 'all') ? 'Todos los establecimientos' : fnGetStoreName($filters['store']);
+        $this->report_data['store'] = ($filters['store'] == 'all') ? 'Todos mis establecimientos' : fnGetStoreName($filters['store']);
+        $this->report_data['period'] = "Periodo: " . date('d/m/Y', strtotime($filters['initial_date'])) ." al " . date('d/m/Y', strtotime($filters['final_date']));
         $this->result = $this->getRedeems($filters);
-        //dd($this->result);
+    }
+
+    public function exportReport()
+    {
+        return (new GlobalsRedeemsExport($this->result['days'], collect($this->result['redeems']), $this->report_data))->download('reporte_global_canjes_diarios.xlsx');
     }
 }
