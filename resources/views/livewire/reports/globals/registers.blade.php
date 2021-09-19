@@ -16,9 +16,9 @@
         <div wire:loading.remove>
             <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $store_name }}</h3>
             <div class="w-full mt-8 h-60 md:h-96 bg-gray-50">
-                <livewire:livewire-area-chart
+                <livewire:livewire-column-chart
                 key="{{ $usersChartModel->reactiveKey() }}"
-                :area-chart-model="$usersChartModel"
+                :column-chart-model="$usersChartModel"
                 />
             </div>
             <div class="mt-8 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -58,6 +58,16 @@
                                 </tr>
                                 @endforelse
                             </tbody>
+                            @if(isset($result['totals']))
+                            <tfoot>
+                                <tr>
+                                    <td class="px-6 py-4 text-sm font-bold text-gray-500 whitespace-nowrap">Totales</td>
+                                    @foreach ($result['totals'] as $total)
+                                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{{ $total }}</td>
+                                    @endforeach
+                                </tr>
+                            </tfoot>
+                            @endif
                         </table>
                     </div>
                 </div>

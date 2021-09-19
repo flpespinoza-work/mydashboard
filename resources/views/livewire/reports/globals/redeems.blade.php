@@ -55,6 +55,16 @@
                                 </tr>
                                 @endforelse
                             </tbody>
+                            @if(isset($result['totals']))
+                            <tfoot>
+                                <tr>
+                                    <td class="px-6 py-4 text-sm font-bold text-gray-500 whitespace-nowrap">Totales</td>
+                                    @foreach ($result['totals'] as $total)
+                                        <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">{{ $total }}</td>
+                                    @endforeach
+                                </tr>
+                            </tfoot>
+                            @endif
                         </table>
                     </div>
                 </div>

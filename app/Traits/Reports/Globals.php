@@ -117,12 +117,8 @@ trait Globals
                     $name = Store::where('giftcard', str_replace('GIFTCARD_', '', $register->bag))->first()->name;
                     $tmpRes['days'][] = $register->day;
                     $tmpRes['registers'][$name][$register->day] = $register->users;
-                    $totals['users'] += $register->users;
                 }
             });
-
-            if(count($tmpRes))
-                $tmpRes['totals'] = $totals;
             return $tmpRes;
         });
 
@@ -146,6 +142,20 @@ trait Globals
 
                     return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));;
                 });
+            }
+
+            //Obtener totales
+            if(count($result['registers']) > 1)
+            {
+                $totals = [];
+                foreach($result['registers'] as $store => $days)
+                {
+                    foreach($days as $day => $users)
+                    {
+                        isset($totals["{$day}"]) ? $totals["{$day}"] += $users : $totals["{$day}"] = $users;
+                    }
+                }
+                $result['totals'] = $totals;
             }
         }
 
