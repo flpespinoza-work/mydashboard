@@ -11,15 +11,21 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class DetailRedeemedCouponsExport implements FromCollection, WithHeadings, WithColumnFormatting, ShouldAutoSize, WithStyles
+class DetailRedeemedCouponsExport implements
+FromCollection,
+WithHeadings,
+WithColumnFormatting,
+ShouldAutoSize,
+WithStyles
 {
     use Exportable;
 
-    private $coupons;
+    private $coupons, $report_data;
 
-    public function __construct($coupons)
+    public function __construct($coupons, $report_data)
     {
         $this->coupons = $coupons;
+        $this->report_data = $report_data;
     }
     /**
     * @return \Illuminate\Support\Collection
@@ -32,12 +38,23 @@ class DetailRedeemedCouponsExport implements FromCollection, WithHeadings, WithC
     public function headings(): array
     {
         return [
-            'Usuario',
-            'Cupón',
-            'Fecha impresión',
-            'Fecha canje',
-            'Monto',
-            'Saldo usuario'
+            [
+                'Reporte de cupones impresos',
+            ],
+            [
+                'Establecimiento: ' . $this->report_data['store']
+            ],
+            [
+                $this->report_data['period']
+            ],
+            [
+                'Usuario',
+                'Cupón',
+                'Fecha impresión',
+                'Fecha canje',
+                'Monto',
+                'Saldo usuario'
+            ]
         ];
     }
 
@@ -52,7 +69,7 @@ class DetailRedeemedCouponsExport implements FromCollection, WithHeadings, WithC
     public function styles(Worksheet $sheet)
     {
         return [
-            1 => ['font' => ['bold' => true]]
+            4 => ['font' => ['bold' => true]]
         ];
     }
 }

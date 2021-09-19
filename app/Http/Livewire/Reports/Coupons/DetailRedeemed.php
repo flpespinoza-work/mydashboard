@@ -8,7 +8,7 @@ use App\Http\Livewire\Reports\BaseCouponsReport;
 class DetailRedeemed extends BaseCouponsReport
 {
     public $reportName = 'reports.coupons.detail-redeemed';
-    public $store_name;
+    public $report_data;
     protected $listeners = ['generateReport'];
 
     public function render()
@@ -18,12 +18,13 @@ class DetailRedeemed extends BaseCouponsReport
 
     public function generateReport($filters)
     {
-        $this->store_name = fnGetStoreNAme($filters['store']);
+        $this->report_data['store'] = fnGetStoreName($filters['store']);
+        $this->report_data['period'] = "Periodo: " . date('d/m/Y', strtotime($filters['initial_date'])) ." al " . date('d/m/Y', strtotime($filters['final_date']));
         $this->result = $this->getDetailRedeemedCoupons($filters);
     }
 
     public function exportReport()
     {
-        return (new DetailRedeemedCouponsExport(collect($this->result['coupons'])))->download('reporte_detalle_cupones_canjeados.xlsx');
+        return (new DetailRedeemedCouponsExport(collect($this->result['coupons']), $this->report_data))->download('reporte_detalle_cupones_canjeados.xlsx');
     }
 }

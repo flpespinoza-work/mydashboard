@@ -9,7 +9,7 @@ use Asantibanez\LivewireCharts\Models\AreaChartModel;
 class Redeemed extends BaseCouponsReport
 {
     public $reportName = 'reports.coupons.redeemed';
-    public $store_name;
+    public $report_data;
     protected $listeners = ['generateReport'];
 
     public function render()
@@ -53,12 +53,13 @@ class Redeemed extends BaseCouponsReport
 
     public function generateReport($filters)
     {
-        $this->store_name = fnGetStoreNAme($filters['store']);
+        $this->report_data['store'] = fnGetStoreName($filters['store']);
+        $this->report_data['period'] = "Periodo: " . date('d/m/Y', strtotime($filters['initial_date'])) ." al " . date('d/m/Y', strtotime($filters['final_date']));
         $this->result = $this->getRedeemedCoupons($filters);
     }
 
     public function exportReport()
     {
-        return (new RedeemedCouponsExport(collect($this->result['coupons'])))->download('reporte_cupones_canjeados.xlsx');
+        return (new RedeemedCouponsExport(collect($this->result['coupons']), $this->report_data))->download('reporte_cupones_canjeados.xlsx');
     }
 }
