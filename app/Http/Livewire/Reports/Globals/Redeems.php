@@ -21,9 +21,9 @@ class Redeems extends BaseGlobalsReport
         if(!is_null($this->result) && !empty($this->result))
         {
             $redeemsChartModel = null;
-            $redeems = collect($this->result['redeems']);
-            if(count($redeems) > 1)
+            if(count($this->result['redeems']) > 1)
             {
+                $redeems = collect($this->result['totals']);
                 $redeemsChartModel = $redeems->reduce(function (ColumnChartModel $redeemsChartModel, $redeems, $key) {
                     return $redeemsChartModel->addColumn($key, $redeems, '#5CB7DA');
                 }, (new ColumnChartModel())
@@ -36,6 +36,7 @@ class Redeems extends BaseGlobalsReport
             }
             else
             {
+                $redeems = collect($this->result['redeems'][$this->store_name]);
                 $redeemsChartModel = $redeems->reduce(function (ColumnChartModel $redeemsChartModel, $redeems, $key) {
                     return $redeemsChartModel->addColumn($key, $redeems, '#5CB7DA');
                 }, (new ColumnChartModel())

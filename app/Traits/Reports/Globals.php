@@ -65,7 +65,21 @@ trait Globals
                 });
             }
 
+            //Obtener totales
+            if(count($result['redeems']) > 1)
+            {
+                $totals = [];
+                foreach($result['redeems'] as $store => $days)
+                {
+                    foreach($days as $day => $amount)
+                    {
+                        isset($totals["{$day}"]) ? $totals["{$day}"] += $amount : $totals["{$day}"] = $amount;
+                    }
+                }
+                $result['totals'] = $totals;
+            }
         }
+
         return $result;
     }
 
