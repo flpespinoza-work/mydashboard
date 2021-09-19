@@ -14,12 +14,17 @@
 
         @if (!is_null($result) && !empty($result))
         <div wire:loading.remove>
-            <div class="flex items-center justify-between">
-                <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $store_name }}</h3>
-                <button class="items-center hidden px-3 py-2 space-x-2 text-xs font-bold bg-gray-700 border border-gray-500 rounded-md hover:bg-gray-600 text-gray-50" href="#">
-                    <x-heroicon-o-download class="w-4 h-4"/>
-                    <span class="hidden md:inline-block">Descargar</span>
-                </button>
+            <div class="flex items-center">
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $report_data['store'] }}</h3>
+                    <h5 class="text-xs font-medium text-gray-500 md:text-base">{{ $report_data['period'] }}</h5>
+                </div>
+                <button
+                wire:click.prefetch="exportReport"
+                type="button"
+                class="px-4 py-2 ml-auto text-sm font-semibold bg-gray-800 rounded-md hover:bg-gray-700 text-gray-50">
+                    <x-heroicon-s-document-download class="w-4 h-4 md:h-5 md:w-5" />
+                 </button>
             </div>
 
             <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">

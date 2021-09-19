@@ -2,7 +2,7 @@
 
 namespace App\Http\Livewire\Reports\Users;
 
-use App\Exports\UsersExport;
+use App\Exports\UsersHistoryExport;
 use App\Http\Livewire\Reports\BaseUsersReport;
 
 class History extends BaseUsersReport
@@ -20,11 +20,10 @@ class History extends BaseUsersReport
     {
         $this->store_name = fnGetStoreNAme($filters['store']);
         $this->result = $this->getHistoryUsers($filters);
-        //dd($this->result);
     }
 
     public function exportReport()
     {
-        //return (new UsersExport(collect($this->result['REGISTROS'])))->download('reporte_nuevos_usuarios.xlsx');
+        return (new UsersHistoryExport(collect($this->result['data']), $this->store_name))->download('reporte_acumulado_usuarios.xlsx');
     }
 }

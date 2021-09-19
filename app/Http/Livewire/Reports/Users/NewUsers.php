@@ -2,14 +2,14 @@
 
 namespace App\Http\Livewire\Reports\Users;
 
-use App\Exports\UsersHistoryExport;
+use App\Exports\UsersExport;
 use App\Http\Livewire\Reports\BaseUsersReport;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 
 class NewUsers extends BaseUsersReport
 {
     public $reportName = 'reports.users.new-users';
-    public $store_name;
+    public $report_data;
     protected $listeners = ['generateReport', 'exportReport'];
 
     public function render()
@@ -38,13 +38,13 @@ class NewUsers extends BaseUsersReport
 
     public function generateReport($filters)
     {
-        $this->store_name = fnGetStoreNAme($filters['store']);
+        $this->report_data['store'] = fnGetStoreName($filters['store']);
+        $this->report_data['period'] = "Periodo: " . date('d/m/Y', strtotime($filters['initial_date'])) ." al " . date('d/m/Y', strtotime($filters['final_date']));
         $this->result = $this->getNewUsers($filters);
     }
 
     public function exportReport()
     {
-        dd('Exporta');
-        //return (new UsersHistoryExport(collect($this->result['data'])))->download('reporte_historico_usuarios.xlsx');
+        return (new UsersExport(collect($this->result['data']), $this->report_data))->download('reporte_nuevos_usuarios.xlsx');
     }
 }
