@@ -15,11 +15,12 @@ class DetailSalesExport implements FromCollection, WithHeadings, WithColumnForma
 {
     use Exportable;
 
-    protected $sales;
+    protected $sales, $report_data;
 
-    public function __construct($sales)
+    public function __construct($sales, $report_data)
     {
         $this->sales = $sales;
+        $this->report_data = $report_data;
     }
 
     /**
@@ -32,10 +33,22 @@ class DetailSalesExport implements FromCollection, WithHeadings, WithColumnForma
 
     public function headings(): array
     {
-        return [
-            'Fecha',
-            'Ventas',
-            'Monto'
+        return
+        [
+            [
+                'Reporte detallado de ventas',
+            ],
+            [
+                'Establecimiento: ' . $this->report_data['store']
+            ],
+            [
+                $this->report_data['period']
+            ],
+            [
+                'Fecha',
+                'Usuario',
+                'Monto'
+            ]
         ];
     }
 
@@ -49,7 +62,7 @@ class DetailSalesExport implements FromCollection, WithHeadings, WithColumnForma
     public function styles(Worksheet $sheet)
     {
         return [
-            1 => ['font' => ['bold' => true]]
+            4 => ['font' => ['bold' => true]]
         ];
     }
 }
