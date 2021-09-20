@@ -13,6 +13,7 @@ class Index extends Component
     //public Group $group;
     public $group;
     public $showModal = false;
+    public $search = '';
 
     protected $rules = [
         'group.name' => 'required|min:6|unique:groups,name',
@@ -47,7 +48,10 @@ class Index extends Component
 
     public function render()
     {
-        $groups = Group::with('stores')->get();
+        $groups = Group::search($this->search)
+        ->with('stores')
+        ->Paginate(20);
+
         return view('livewire.group.index', compact('groups'));
     }
 

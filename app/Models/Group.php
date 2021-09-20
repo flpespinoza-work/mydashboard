@@ -16,4 +16,11 @@ class Group extends Model
     {
         return $this->hasMany(Store::class);
     }
+
+    public static function search($search)
+    {
+        return empty($search) ? static::query()
+            : static::query()
+              ->where('name', 'like', '%' . $search . '%');
+    }
 }

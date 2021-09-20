@@ -5,12 +5,22 @@ namespace App\Http\Livewire\Store;
 use App\Models\Store;
 use App\Models\Group;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
+    use WithPagination;
+
     public $groups;
     public $store, $group;
+    public $search = '';
     public $showModal = false;
+
+    protected $queryString = [
+        'search' => [
+            'except' => '',
+        ]
+    ];
 
     protected $rules = [
         'store.name' => 'required',
@@ -29,7 +39,11 @@ class Index extends Component
 
     public function render()
     {
-        return view('livewire.store.index');
+        $stores = Store::search($this->search)
+        ->with('group')
+        ->orderBy('name')
+        ->Paginate(20);
+        return view('livewire.store.index', compact('stores'));
     }
 
     public function create()

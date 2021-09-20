@@ -1,5 +1,5 @@
 <div class="w-full mx-auto overflow-hidden">
-    <div class="flex items-center p-3 space-x-3 bg-white rounded-md">
+    <div class="flex items-center py-3 space-x-3 bg-white rounded-md">
         <input class="flex-1 w-full text-sm border-gray-100 rounded-md bg-gray-50 focus:ring-gray-200 focus:border-gray-100" type="search" wire:model="search" id="search" placeholder="Buscar...">
         <button
             wire:click="create"
@@ -15,6 +15,71 @@
         </a>
     </div>
     <div class="mt-4">
+
+        <div class="flex flex-col">
+            <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                    <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
+                        <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
+                                    Nombre
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
+                                    Grupo
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
+                                    Nodo Tokencash
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
+                                    Presupuesto
+                                </th>
+                                <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
+                                    Giftcard
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @foreach($stores as $store)
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-500">
+                                        {{ $store->name }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex px-2 text-xs font-semibold leading-5 text-blue-800 bg-blue-100 rounded-full">
+                                        {{ $store->group->name }}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-500">
+                                        {{ $store->node }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="text-sm text-gray-500">
+                                        {{ $store->budget }}
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                    <div class="text-sm text-gray-500">
+                                        {{ $store->giftcard }}
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-4">
+            {!! $stores->links() !!}
+        </div>
     </div>
     <div>
         <form wire:submit.prevent="saveStore">
@@ -26,6 +91,7 @@
                         <select wire:model.defer="group"
                         class="w-full mt-2 text-xs border-gray-100 rounded-md focus:ring-gray-200 focus:border-gray-100 bg-gray-50"
                         >
+                            <option value="">Seleccione un grupo</option>
                             @foreach ($groups as $group)
                             <option value="{{ $group->id }}">{{ $group->name }}</option>
                             @endforeach

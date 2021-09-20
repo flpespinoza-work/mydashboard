@@ -4,7 +4,7 @@ use App\Models\Store;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Date;
 
-//Obtener los establecimientos asignados a cada usuario
+//Obtener los establecimientos asignados a cada usuario, solo nombre e id
 if(!function_exists('fnGetMyStores'))
 {
     function fnGetMyStores()

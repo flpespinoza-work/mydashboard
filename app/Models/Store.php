@@ -27,4 +27,11 @@ class Store extends Model
         return $this->hasMany(Seller::class);
     }
 
+    public static function search($search)
+    {
+        return empty($search) ? static::query()
+            : static::query()
+              ->where('name', 'like', '%' . $search . '%');
+    }
+
 }
