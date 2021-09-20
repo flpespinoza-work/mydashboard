@@ -14,8 +14,13 @@
             <span class="hidden ml-2 text-xs font-semibold text-gray-500 md:inline-block">Volver a grupos</span>
         </a>
     </div>
+    <div class="my-4">
+        <form wire:submit.prevent="importStores">
+            <input type="file" wire:model.defer="file">
+            <button type="submit">Importar</button>
+        </form>
+    </div>
     <div class="mt-4">
-
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">

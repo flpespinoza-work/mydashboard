@@ -2,17 +2,21 @@
 
 namespace App\Http\Livewire\Store;
 
+use App\Imports\StoreImport;
 use App\Models\Store;
 use App\Models\Group;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Index extends Component
 {
     use WithPagination;
+    use WithFileUploads;
 
     public $groups;
-    public $store, $group;
+    public $store, $group, $file;
     public $search = '';
     public $showModal = false;
 
@@ -66,5 +70,21 @@ class Index extends Component
         $this->store->group_id = $this->group;
         $this->store->save();
         $this->showModal = false;
+    }
+
+    public function importStores()
+    {
+        try {
+
+            $this->validate([
+                'file' => 'required|mimes:xlsx,xls'
+            ]);
+
+            Excel::import(new StoreImport, $this->file);
+        } catch (\Throwable $th) {
+
+        }
+
+
     }
 }

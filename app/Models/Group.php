@@ -10,7 +10,7 @@ class Group extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $guarded = [];
+    protected $fillable = ['name', 'email', 'phone', 'contact'];
 
     public function stores()
     {
