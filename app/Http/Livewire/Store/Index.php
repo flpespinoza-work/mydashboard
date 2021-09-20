@@ -9,9 +9,17 @@ use Livewire\Component;
 class Index extends Component
 {
     public $groups;
-    //public Store $store;
-    public $store;
+    public $store, $group;
     public $showModal = false;
+
+    protected $rules = [
+        'store.name' => 'required',
+        'store.node' => 'required|unique:stores,node',
+        'store.giftcard' => 'required|unique:stores,giftcard',
+        'store.budget' => 'required|unique:stores,budget',
+        'store.email' => 'email:rfc',
+        'store.phone' => 'digits:10'
+    ];
 
     public function mount()
     {
@@ -34,5 +42,15 @@ class Index extends Component
     public function initializeStore()
     {
         return Store::make();
+    }
+
+    public function saveStore()
+    {
+        $this->validate();
+
+        //Asignar grupo
+        $this->store->group_id = $this->group;
+        $this->store->save();
+        $this->showModal = false;
     }
 }

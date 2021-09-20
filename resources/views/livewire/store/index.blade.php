@@ -23,7 +23,9 @@
                 <x-slot name="content">
                     <div class="my-2">
                         <label class="block text-xs font-semibold text-gray-500" for="group">Grupo <span class="text-red-500">*</span></label>
-                        <select wire:model.defer="store.group_id">
+                        <select wire:model.defer="group"
+                        class="w-full mt-2 text-xs border-gray-100 rounded-md focus:ring-gray-200 focus:border-gray-100 bg-gray-50"
+                        >
                             @foreach ($groups as $group)
                             <option value="{{ $group->id }}">{{ $group->name }}</option>
                             @endforeach
@@ -42,7 +44,7 @@
                         </div>
                         <div class="my-2 md:w-1/3">
                             <label class="block text-xs font-semibold text-gray-500" for="node">Nodo Tokencash <span class="text-red-500">*</span></label>
-                            <input class="w-full mt-2 border-gray-100 rounded-md bg-gray-50 focus:ring-gray-200 focus:border-gray-100" wire:model.defer="store.token_node" type="text">
+                            <input class="w-full mt-2 border-gray-100 rounded-md bg-gray-50 focus:ring-gray-200 focus:border-gray-100" wire:model.defer="store.node" type="text">
                             @error('store.token_node')
                             <span class="font-medium text-red-400 text-xxs">{{ $message }}</span>
                             @enderror
@@ -51,14 +53,14 @@
                     <div class="flex items-center space-x-2">
                         <div class="my-2 md:w-1/2">
                             <label class="block text-xs font-semibold text-gray-500" for="giftcard">Giftcard <span class="text-red-500">*</span></label>
-                            <input class="w-full mt-2 border-gray-100 rounded-md bg-gray-50 focus:ring-gray-200 focus:border-gray-100" wire:model.defer="store.token_giftcard" type="text">
+                            <input class="w-full mt-2 border-gray-100 rounded-md bg-gray-50 focus:ring-gray-200 focus:border-gray-100" wire:model.defer="store.giftcard" type="text">
                             @error('store.token_giftcard')
                             <span class="font-medium text-red-400 text-xxs">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="my-2 md:w-1/2">
                             <label class="block text-xs font-semibold text-gray-500" for="budget">Presupuesto <span class="text-red-500">*</span></label>
-                            <input class="w-full mt-2 border-gray-100 rounded-md bg-gray-50 focus:ring-gray-200 focus:border-gray-100" wire:model.defer="store.token_budget" type="tel">
+                            <input class="w-full mt-2 border-gray-100 rounded-md bg-gray-50 focus:ring-gray-200 focus:border-gray-100" wire:model.defer="store.budget" type="tel">
                             @error('store.token_budget')
                             <span class="font-medium text-red-400 text-xxs">{{ $message }}</span>
                             @enderror
@@ -67,9 +69,6 @@
                     <div class="my-2">
                         <label class="block text-xs font-semibold text-gray-500" for="contact_name">Contacto</label>
                         <input class="w-full mt-2 border-gray-100 rounded-md bg-gray-50 focus:ring-gray-200 focus:border-gray-100" wire:model.defer="store.contact_name" type="text">
-                        @error('store.contact_name')
-                        <span class="font-medium text-red-400 text-xxs">{{ $message }}</span>
-                        @enderror
                     </div>
                     <div class="flex items-center space-x-2">
                         <div class="my-2 md:w-1/2">
