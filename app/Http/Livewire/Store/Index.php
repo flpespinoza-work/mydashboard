@@ -72,19 +72,45 @@ class Index extends Component
         $this->showModal = false;
     }
 
+    public function updatedFile()
+    {
+        $this->validate([
+            'file' => 'required|file|mimes:xls,xlsx'
+        ]);
+    }
+
     public function importStores()
     {
-        try {
+        try
+        {
 
             $this->validate([
-                'file' => 'required|mimes:xlsx,xls'
+                'file' => 'file|mimes:xlsx,xls'
             ]);
 
             Excel::import(new StoreImport, $this->file);
-        } catch (\Throwable $th) {
 
+            $this->alertSuccess();
         }
+        catch (\Throwable $th)
+        {
+            $this->alertError();
+        }
+    }
 
+    public function alertSuccess()
+    {
+        $this->dispatchBrowserEvent('swal:success', [
+            'type' => 'success',
+            'message' => 'Se importaron los registros correctamente'
+        ]);
+    }
 
+    public function alertError()
+    {
+        $this->dispatchBrowserEvent('swal:error', [
+            'type' => 'error',
+            'message' => 'Error al importar los registros'
+        ]);
     }
 }
