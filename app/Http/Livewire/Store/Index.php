@@ -46,7 +46,7 @@ class Index extends Component
         $stores = Store::search($this->search)
         ->with('group')
         ->orderBy('name')
-        ->Paginate(20);
+        ->Paginate(10);
         return view('livewire.store.index', compact('stores'));
     }
 
