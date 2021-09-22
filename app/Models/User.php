@@ -57,16 +57,6 @@ class User extends Authenticatable
         return $this->hasRole('superadmin');
     }
 
-    public function isGroupOwner()
-    {
-        return $this->hasRole(['group-owner', 'groupadmin']);
-    }
-
-    public function isStoreManager()
-    {
-        return $this->hasRole('store-manager');
-    }
-
     public static function search($search)
     {
         return empty($search) ? static::query()

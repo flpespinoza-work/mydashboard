@@ -40,4 +40,16 @@ class Store extends Model
         return $this->attributes['name'] = strtoupper($value);
     }
 
+    public static function getStoresByGroup($group)
+    {
+        if($group == 1)
+        {
+            return Store::orderBy('name')->get();
+        }
+
+        return Store::where('group_id', $group)
+        ->orderBy('name')
+        ->get();
+    }
+
 }

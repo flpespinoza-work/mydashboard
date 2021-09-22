@@ -83,4 +83,14 @@ class Menu extends Model
 
         return $hijos;
     }
+
+    public static function getMenuModules($role)
+    {
+        return Menu::whereHas('roles', function($query) use ($role){
+            $query->where('role_id', $role);
+        })
+        ->whereNotNull('route')
+        ->orderBy('name')
+        ->get();
+    }
 }
