@@ -23,8 +23,17 @@
         </div>
     </div>
 
-    <div class="flex items-center py-3 mt-5 space-x-3 bg-white rounded-md">
-        <input class="flex-1 w-full text-sm border-gray-100 rounded-md bg-gray-50 focus:ring-gray-200 focus:border-gray-100" type="search" wire:model="search" id="search" placeholder="Buscar...">
+    <div class="flex items-center py-3 mt-5 space-y-2 bg-white rounded-md md:space-y-0 md:space-x-3">
+        <input class="flex-1 text-sm border-gray-100 rounded-md bg-gray-50 focus:ring-gray-200 focus:border-gray-100" type="search" wire:model="search" id="search" placeholder="Buscar...">
+        <select
+        wire:model="filterGroup"
+        class="p-2 text-xs font-semibold border border-gray-100 rounded-md md:w-64 focus:ring-gray-200 focus:border-gray-100 bg-gray-50"
+        >
+            <option value="">Todos los grupos...</option>
+            @foreach ($groups as $group)
+            <option value="{{ $group->id }}">{{ $group->name }}</option>
+            @endforeach
+        </select>
         <button
             wire:click="create"
             class="flex items-center justify-center p-2 ml-auto transition duration-75 rounded-md bg-orange">

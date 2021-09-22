@@ -17,6 +17,7 @@ class Index extends Component
 
     public $groups;
     public $store, $group, $file;
+    public $filterGroup = null;
     public $search = '';
     public $showModal = false;
 
@@ -38,12 +39,15 @@ class Index extends Component
     public function mount()
     {
         $this->store = $this->initializeStore();
-        $this->groups = Group::orderBy('name')->get();
+        $this->groups = Group::where('name', '!=', 'SUPERADMIN')->orderBy('name')->get();
     }
 
     public function render()
     {
         $stores = Store::search($this->search)
+        ->when($this->filterGroup, function($query, $group) {
+            return $query->where('group_id', $group);
+        })
         ->with('group')
         ->orderBy('name')
         ->Paginate(10);

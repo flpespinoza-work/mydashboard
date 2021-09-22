@@ -16,7 +16,7 @@ class Index extends Component
     public $search = '';
 
     protected $rules = [
-        'group.name' => 'required|min:6|unique:groups,name',
+        'group.name' => 'required|min:3|unique:groups,name',
         'group.contact' => 'min:5',
         'group.email' => 'email:rfc,dns',
         'group.phone' => 'digits:10'

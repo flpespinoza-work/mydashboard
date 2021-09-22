@@ -12,6 +12,8 @@ class ScoreFilters extends Component
     public $final_date;
     public $store;
     public $seller;
+    public $selectedStore = null;
+    public $showStores = false;
 
     public function mount()
     {
@@ -22,15 +24,21 @@ class ScoreFilters extends Component
     public function render()
     {
         $stores = fnGetMyStores();
+
+        if(strlen($this->selectedStore) >= 3)
+        {
+            $search = $this->selectedStore;
+            $stores = array_filter($stores, function($store) use($search) {
+                return (stripos($store, $search) !== false);
+            }, ARRAY_FILTER_USE_BOTH);
+        }
+
         return view('livewire.score.score-filters', compact('stores'));
     }
 
-    public function updatedStore($store)
+    public function getSellers($store)
     {
-        if(!is_null($store))
-        {
-            $this->sellers = fnGetSellers($store);
-        }
+        $this->sellers = fnGetSellers($store);
     }
 
     public function selectSeller($seller)
@@ -48,6 +56,21 @@ class ScoreFilters extends Component
         ];
 
         $this->emitTo('score.index', 'getScore', $filters);
-        //$this->reset();
+    }
+
+    public function selectStore($store, $name)
+    {
+        $this->selectedStore = $name;
+        $this->store = $store;
+        $this->showStores = false;
+        $this->getSellers($this->store);
+    }
+
+    public function clearStore()
+    {
+        $this->selectedStore = null;
+        $this->showStores = true;
+        $this->store = null;
+
     }
 }

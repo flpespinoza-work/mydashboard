@@ -15,4 +15,10 @@ class Seller extends Model
     {
         return $this->belongsTo(Store::class);
     }
+
+    //Guardar el nombre con mayusculas
+    public function setNameAttribute($value)
+    {
+        return $this->attributes['name'] = strtoupper($value);
+    }
 }

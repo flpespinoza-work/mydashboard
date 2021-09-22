@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             //MunicipalitiesTableSeeder::class,
             MenusTableSeeder::class,
             GroupsTableSeeder::class,
-            StoreTableSeeder::class,
+            //StoreTableSeeder::class,
             UsersTableSeeder::class,
             MenuRoleTableSeeder::class,
         ]);

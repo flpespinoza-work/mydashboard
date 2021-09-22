@@ -10,6 +10,8 @@ class Filters extends Component
     public $report;
     public $hideDates = false;
     public $hideStores = false;
+    public $selectedStore = null;
+    public $showStores = false;
 
     protected $rules = [
         'filters.store' => 'required',
@@ -35,6 +37,15 @@ class Filters extends Component
     public function render()
     {
         $stores = fnGetMyStores();
+
+        if(strlen($this->selectedStore) >= 3)
+        {
+            $search = $this->selectedStore;
+            $stores = array_filter($stores, function($store) use($search) {
+                return (stripos($store, $search) !== false);
+            }, ARRAY_FILTER_USE_BOTH);
+        }
+
         return view('livewire.reports.filters', compact('stores'));
     }
 
@@ -42,5 +53,19 @@ class Filters extends Component
     {
         $this->validate();
         $this->emitTo($this->report,'generateReport', $this->filters);
+    }
+
+    public function selectStore($store, $name)
+    {
+        $this->selectedStore = $name;
+        $this->filters['store'] = $store;
+        $this->showStores = false;
+    }
+
+    public function clearStore()
+    {
+        $this->selectedStore = null;
+        $this->showStores = true;
+        $this->filters['store'] = null;
     }
 }

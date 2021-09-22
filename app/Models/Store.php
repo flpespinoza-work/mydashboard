@@ -34,4 +34,10 @@ class Store extends Model
               ->where('name', 'like', '%' . $search . '%');
     }
 
+    //Guardar el nombre con mayusculas
+    public function setNameAttribute($value)
+    {
+        return $this->attributes['name'] = strtoupper($value);
+    }
+
 }

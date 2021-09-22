@@ -16,31 +16,7 @@ class GroupsTableSeeder extends Seeder
     {
         $groups = [
             [
-                'name' => 'Todos'
-            ],
-            [
-                'name' => 'ATG'
-            ],
-            [
-                'name' => 'Euro'
-            ],
-            [
-                'name' => 'Hormadi'
-            ],
-            [
-                'name' => 'Servicio El Milagro'
-            ],
-            [
-                'name' => 'Guerra'
-            ],
-            [
-                'name' => 'Petro'
-            ],
-            [
-                'name' => 'ATH'
-            ],
-            [
-                'name' => 'Gaxxor'
+                'name' => 'SUPERADMIN'
             ]
         ];
 
