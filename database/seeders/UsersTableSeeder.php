@@ -22,7 +22,8 @@ class UsersTableSeeder extends Seeder
             'email' => 'superadmin@tokencash.mx',
             'password' => Hash::make('password'),
             'phone_number' => 3333333330,
-            'group_id' => 1
+            'group_id' => 1,
+            'home' => 'dashboard'
         ]);
 
         $role = Role::find(1);

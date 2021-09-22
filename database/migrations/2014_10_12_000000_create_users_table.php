@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('phone_number', 10);
             $table->string('password');
             $table->foreignId('group_id')->constrained();
+            $table->string('home');
             $table->dateTime('last_login_at')->nullable();
             $table->string('last_login_ip', 30)->nullable();
             $table->rememberToken();
