@@ -92,13 +92,29 @@
     <div class="pb-8 mt-4 border-b border-gray-100">
         <h3 class="text-xs font-medium leading-6 text-gray-600 md:text-base">Establecimientos</h3>
         <div class="mt-2">
-            <label class="flex items-center">
+            <label class="flex items-center w-full pb-2">
                 <input type="checkbox" id="allStores" class="border-gray-200 rounded appearance-none focus:ring-orange-light text-orange">
                 <span class="ml-2 text-xs">Seleccionar todos</span>
             </label>
-            <div class="flex flex-wrap items-center">
+            <div class="grid grid-cols-3 gap-4 mt-5">
+                @forelse ($stores as $store)
+                    <div class="">
+                        <label class="flex items-center w-full">
+                            <input type="checkbox" value="{{ $store->id }}" class="border-gray-200 rounded appearance-none focus:ring-orange-light text-orange">
+                            <span class="ml-2 text-xs">{{ $store->name }}</span>
+                        </label>
+                    </div>
+                @empty
+                    <div>
+                        Sin establecimientos para asignar
+                    </div>
+                @endforelse
             </div>
         </div>
+    </div>
+
+    <div class="pb-8 mt-8">
+        <button type="submit" class="block w-full py-2 ml-auto text-xs font-semibold text-white border rounded-md md:w-72 border-orange-light bg-orange">Guardar usuario</button>
     </div>
 
 </div>
