@@ -28,6 +28,7 @@ class Index extends Component
     public function mount()
     {
         $stores = fnGetMyStores();
+        //dd($stores);
         if(count($stores))
         {
             $store = array_key_first($stores);
@@ -60,6 +61,5 @@ class Index extends Component
     {
         $this->store_name = fnGetStoreName($filters['store']);
         $this->result = $this->getData($filters);
-        //dd($this->result);
     }
 }

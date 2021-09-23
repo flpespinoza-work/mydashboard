@@ -10,4 +10,22 @@
     @apply font-sans text-xxs !important;
 }
 
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #F3F4F6;
+  }
 
+  /* Works on Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #FEFEFE;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #FEF8F3;
+    border-radius: 999px;
+  }
