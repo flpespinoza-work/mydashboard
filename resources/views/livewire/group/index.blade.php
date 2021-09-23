@@ -18,7 +18,7 @@
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
+                    <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-md">
                         <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
@@ -33,12 +33,12 @@
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach($groups as $group)
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-500">
+                                <td class="px-6 py-2 whitespace-nowrap">
+                                    <div class="text-xs text-gray-500">
                                         {{ $group->name }}
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 space-y-1 whitespace-wrap">
+                                <td class="px-6 py-3 space-y-1 whitespace-wrap">
                                     @forelse ($group->stores as $store)
                                     <span class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
                                         {{ $store->name }}
@@ -67,7 +67,7 @@
                 <x-slot name="content">
                     <div class="my-2">
                         <label class="block text-xs font-semibold text-gray-500" for="name">Nombre del grupo <span class="text-red-500">*</span></label>
-                        <input class="w-full mt-2 border-gray-100 rounded-md bg-gray-50 focus:ring-gray-200 focus:border-gray-100" wire:model.defer="group.name" type="text">
+                        <input autofocus class="w-full mt-2 border-gray-100 rounded-md bg-gray-50 focus:ring-gray-200 focus:border-gray-100" wire:model.defer="group.name" type="text">
                         @error('group.name')
                         <span class="font-medium text-red-400 text-xxs">{{ $message }}</span>
                         @enderror
