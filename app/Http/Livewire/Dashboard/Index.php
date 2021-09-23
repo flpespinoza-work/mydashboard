@@ -11,24 +11,30 @@ class Index extends Component
     use Data;
 
     public $reportName = 'dashboard.index';
-    public $result = [
+
+    public $result =
+    [
         'balance' => '0',
         'printed_coupons' => ['coupons' => 0, 'amount' => 0],
         'redeemed_coupons' => ['redeems' => 0, 'amount' => 0],
         'sales' => ['sales' => 0, 'amount' => 0],
         'users' => ['totals' => 0]
     ];
-    public $store_name;
+
+    public $store_name = null;
 
     protected $listeners = ['generateReport'];
 
     public function mount()
     {
         $stores = fnGetMyStores();
-        $store = array_key_first($stores);
-        $this->store_name = $stores[$store];
-        $filters = ['initial_date' => date('Y-m-d', strtotime('-7 days')), 'final_date' => date('Y-m-d'), 'store' => $store];
-        $this->generateReport($filters);
+        if(count($stores))
+        {
+            $store = array_key_first($stores);
+            $this->store_name = $stores[$store];
+            $filters = ['initial_date' => date('Y-m-d', strtotime('-7 days')), 'final_date' => date('Y-m-d'), 'store' => $store];
+            $this->generateReport($filters);
+        }
     }
 
     public function render()
@@ -52,7 +58,7 @@ class Index extends Component
 
     public function generateReport($filters)
     {
-        $this->store_name = fnGetStoreNAme($filters['store']);
+        $this->store_name = fnGetStoreName($filters['store']);
         $this->result = $this->getData($filters);
         //dd($this->result);
     }

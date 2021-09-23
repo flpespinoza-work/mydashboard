@@ -82,8 +82,20 @@ class PermissionsTableSeeder extends Seeder
             [
                 'name' => 'can_reply_comment',
                 'description' => 'Puede enviar respuesta a un comentario'
-            ]
+            ],
             // Permisos para notificaciones
+            [
+                'name' => 'can_create_campaign',
+                'description' => 'Puede crear nueva campaña'
+            ],
+            [
+                'name' => 'can_test_campaign',
+                'description' => 'Puede probar una campaña'
+            ],
+            [
+                'name' => 'can_see_campaign_stats',
+                'description' => 'Puede ver las estadísticas de una campaña'
+            ]
         ];
 
         $permissions = collect($arrayOfPermissions)->map(function($permission){

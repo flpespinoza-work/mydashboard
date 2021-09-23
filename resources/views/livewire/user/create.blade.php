@@ -67,7 +67,7 @@
                 class="{{ $errors->has('role') ? 'border-red-300 bg-red-50' : '' }} w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200 mt-2">
                     <option value="" selected>Seleccione un rol</option>
                     @forelse ($modules as $module)
-                        <option value="{{ $module->id }}">{{ $module->name }}</option>
+                        <option value="{{ $module->id }}">{{ $module->description }}</option>
                     @empty
                     @endforelse
                 </select>

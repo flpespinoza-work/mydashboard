@@ -12,6 +12,7 @@ use App\Http\Controllers\UserReportController;
 use App\Http\Controllers\SaleReportController;
 use App\Http\Controllers\BalanceReportController;
 use App\Http\Controllers\GlobalReportController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
@@ -41,6 +42,7 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::resource('roles', RoleController::class, ['except' => ['store', 'update', 'destroy']]);
     Route::get('/permisos', [PermissionController::class, 'index'])->name('permissions.index');
+    Route::get('/menus', [MenuController::class, 'index'])->name('menu.index');
 
     //Calificaciones
     Route::get('/calificaciones', [ScoreController::class, 'index'])->name('scores');

@@ -6,11 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
@@ -20,8 +16,8 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone_number', 10);
             $table->string('password');
-            $table->foreignId('group_id')->constrained();
-            $table->string('home');
+            $table->foreignId('group_id')->nullable()->constrained();
+            $table->string('home')->nullable();
             $table->dateTime('last_login_at')->nullable();
             $table->string('last_login_ip', 30)->nullable();
             $table->rememberToken();
@@ -30,11 +26,7 @@ class CreateUsersTable extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+
     public function down()
     {
         Schema::dropIfExists('users');

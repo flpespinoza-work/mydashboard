@@ -14,6 +14,21 @@ class StoreTableSeeder extends Seeder
      */
     public function run()
     {
+        $arrayOfStores = [
+            [
+                'name' => 'todos los establecimientos',
+            ],
+            [
+                'name' => 'todos '
+            ]
+        ];
 
+        $stores = collect($arrayOfStores)->map(function($store){
+            return [
+                'name' => $store['name']
+            ];
+        });
+
+        DB::table('stores')->insert($stores->toArray());
     }
 }

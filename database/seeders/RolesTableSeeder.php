@@ -18,16 +18,8 @@ class RolesTableSeeder extends Seeder
 
         $arrayOfRoles = [
             [
-                'name' => 'superadmin',
+                'name' => 'SUPERADMIN',
                 'description' => 'Acceso a todos los módulos y funciones del dashboard'
-            ],
-            [
-                'name' => 'groupadmin',
-                'description' => 'Administrador de un grupo, puede administrar todas las estaciones pertenecientes a su grupo'
-            ],
-            [
-                'name' => 'gerente',
-                'description' => 'Gerente de estacion'
             ]
         ];
 

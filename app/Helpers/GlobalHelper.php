@@ -9,14 +9,12 @@ if(!function_exists('fnGetMyStores'))
 {
     function fnGetMyStores()
     {
-        if(auth()->user()->isSuperAdmin())
-        {
-            $stores = Cache::remember('stores-' . auth()->user()->id, 60*60*12, function(){ return Store::orderBy('name')->pluck('name', 'id')->toArray(); });
-        }
-        else
-        {
-            $stores = Cache::remember('stores-' . auth()->user()->id, 60*60*12, function(){ return auth()->user()->stores->pluck('name', 'id')->sort()->toArray(); });
-        }
+        $stores = Cache::remember('stores-' . auth()->user()->id, 60*60*12, function(){
+            if(auth()->user()->isSuperAdmin())
+                return Store::orderBy('name')->pluck('name', 'id')->toArray();
+
+            return auth()->user()->stores->pluck('name', 'id')->sort()->toArray();
+        });
 
         return $stores;
     }

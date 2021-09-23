@@ -12,6 +12,7 @@ class Menu extends Model
     protected $fillable =
     [
         'name',
+        'description',
         'menu_id',
         'route',
         'route-group',
@@ -90,7 +91,7 @@ class Menu extends Model
             $query->where('role_id', $role);
         })
         ->whereNotNull('route')
-        ->orderBy('name')
+        ->orderBy('description')
         ->get();
     }
 }

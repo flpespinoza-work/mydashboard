@@ -7,11 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 class MenuRoleTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
+
     public function run()
     {
         //Obtener numero de items de menu registrados
