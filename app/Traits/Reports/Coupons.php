@@ -43,8 +43,8 @@ trait Coupons
             if(!empty($tmpRes))
             {
                 $tmpRes['totals'] = $totales;
-                $tmpRes['totals']['average_amount'] = number_format($totales['printed_amount'] / $totales['printed_coupons'], 3);
-                $tmpRes['totals']['average_sale'] = number_format($totales['printed_sale'] / $totales['printed_coupons'], 3);
+                $tmpRes['totals']['average_amount'] = number_format($totales['printed_amount'] / $totales['printed_coupons'], 2);
+                $tmpRes['totals']['average_sale'] = number_format($totales['printed_sale'] / $totales['printed_coupons'], 2);
             }
 
             return $tmpRes;
@@ -135,8 +135,8 @@ trait Coupons
             ->chunk(100, function($coupons) use(&$tmpRes, &$totales) {
                 foreach($coupons as $coupon)
                 {
-                    $totales['redeemed_coupons'] += 1;
-                    $totales['redeemed_amount'] += $coupon->CANJE_MONTO;
+                    //$totales['redeemed_coupons'] += 1;
+                    //$totales['redeemed_amount'] += $coupon->CANJE_MONTO;
 
                     $tmpRes['coupons'][] = [
                         'user' => $coupon->USUARIO_NODO,
@@ -174,6 +174,7 @@ trait Coupons
             $pr = [];
             $printed = $this->getPrintedCoupons($filters);
             $redeemed = $this->getRedeemedCoupons($filters);
+            dd($redeemed);
             $coupons = array_merge_recursive($printed, $redeemed);
             if(count($coupons))
             {

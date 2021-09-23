@@ -18,6 +18,12 @@ class Create extends Component
         'home' => ''
     ];
 
+    protected $rules = [
+        'user.name' => 'required|max:255',
+        'user.email' => 'required|email:rfc',
+        'user.password' => 'required|confirmed|min:8'
+    ];
+
     public $group = null;
     public $role = null;
 
@@ -42,5 +48,10 @@ class Create extends Component
 
 
         return view('livewire.user.create', compact('roles', 'groups', 'modules', 'stores'));
+    }
+
+    public function createUser()
+    {
+        dd($this->user);
     }
 }
