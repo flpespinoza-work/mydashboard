@@ -9,12 +9,13 @@ trait Campaigns
 {
     function getCampaigns($nodes, $filter = '')
     {
-        return Campaign::with(['notification' => function($query) use($nodes){
+        return Campaign::with('notification')
+        ->whereHas('notification', function($query) use($nodes){
             if(is_array($nodes))
-                return $query->whereIn('NOT_NODO_ID', $nodes);
+                $query->whereIn('NOT_NODO_ID', $nodes);
             else
-                return $query->where('NOT_NODO_ID', $nodes);
-        }])
+                $query->where('NOT_NODO_ID', $nodes);
+        })
         ->when($filter, function($query) use ($filter){
             return $query->where('CAMP_NOMBRE', 'like', "%{$filter}%");
         })
