@@ -1,31 +1,27 @@
 <?php
 
 namespace App\Traits\Notifications;
+
+use App\Models\Campaign;
 use Illuminate\Support\Facades\DB;
 
 trait Campaigns
 {
-    function getCampaigns($nodes)
+    function getCampaigns($nodes, $filter = '')
     {
-        $tokDB = DB::connection('reportes');
-        $query = $tokDB->table('dat_campush')
-        ->join('dat_notificacion', 'dat_notificacion.NOT_ID', '=', 'dat_campush.CAMP_NOT_ID')
-        ->select(DB::raw('NOT_ID, NOT_TS, NOT_NODO_ID, CAST(CONVERT(CAMP_NOMBRE USING utf8) AS binary) CAMP_NOMBRE, NOT_TIPO, CAMP_FALLIDAS, CAMP_EXITOSAS, CAMP_ANDROID, CAMP_IOS'));
-        if(is_array($nodes))
-        {
-            $query->whereIn('NOT_NODO_ID',  $nodes);
-        }
-        else
-        {
-            $query->where('NOT_NODO_ID', $nodes);
-        }
-
-        return $query
-        ->orderBy('NOT_TS', 'desc')
-        ->get();
+        return Campaign::with(['notification' => function($query) use($nodes){
+            if(is_array($nodes))
+                return $query->whereIn('NOT_NODO_ID', $nodes);
+            else
+                return $query->where('NOT_NODO_ID', $nodes);
+        }])
+        ->when($filter, function($query) use ($filter){
+            return $query->where('CAMP_NOMBRE', 'like', "%{$filter}%");
+        })
+        ->orderBy('CAMP_TS', 'desc');
 
     }
-//496
+
     function getCampaignStats($notId)
     {
         $tokDB = DB::connection('reportes');
