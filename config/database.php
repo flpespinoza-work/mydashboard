@@ -69,7 +69,9 @@ return [
             'host'      => env('TOKENCASH_DB_HOST'),
             'database'  => env('TOKENCASH_DB_NAME'),
             'username'  => env('TOKENCASH_DB_USERNAME'),
-            'password'  => env('TOKENCASH_DB_PASSWORD')
+            'password'  => env('TOKENCASH_DB_PASSWORD'),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_spanish_ci'
         ],
 
         'tokencash_campanas' => [
@@ -78,7 +80,9 @@ return [
             'port'      => env('TOKENCASH_CAMPANAS_DB_PORT'),
             'database'  => env('TOKENCASH_CAMPANAS_DB_NAME'),
             'username'  => env('TOKENCASH_CAMPANAS_DB_USERNAME'),
-            'password'  => env('TOKENCASH_CAMPANAS_DB_PASSWORD')
+            'password'  => env('TOKENCASH_CAMPANAS_DB_PASSWORD'),
+            'charset'   => 'utf8',
+            'collation' => 'utf8_spanish_ci'
         ],
 
         'pgsql' => [
