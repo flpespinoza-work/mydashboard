@@ -13,7 +13,12 @@ class Index extends Component
     use Campaigns;
     use WithPagination;
 
-    protected $queryString = ['search'];
+    protected $queryString = [
+        'search' => [
+            'except' => '',
+        ]
+    ];
+
     public $reportName = 'notification.index';
     protected $listeners = ['generateReport'];
     public $store = null;
