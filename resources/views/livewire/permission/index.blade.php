@@ -1,5 +1,12 @@
 <div class="w-full mx-auto overflow-hidden">
-    <div class="mt-4">
+    <div class="flex items-center mt-4">
+        <div class="flex w-full md:w-2/5">
+            <input
+            wire:model.debounce.300ms="search"
+            type="text"
+            class="w-full p-2 text-xs border-gray-200 rounded-md focus:ring-gray-100 focus:border-gray-150"
+            placeholder="Buscar usuarios...">
+        </div>
         @can('can_create_new_permission')
         <button
             type="button"

@@ -22,7 +22,7 @@
                                 Menu
                             </th>
                             @foreach($roles as $role)
-                            <th scope="col" class="sticky top-0 px-6 py-2 text-xs font-medium tracking-wider text-left text-gray-500 align-top bg-white border border-l-0 border-gray-200">
+                            <th scope="col" class="sticky top-0 px-6 py-2 text-xs font-medium tracking-wider text-left text-center text-gray-500 align-top bg-white border border-l-0 border-gray-200">
                                 {{ $role['name'] }}
                             </th>
                             @endforeach

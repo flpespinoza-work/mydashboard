@@ -9,10 +9,11 @@ use Livewire\Component;
 class Index extends Component
 {
     protected $listeners = ['toggleUserPermission'];
+    public $search = '';
 
     public function render()
     {
-        $users = User::orderBy('id')->get();
+        $users = User::search($this->search)->orderBy('id')->get();
         $permissions = Permission::orderBy('id')->get();
         $userPermissions = User::with('permissions')->get()->pluck('permissions', 'id')->toArray();
         //dd($userPermissions);
@@ -22,7 +23,6 @@ class Index extends Component
     public function toggleUserPermission($user, $permission, $checked)
     {
         $u = User::findOrFail($user);
-
         if($checked)
         {
             $u->permissions()->attach($permission);
