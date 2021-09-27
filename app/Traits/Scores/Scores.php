@@ -91,6 +91,8 @@ trait Scores
         return $scores;
     }
 
+    //Nuevo query sin NOD_USU_CERTIFICADO  y filtrar en php
+
     function getOldScores($filters)
     {
         $tokDB = DB::connection('reportes');
