@@ -5,11 +5,13 @@
         wire:model.debounce.500ms="search"
         id="search"
         placeholder="Buscar...">
+        @can('can_create_new_campaign')
         <button
             class="flex items-center justify-center p-2 ml-auto transition duration-75 rounded-md bg-orange">
             <x-icons.plus class="w-5 h-5 text-orange-light"/>
             <span class="hidden ml-2 text-xs font-semibold md:inline-block text-orange-light">Nueva campaña</span>
         </button>
+        @endcan
     </div>
     <div class="mt-4">
         <div class="flex flex-col">
@@ -46,7 +48,7 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 @if ($campaigns->count() > 0)
-                                    @foreach ($campaigns as $campaign)
+                                    @forelse($campaigns as $campaign)
                                         @php $action = json_decode($campaign->notification->NOT_ACCION) @endphp
                                         <tr>
                                             <td class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
@@ -84,27 +86,43 @@
                                             <td class="px-6 py-3 font-medium tracking-wider text-left text-gray-500 text-xxs">{{ $campaign->CAMP_AUTOR }}</td>
                                             <td class="px-6 py-3 font-medium tracking-wider text-left text-gray-500 text-xxs">
                                                 <div class="flex items-center space-x-2">
+                                                    @can('can_see_campaign')
                                                     <a class="cursor-pointer" wire:click="stats('{{ Crypt::encrypt($campaign->CAMP_ID) }}', '{{ $campaign->CAMP_AUTORIZACION}}')">
                                                         <x-heroicon-o-trending-up class="w-5 h-5"/>
                                                     </a>
-                                                    <a class="cursor-pointer" wire:click="showProgram('{{ Crypt::encrypt($campaign->CAMP_ID) }}')">
-                                                        <x-heroicon-s-clock class="w-5 h-5"/>
-                                                    </a>
+                                                    @endcan
+
+                                                    @can('can_test-campaign')
                                                     <a href="">
                                                         <x-heroicon-s-check-circle class="w-5 h-5"/>
                                                     </a>
+                                                    @endcan
+
+                                                    @can('can_program_campaign')
+                                                    <a class="cursor-pointer" wire:click="showProgram('{{ Crypt::encrypt($campaign->CAMP_ID) }}')">
+                                                        <x-heroicon-s-clock class="w-5 h-5"/>
+                                                    </a>
+                                                    @endcan
+
+                                                    @can('can_send_campaign')
                                                     <a href="">
                                                         <x-heroicon-s-chat-alt class="w-5 h-5"/>
                                                     </a>
+                                                    @endcan
+
+                                                    @can('can_suspend_campaign')
                                                     <a href="">
                                                         <x-heroicon-s-stop class="w-5 h-5 text-red-500"/>
                                                     </a>
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>
                                     @endforeach
                                 @else
-                                    <p>No hay campañas registradas</p>
+                                    <tr>
+                                        <td colspan="6" class="px-6 py-3 font-medium tracking-wider text-center text-gray-500 text-xxs">No hay campañas para mostrar</td>
+                                    </tr>
                                 @endif
                             </tbody>
                         </table>

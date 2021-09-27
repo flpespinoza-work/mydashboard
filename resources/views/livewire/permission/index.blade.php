@@ -1,5 +1,6 @@
 <div class="w-full mx-auto overflow-hidden">
     <div class="mt-4">
+        @can('can_create_new_permission')
         <button
             type="button"
             class="flex items-center flex-shrink-0 p-2 ml-auto text-xs font-bold leading-tight tracking-wide rounded-md bg-orange text-orange-lightest" >
@@ -8,6 +9,8 @@
                 Nuevo permiso
             </span>
         </button>
+        @endcan
+
     </div>
 
     <div class="flex flex-col mt-6">

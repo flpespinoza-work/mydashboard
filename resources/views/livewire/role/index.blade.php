@@ -20,7 +20,8 @@
                     </select>
                 </div>
             </div>
-            <button
+            @can('can_create_new_role')
+           <button
                 type="button"
                 wire:click="create"
                 class="flex items-center flex-shrink-0 p-2 ml-auto text-xs font-bold leading-tight tracking-wide bg-blue-600 rounded-md text-blue-50" >
@@ -29,6 +30,8 @@
                     Nuevo rol
                 </span>
             </button>
+            @endcan
+
         </div>
 
         <div class="flex flex-col mt-7">
@@ -39,7 +42,7 @@
                     <thead>
                       <tr class="bg-gray-50">
                         <x-table.heading value="Role"/>
-                        <x-table.heading value="Permisos"/>
+                        <x-table.heading value="Usuarios"/>
                         <x-table.heading />
                       </tr>
                     </thead>
@@ -54,8 +57,8 @@
                             </div>
                         </x-table.cell>
                         <td class="hidden px-3 py-2 whitespace-normal lg:px-6 lg:py-3 md:table-cell">
-                            @forelse($role->permissions as $key => $permission)
-                                <span class="inline-flex px-2 font-medium leading-5 text-blue-600 capitalize bg-blue-100 rounded-full text-xxs">{{ $permission->description }}</span>
+                            @forelse($role->users as $key => $user)
+                                <span class="inline-flex px-2 font-medium leading-5 text-blue-600 capitalize bg-blue-100 rounded-full text-xxs">{{ $user->name }}</span>
                             @empty
                             <span class="inline-flex px-2 font-medium leading-5 text-red-500 capitalize bg-red-100 rounded-full text-xxs">
                                 El Rol no tiene permisos asignados

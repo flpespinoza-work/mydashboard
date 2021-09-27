@@ -1,4 +1,5 @@
 <div class="w-full mx-auto overflow-hidden">
+    @can('can_create_new_store')
     <div>
         <div id="containerFile" class="px-2 py-2 {{ $errors->has('file') ? 'bg-red-50' : 'bg-gray-100'}} rounded-md md:w-2/6 md:ml-auto">
             <form wire:submit.prevent="importStores" class="flex items-center">
@@ -22,6 +23,7 @@
             </form>
         </div>
     </div>
+    @endcan
 
     <div class="flex items-center py-3 mt-5 space-y-2 bg-white rounded-md md:space-y-0 md:space-x-3">
         <input class="flex-1 text-sm border-gray-100 rounded-md bg-gray-50 focus:ring-gray-200 focus:border-gray-100" type="search" wire:model="search" id="search" placeholder="Buscar...">
@@ -34,18 +36,24 @@
             <option value="{{ $group->id }}">{{ $group->name }}</option>
             @endforeach
         </select>
+        @can('can_create_new_store')
         <button
             wire:click="create"
             class="flex items-center justify-center p-2 ml-auto transition duration-75 rounded-md bg-orange">
             <x-icons.plus class="w-5 h-5 text-orange-light"/>
             <span class="hidden ml-2 text-xs font-semibold md:inline-block text-orange-light">Nuevo establecimiento</span>
         </button>
+        @endcan
+
+        @can('can_access_groups_module')
         <a
             class="flex items-center justify-center p-2 ml-auto transition duration-75 rounded-md bg-gray-50"
             href="{{ route('groups.index') }}">
             <x-icons.group class="w-5 h-5 text-gray-500"/>
             <span class="hidden ml-2 text-xs font-semibold text-gray-500 md:inline-block">Volver a grupos</span>
         </a>
+        @endcan
+
     </div>
 
     <div class="mt-4">

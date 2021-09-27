@@ -76,6 +76,9 @@ class Create extends Component
 
             $user->save();
 
+            session()->flash('usuario_creado', 'Usuario creado correctamente');
+            return redirect()->to(route('users.index'));
+
             $this->dispatchBrowserEvent('swal:success', [
                 'type' => 'success',
                 'message' => 'Se guardo el usuario correctamente'

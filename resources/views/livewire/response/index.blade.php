@@ -6,12 +6,14 @@
             wire:model="search"
             id="search"
             placeholder="Buscar...">
+        @can('can_create_new_response')
         <button
             wire:click="create"
             class="flex items-center justify-center p-2 ml-3 transition duration-75 rounded-md md:ml-8 bg-orange">
             <x-icons.plus class="w-5 h-5 text-green-50"/>
             <span class="hidden ml-2 text-xs font-semibold md:inline-block text-orange-light">Nueva respuesta</span>
         </button>
+        @endcan
     </div>
     <div class="mt-4">
         @foreach ($responses as $response)

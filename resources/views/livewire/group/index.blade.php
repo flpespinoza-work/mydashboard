@@ -1,18 +1,24 @@
 <div class="w-full mx-auto overflow-hidden">
     <div class="flex items-center py-3 space-x-3 bg-white rounded-md">
         <input class="flex-1 w-full text-sm border-gray-100 rounded-md bg-gray-50 focus:ring-gray-200 focus:border-gray-100" type="search" wire:model="search" id="search" placeholder="Buscar...">
-        <button
+
+        @can('can_create_new_group')
+         <button
             wire:click="create"
             class="flex items-center justify-center p-2 ml-auto transition duration-75 rounded-md bg-orange">
             <x-icons.plus class="w-5 h-5 text-orange-light"/>
             <span class="hidden ml-2 text-xs font-semibold md:inline-block text-orange-light">Nuevo grupo</span>
         </button>
+        @endcan
+
+        @can('can_access_stores_module')
         <a
             class="flex items-center justify-center p-2 ml-auto transition duration-75 rounded-md bg-gray-50"
             href="{{ route('stores.index') }}">
             <x-icons.group class="w-5 h-5 text-gray-500"/>
             <span class="hidden ml-2 text-xs font-semibold text-gray-500 md:inline-block">Ver establecimientos</span>
         </a>
+        @endcan
     </div>
     <div class="mt-4">
         <div class="flex flex-col">

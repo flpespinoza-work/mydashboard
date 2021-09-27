@@ -130,6 +130,10 @@ class PermissionsTableSeeder extends Seeder
                 'description' => 'Puede ingresar al modulo de permisos'
             ],
             [
+                'name' => 'can_create_new_permission',
+                'description' => 'Puede crear un nuevo permiso'
+            ],
+            [
                 'name' => 'can_access_groups_module',
                 'description' => 'Puede ingresar al modulo de grupos'
             ],
@@ -160,6 +164,10 @@ class PermissionsTableSeeder extends Seeder
             [
                 'name' => 'can_create_new_response',
                 'description' => 'Puede crear una nueva respuesta'
+            ],
+            [
+                'name' => 'can_export_reports',
+                'description' => 'Puede descargar reportes'
             ]
         ];
 

@@ -24,7 +24,7 @@ class Index extends Component
 
     public function render()
     {
-        $roles = Role::with(['permissions'])->paginate();
+        $roles = Role::with(['users'])->paginate();
         return view('livewire.role.index', compact('roles'));
     }
 
