@@ -50,7 +50,7 @@ class PermissionsTableSeeder extends Seeder
                 'description' => 'Puede probar una campaña'
             ],
             [
-                'name' => 'can_access_scores',
+                'name' => 'can_access_scores_module',
                 'description' => 'Puede ingresar al modulo de calificaciones'
             ],
             [
@@ -79,6 +79,10 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'name' => 'can_access_printed_redeemed_coupons_report',
+                'description' => 'Puede ingresar al reporte de cupones impresos vs canjeados'
+            ],
+            [
+                'name' => 'can_access_printed_redeemed_history_coupons_report',
                 'description' => 'Puede ingresar al reporte de cupones impresos vs canjeados'
             ],
             [

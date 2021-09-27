@@ -30,6 +30,7 @@
                     <input
                         id="phone"
                         type="text"
+                        maxlength="10"
                         wire:model="user.phone_number"
                         class="w-full mt-2 text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200"
                     >
@@ -79,7 +80,7 @@
                     class="{{ $errors->has('role') ? 'border-red-300 bg-red-50' : '' }} w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200 mt-2">
                         <option value="" selected>Seleccione un rol</option>
                         @forelse ($modules as $module)
-                            <option value="{{ $module->id }}">{{ $module->description }}</option>
+                            <option value="{{ $module->route }}">{{ $module->description }}</option>
                         @empty
                         @endforelse
                     </select>
@@ -143,19 +144,59 @@
     </form>
 </div>
 
+
+@push('styles')
+    <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-minimal/minimal.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+@endpush
+
 @push('scripts')
-    <script>
-        function newUser() {
-            return {
-                selectAll(event) {
-                    let checked = event.target.checked;
-                    let stores = document.querySelectorAll('.store');
-                    stores.forEach(function(store){
-                        store.checked = checked;
-                        @this.set('userStores', store.value);
-                    });
-                }
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    let file = document.querySelector('#file').files[0];
+</script>
+<script>
+    window.addEventListener('swal:success', event => {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-right',
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true
+        })
+
+        Toast.fire({
+            icon: 'success',
+            title: 'Éxito',
+            text: event.detail.message,
+            showClass: {
+                popup: 'animate__animated animate__backInRight'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__backOutRight'
             }
-        }
-    </script>
+        })
+    });
+
+    window.addEventListener('swal:error', event => {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-right',
+            showConfirmButton: false,
+            timer: 2000
+        })
+
+        Toast.fire({
+            icon: 'error',
+            title: 'Error',
+            text: event.detail.message,
+            showClass: {
+                popup: 'animate__animated animate__backInRight'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__backOutRight'
+            }
+        })
+    });
+</script>
 @endpush
