@@ -94,17 +94,27 @@
                             </li>
                             <li @click="openTab = 0" :class="openTab === 0 ? 'bg-gray-25' : 'bg-orange-lightest'"
                                 class="flex-shrink-0 w-60 h-14 md:flex-1">
-                                <a class="flex items-center justify-center w-full h-full text-xs font-semibold leading-snug cursor-pointer md:text-sm">Solo comentarios</a>
+                                <a class="flex items-center justify-center w-full h-full text-xs font-semibold leading-snug cursor-pointer md:text-sm">
+                                    <span>Solo comentarios</span>
+                                    <span class="ml-2 text-xs font-medium">{{ $scores['count0'] }}</span>
+                                </a>
                             </li>
                         </ul>
-                        <div class="px-4 py-8 border border-t-0 border-gray-150">
+                        <div class="px-4 py-8 border border-t-0 border-gray-150 ">
                             @foreach (range(5,0) as $value)
                                 @if (isset($scores['comments'][$value]))
+                                    @php $hide = 0; $show = 0;  @endphp
                                     <div id="score-{{$value}}" x-show="openTab === {{ $value }}">
                                         @foreach ($scores['comments'][$value] as $comment)
                                             @if(strpos($comment['comment'], 'tus comentarios') !== true)
+                                                @if (strlen($comment['comment']) <= 3)
+                                                    @php $hide++; continue; @endphp
+                                                @else
+                                                    @php $show++; @endphp
+                                                @endif
                                             <div class="p-3 mx-auto my-2 border rounded-md md:w-3/4 border-gray-150">
                                                 <div class="flex flex-wrap items-center">
+                                                    <span class="inline-block px-2 mr-4 font-bold bg-yellow-500 rounded text-gray-50">{{ $show }}</span>
                                                     <span class="text-xs font-semibold text-gray-500">Usuario: {{ $comment['user']}}</span>
                                                     <span class="mx-6 font-medium text-gray-400 text-xxs md:text-xs">{{ $comment['date']}}</span>
                                                     @if (strpos($comment['action'], 'Pago') !== false)
@@ -125,6 +135,11 @@
                                             </div>
                                             @endif
                                         @endforeach
+                                        @if($hide > 0)
+                                        <p class="w-full mt-8">
+                                           <span class="relative block w-full py-2 mx-auto text-xs font-semibold text-center bg-yellow-100 rounded md:w-3/4">Se ocultaron {{ $hide }} comentarios cortos</span>
+                                        </p>
+                                        @endif
                                     </div>
                                 @else
                                     <div id="score-{{$value}}" x-show="openTab === {{ $value }}">
