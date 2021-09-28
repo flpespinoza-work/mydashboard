@@ -38,7 +38,7 @@ class Index extends Component
                 ->setTitle('Calificaciones - Comentarios')
                 ->setDataLabelsEnabled(false)
                 ->addColumn('Califico', $this->scores['totalScores'], '#53ADF4')
-                ->addColumn('Comentarios', number_format($this->scores['totalComments']), '#F17061');
+                ->addColumn('Comentarios', $this->scores['totalComments'], '#F17061');
 
             return view('livewire.score.index')->with(['columnChartModelScore' => $columnChartModelScore, 'columnChartModel' => $columnChartModel]);
         }
