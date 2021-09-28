@@ -61,7 +61,7 @@
                                 <span class="inline-flex px-2 font-medium leading-5 text-blue-600 capitalize bg-blue-100 rounded-full text-xxs">{{ $user->name }}</span>
                             @empty
                             <span class="inline-flex px-2 font-medium leading-5 text-red-500 capitalize bg-red-100 rounded-full text-xxs">
-                                El Rol no tiene permisos asignados
+                                El Rol no tiene usuarios asignados
                             </span>
                             @endforelse
                         </td>
