@@ -10,7 +10,11 @@
     </div>
     @if(!is_null($store_name))
         <div class="flex flex-col mt-7">
-            <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $store_name }}</h3>
+            <div>
+                <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $store_name }}</h3>
+                <h5 class="text-xs font-medium text-gray-500 md:text-base">{{ $period }}</h5>
+            </div>
+
             <div class="grid grid-cols-4 gap-2 mt-4 md:gap-4 lg:gap-5">
                 <div class="col-span-2 p-3 rounded-md drop-shadow-sm bg-gray-50 sm:col-span-2 md:col-span-1 ">
                     <h5 class="text-xs font-light text-gray-500 lg:text-sm">Cupones impresos</h5>
@@ -73,6 +77,6 @@
             </div>
         </div>
     @else
-        <p class="text-center text-xs  text-gray-600">No hay establecimientos registrados</p>
+        <p class="text-xs text-center text-gray-600">No hay establecimientos registrados</p>
     @endif
 </div>

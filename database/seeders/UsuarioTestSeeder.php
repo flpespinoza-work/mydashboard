@@ -25,7 +25,7 @@ class UsuarioTestSeeder extends Seeder
             'name' => 'Carlos',
             'email' => 'supervision.bombas@grupohormadi.com',
             'password' => Hash::make('xWeHjdU9'),
-            'phone_number' => 3333333330,
+            'phone_number' => '',
             'group_id' => $grupo
         ]);
         $user->assignRole($role);

@@ -33,6 +33,7 @@ class NewUsers extends BaseUsersReport
 
             return view('livewire.reports.users.new-users')->with(['usersChartModel' => $usersChartModel]);
         }
+
         return view('livewire.reports.users.new-users');
     }
 

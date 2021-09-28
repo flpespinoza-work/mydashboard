@@ -22,6 +22,7 @@ class Index extends Component
     ];
 
     public $store_name = null;
+    public $period = '';
 
     protected $listeners = ['generateReport'];
 
@@ -60,6 +61,7 @@ class Index extends Component
     public function generateReport($filters)
     {
         $this->store_name = fnGetStoreName($filters['store']);
+        $this->period = "Periodo: " . date('d/m/Y', strtotime($filters['initial_date'])) ." al " . date('d/m/Y', strtotime($filters['final_date']));
         $this->result = $this->getData($filters);
     }
 }

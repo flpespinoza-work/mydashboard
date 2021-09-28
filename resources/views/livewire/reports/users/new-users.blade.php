@@ -1,4 +1,4 @@
-<div>
+<div x-data="{}">
 
     <x-slot name="actions">
         <livewire:reports.filters :report="$reportName"/>
@@ -20,11 +20,11 @@
                     <h5 class="text-xs font-medium text-gray-500 md:text-base">{{ $report_data['period'] }}</h5>
                 </div>
                 <button
-                wire:click.prefetch="exportReport"
-                type="button"
-                class="px-4 py-2 ml-auto text-sm font-semibold bg-gray-800 rounded-md hover:bg-gray-700 text-gray-50">
+                    type="button"
+                    x-on:click="$wire.exportReport()"
+                    class="px-4 py-2 ml-auto text-sm font-semibold bg-gray-800 rounded-md hover:bg-gray-700 text-gray-50">
                     <x-heroicon-s-document-download class="w-4 h-4 md:h-5 md:w-5" />
-                 </button>
+                </button>
             </div>
 
             <div class="grid grid-cols-2 gap-4 mt-8 md:grid-cols-4">

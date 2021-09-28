@@ -42,7 +42,7 @@
                 </div>
 
                 @if (Route::has('password.request'))
-                <div class="my-5">
+                <div class="hidden my-5">
                     <a class="block text-sm text-center text-gray-600 underline hover:text-gray-900" href="{{ route('password.request') }}">
                         ¿Olvido su contraseña?
                     </a>
