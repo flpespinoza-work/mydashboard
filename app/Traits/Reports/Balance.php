@@ -23,7 +23,7 @@ trait Balance
             ->whereIn('TAE_SAL_NODO', $nodes)
             ->whereIn('TAE_SAL_BOLSA', $budgets)
             ->orderBy('TAE_SAL_NODO')
-            ->chunk(10, function($balances) use(&$tmpRes) {
+            ->chunk(100, function($balances) use(&$tmpRes) {
                 foreach($balances as $balance)
                 {
                     $tmpRes['balances'][] = [

@@ -25,7 +25,7 @@ trait Coupons
             ->whereBetween('REP_IMP_CUPON_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->groupBy('day')
             ->orderBy('day')
-            ->chunk(10, function($coupons) use(&$tmpRes, &$totales, &$aggr) {
+            ->chunk(1000, function($coupons) use(&$tmpRes, &$totales, &$aggr) {
                 foreach($coupons as $coupon)
                 {
                     $totales['printed_coupons'] += $coupon->coupons;
@@ -77,7 +77,7 @@ trait Coupons
             ->whereBetween('REP_CAN_CUPON_CANJE_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->groupBy('DIA')
             ->orderBy('DIA', 'asc')
-            ->chunk(10, function($coupons) use(&$tmpRes, &$totales) {
+            ->chunk(1000, function($coupons) use(&$tmpRes, &$totales) {
                 foreach($coupons as $coupon)
                 {
                     $totales['redeemed_coupons'] += $coupon->CANJES;
@@ -132,7 +132,7 @@ trait Coupons
             ->whereBetween('REP_CAN_CUPON_CANJE_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->orderBy('CANJE_FECHA_HORA')
             ->orderBy('USUARIO_NODO')
-            ->chunk(100, function($coupons) use(&$tmpRes, &$totales) {
+            ->chunk(1000, function($coupons) use(&$tmpRes, &$totales) {
                 foreach($coupons as $coupon)
                 {
                     //$totales['redeemed_coupons'] += 1;
@@ -174,7 +174,6 @@ trait Coupons
             $pr = [];
             $printed = $this->getPrintedCoupons($filters);
             $redeemed = $this->getRedeemedCoupons($filters);
-            dd($redeemed);
             $coupons = array_merge_recursive($printed, $redeemed);
             if(count($coupons))
             {
@@ -203,7 +202,6 @@ trait Coupons
 
                 ];
             }
-
 
             return $pr;
         });

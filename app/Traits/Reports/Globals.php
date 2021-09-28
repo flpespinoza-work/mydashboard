@@ -31,7 +31,7 @@ trait Globals
             $query->whereBetween('REP_CAN_CUPON_CANJE_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->groupBy('day','REP_CAN_CUPON_GIFTCARD')
             ->orderBy('day', 'asc')
-            ->chunk(50, function($redeems) use(&$tmpRes){
+            ->chunk(1000, function($redeems) use(&$tmpRes){
                 foreach($redeems as $redeem)
                 {
                     $name = Store::where('giftcard', $redeem->giftcard)->first()->name;
@@ -111,7 +111,7 @@ trait Globals
             $query->whereBetween('TAE_SAL_TS', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->groupBy('day', 'TAE_SAL_BOLSA')
             ->orderBy('day')
-            ->chunk(50, function($registers) use (&$tmpRes, &$totals){
+            ->chunk(1000, function($registers) use (&$tmpRes, &$totals){
                 foreach($registers as $register)
                 {
                     $name = Store::where('giftcard', str_replace('GIFTCARD_', '', $register->bag))->first()->name;

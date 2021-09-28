@@ -28,7 +28,7 @@ trait Sales
             ->groupBy('VEN_ID')
             ->orderBy('VEN_FECHA_HORA')
             ->orderBy('NOD_USU_NODO')
-            ->chunk(100, function($sales) use(&$tmpRes, &$totalSales) {
+            ->chunk(1000, function($sales) use(&$tmpRes, &$totalSales) {
                 foreach($sales as $sale)
                 {
                     $totalSales['sales'] += 1;
@@ -104,7 +104,7 @@ trait Sales
             ->whereRaw("(BINARY NOD_USU_CERTIFICADO REGEXP '[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]' OR NOD_USU_CERTIFICADO = '')")
             ->groupBy('DIA')
             ->orderBy('DIA')
-            ->chunk(10, function($sales) use(&$tmpRes, &$totalSales) {
+            ->chunk(1000, function($sales) use(&$tmpRes, &$totalSales) {
                 foreach($sales as $sale)
                 {
                     $totalSales['sales'] += $sale->VENTAS;

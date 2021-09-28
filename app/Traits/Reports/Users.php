@@ -25,7 +25,7 @@ trait Users
             ->groupBy('day')
             ->groupBy('TAE_SAL_BOLSA')
             ->orderBy('day')
-            ->chunk(10, function($users) use(&$tmpRes, &$totalUsers) {
+            ->chunk(1000, function($users) use(&$tmpRes, &$totalUsers) {
                 foreach($users as $user)
                 {
                     $totalUsers += $user->users;

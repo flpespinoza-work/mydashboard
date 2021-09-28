@@ -62,6 +62,7 @@ trait Scores
             ->where('COM_ESTABLECIMIENTO_ID', $filters['node'])
             ->whereBetween('COM_FECHA_HORA', [$filters['initial_date'], $filters['final_date']])
             ->whereRaw("(BINARY NOD_USU_CERTIFICADO REGEXP '[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]' OR NOD_USU_CERTIFICADO = '')")
+            ->where('COM_COMENTARIO', 'NOT LIKE', "%escribe tus comentarios aqu%")
             ->orderBy('COM_FECHA_HORA', 'desc');
 
             if($filters['seller'])
@@ -69,7 +70,7 @@ trait Scores
                 $query->where('COM_VENDEDOR', $filters['seller']);
             }
 
-            $query->chunk(50, function($scores) use(&$result) {
+            $query->chunk(5000, function($scores) use(&$result) {
                 foreach($scores as $score)
                 {
                     $result['data'][] = [
@@ -78,9 +79,9 @@ trait Scores
                         'user' => $score->NOD_USU_NODO,
                         'store' => $score->COM_ESTABLECIMIENTO_ID,
                         'action' => ($score->COM_TIPO == 'CANJE') ? 'Canje de cupon' : 'Pago con Tokencash',
-                        'comment' => utf8_encode($score->COM_COMENTARIO),
+                        'comment' => $score->COM_COMENTARIO,
                         'score' => $score->COM_CALIFICACION,
-                        'seller' => utf8_encode($score->COM_VENDEDOR),
+                        'seller' => $score->COM_VENDEDOR,
                         'aditional' => $score->COM_ADICIONAL
                     ];
                 }
@@ -115,9 +116,10 @@ trait Scores
             })
             ->whereBetween('VEN_FECHA_HORA', [$filters['initial_date'], $filters['final_date']])
             ->whereRaw("(BINARY NOD_USU_CERTIFICADO REGEXP '[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]' OR NOD_USU_CERTIFICADO = '')")
+            ->where('COM_COMENTARIO', 'NOT LIKE', "%escribe tus comentarios aqu%")
             ->orderBy('VEN_FECHA_HORA', 'desc');
 
-            $query->chunk(50, function($scores) use(&$result, $tokDB) {
+            $query->chunk(5000, function($scores) use(&$result, $tokDB) {
                 foreach($scores as $score)
                 {
                     $action = '';
