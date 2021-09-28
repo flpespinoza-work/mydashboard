@@ -24,6 +24,7 @@
     x-data="{ sidebarOpen: false }"
     class="m-0 font-sans text-sm antialiased text-gray-600 bg-white">
         <noscript>{{ __('You need to enable JavaScript to run this app.') }}</noscript>
+        <livewire:offline/>
         <div class="flex h-screen overflow-hidden">
             <div class="lg:w-72">
                 <div @click="sidebarOpen = !sidebarOpen" x-show="sidebarOpen" :class="{ 'opacity-100' : sidebarOpen }"

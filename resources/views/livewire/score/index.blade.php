@@ -3,7 +3,7 @@
         <livewire:score.score-filters />
     </x-slot>
 
-    <div class="min-h-full mt-14">
+    <div class="min-h-full mt-4 lg:mt-8">
         <div wire:loading.delay class="w-full">
             <p class="text-xs font-semibold text-center md:text-sm">
                 <x-loader class="w-10 h-10" />
