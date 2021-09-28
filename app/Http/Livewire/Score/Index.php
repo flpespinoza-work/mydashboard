@@ -12,6 +12,7 @@ class Index extends Component
 
     public $scores = null;
     public $store_name;
+    public $report_data;
 
     protected $listeners = ['getScore'];
 
@@ -49,7 +50,9 @@ class Index extends Component
     public function getScore($filters)
     {
         $this->scores = null;
-        $this->store_name = "Establecimiento: " . fnGetStoreNAme($filters['store']);
+        $this->report_data['store'] = fnGetStoreName($filters['store']);
+        $this->report_data['period'] = "Periodo: " . date('d/m/Y', strtotime($filters['initial_date'])) ." al " . date('d/m/Y', strtotime($filters['final_date']));
+        $this->report_data['seller'] = $filters['seller'];
         $this->scores = $this->getScores($filters);
     }
 }
