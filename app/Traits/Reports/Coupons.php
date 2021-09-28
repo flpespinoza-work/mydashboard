@@ -158,9 +158,13 @@ trait Coupons
             return $tmpRes;
         });
 
-        usort($result['coupons'], function($a, $b){
-            return strtotime(str_replace('/', '-', $a['date_coupon'])) - strtotime(str_replace('/', '-', $b['date_coupon']));
-        });
+        if(count($result))
+        {
+            usort($result['coupons'], function($a, $b){
+                return strtotime(str_replace('/', '-', $a['date_coupon'])) - strtotime(str_replace('/', '-', $b['date_coupon']));
+            });
+        }
+
 
 
         return $result;
