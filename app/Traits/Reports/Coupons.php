@@ -259,7 +259,7 @@ trait Coupons
         $tokDB = DB::connection('reportes');
         $filters['budgets'] = fnGetAllBudgets();
 
-        $result = cache()->remember('last-printed-coupon-report', 60*5, function() use($tokDB, $filters){
+        $result = cache()->remember('last-printed-coupon-report', 60*1, function() use($tokDB, $filters){
             return $tokDB->table('dat_reporte_cupones_impresos')
             ->selectRaw('MAX(REP_IMP_CUPON_FECHA_HORA) date, REP_IMP_CUPON_PRESUPUESTO budget, REP_IMP_CUPON_MONTO amount')
             ->whereIn('REP_IMP_CUPON_PRESUPUESTO', $filters['budgets'])

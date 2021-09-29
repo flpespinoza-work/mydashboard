@@ -10,13 +10,19 @@ class Index extends Component
 {
     protected $listeners = ['toggleUserPermission'];
     public $search = '';
+    public $showModal = false;
+    public $permission;
+
+    protected $rules = [
+        'permission.name' => 'required|unique:permissions,name',
+        'permission.description' => 'required|string'
+    ];
 
     public function render()
     {
         $users = User::search($this->search)->orderBy('id')->get();
         $permissions = Permission::orderBy('id')->get();
         $userPermissions = User::with('permissions')->get()->pluck('permissions', 'id')->toArray();
-        //dd($userPermissions);
         return view('livewire.permission.index', compact('users', 'permissions', 'userPermissions'));
     }
 
@@ -31,5 +37,18 @@ class Index extends Component
         {
             $u->permissions()->detach($permission);
         }
+    }
+
+    public function createPermission()
+    {
+        $this->permission = Permission::make();
+        $this->showModal = true;
+    }
+
+    public function savePermission()
+    {
+        $this->validate();
+        $this->permission->save();
+        $this->showModal = false;
     }
 }

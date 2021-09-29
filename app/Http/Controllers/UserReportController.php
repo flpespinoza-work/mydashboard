@@ -21,4 +21,10 @@ class UserReportController extends Controller
 
         return view('reports.users.history');
     }
+
+    public function activity()
+    {
+        //abort_if(Gate::denies('can_access_activity_users_report'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return view('reports.users.activity');
+    }
 }
