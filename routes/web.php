@@ -68,6 +68,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/reportes/globales/redeems', [GlobalReportController::class, 'redeems'])->name('reports.globals.redeems');
     Route::get('/reportes/globales/registers', [GlobalReportController::class, 'registers'])->name('reports.globals.registers');
 
+
 });
 
 /*Route::get('/dashboard', function () {

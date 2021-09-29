@@ -2,19 +2,6 @@
 x-data="{ showStoreList: @entangle('showStores') }"
 >
     <form wire:submit.prevent="sendFiltersToReport" class="items-center space-y-2 md:space-y-0 md:space-x-4 xl:justify-end md:flex">
-        <!--
-        <div class="md:w-5/12 lg:w-5/12 xl:w-6/12">
-            <select
-                wire:model="store"
-                id="store"
-                class="{{ $errors->has('store') ? 'border-red-300 bg-red-50' : '' }} w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
-                <option value="" selected>Seleccione un establecimiento...</option>
-                @foreach ($stores as $id => $store)
-                    <option value="{{ $id }}">{{ $store }}</option>
-                @endforeach
-            </select>
-        </div>
-        -->
         <div class="relative md:w-6/12 lg:w-5/12 xl:w-5/12">
             <div class="relative w-full">
                 <input

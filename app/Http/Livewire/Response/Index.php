@@ -40,7 +40,7 @@ class Index extends Component
 
     public function initializeResponse()
     {
-        return Response::make();;
+        return Response::make();
     }
 
     public function render()
