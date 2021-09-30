@@ -16,6 +16,11 @@ class Activity extends Component
 
     public function render()
     {
+        if(count($this->result['redeems_day']))
+        {
+
+        }
+
         return view('livewire.reports.users.activity');
     }
 
@@ -24,7 +29,7 @@ class Activity extends Component
         $this->report_data['store'] = fnGetStoreName($filters['store']);
         $this->report_data['period'] = "Periodo: " . date('d/m/Y', strtotime($filters['initial_date'])) ." al " . date('d/m/Y', strtotime($filters['final_date']));
         $this->result = $this->getUserActivity($filters);
-        //dd($this->result);
+        dd($this->result);
     }
 
     public function exportReport()
