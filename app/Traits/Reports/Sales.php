@@ -22,7 +22,6 @@ trait Sales
             ->select(DB::raw('NOD_USU_NODO, VEN_ID, DATE_FORMAT(VEN_FECHA_HORA, "%d/%m/%Y %H:%i:%s") VEN_FECHA_HORA, VEN_MONTO MONTO_VENTA'))
             ->where('VEN_DESTINO', $filters['node'])
             ->where('VEN_ESTADO', '=', 'VIGENTE')
-            ->where('VEN_BOLSA', '=', $filters['giftcard'])
             ->whereBetween('VEN_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->whereRaw("(BINARY NOD_USU_CERTIFICADO REGEXP '[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]' OR NOD_USU_CERTIFICADO = '')")
             ->groupBy('VEN_ID')
