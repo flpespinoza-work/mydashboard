@@ -17,22 +17,25 @@ class Activity extends Component
 
     public function render()
     {
-        if(count($this->result['redeems_day']))
+        if(!is_null($this->result) && isset($this->result['redeems_day']))
         {
-            $charModel = null;
+            $chartModel = null;
             $redeems = collect($this->result['redeems_day']);
-            $chartModel = $redeems->reduce(function (LineChartModel $chartModel, $data, $key) {
-                return $chartModel->addPoint($key, $data, '#5CB7DA');
-
+            $sales = collect($this->result['sales_day']);
+            $chartModel = $redeems->reduce(function (LineChartModel $chartModel, $data, $key) use ($sales) {
+                $chartModel->addSeriesPoint('Canje', $key, $data);
+                $chartModel->addSeriesPoint('Compra', $key, $sales[$key]);
+                return $chartModel;
             }, (new LineChartModel())
                 ->setTitle('Hábitos de canje y compra')
+                ->multiLine()
                 ->setAnimated(true)
-                ->withoutLegend()
                 ->withGrid()
                 ->setXAxisVisible(true)
+                ->setColors(['#259FFB', '#EF6A37'])
             );
 
-            return view('livewire.reports.users.new-users')->with(['chartModel' => $chartModel]);
+            return view('livewire.reports.users.activity')->with(['chartModel' => $chartModel]);
         }
 
         return view('livewire.reports.users.activity');

@@ -95,6 +95,10 @@ trait Users
         $filters['budget'] = fnGetBudget($filters['store']);
         $filters['node'] = fnGetTokencashNode($filters['store']);
         $result = [];
+        $result['redeems_day'] = ['L' => 0, 'Ma' => 0, 'Mi' => 0, 'J' => 0, 'V' => 0, 'S' => 0, 'D' => 0];
+        $result['redeems_period'] = [ 'redeems' => 0, 'amount' => 0];
+        $result['sales_day'] = ['L' => 0, 'Ma' => 0, 'Mi' => 0, 'J' => 0, 'V' => 0, 'S' => 0, 'D' => 0];
+        $result['sales_period'] = [ 'sales' => 0, 'amount' => 0];
 
         $rememberReport = fnRememberReportTime($filters['final_date']);
         //Obtener informacion general(ID Usuario, nombre usuario, telefono, correo, fecha alta, estado)
@@ -125,7 +129,7 @@ trait Users
             ->whereBetween('REP_CAN_CUPON_CANJE_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->where('NOD_USU_NODO', $filters['user'])
             ->where('REP_CAN_CUPON_PRESUPUESTO', $filters['budget'])
-            ->orderBy('REP_CAN_CUPON_CANJE_FECHA_HORA')
+            ->orderBy('REP_CAN_CUPON_CANJE_FECHA_HORA', 'desc')
             ->get();
         });
 
@@ -136,9 +140,11 @@ trait Users
         else
         {
             $result['redeems'] = $userRedeems->toArray();
-            $result['redeems_day'] = ['L' => 0, 'Ma' => 0, 'Mi' => 0, 'J' => 0, 'V' => 0, 'S' => 0, 'D' => 0];
             foreach($userRedeems as $redeem)
             {
+                $result['redeems_period']['redeems'] += 1;
+                $result['redeems_period']['amount'] += $redeem->MONTO;
+
                 $day = date('l', strtotime($redeem->IMPRESION));
                 switch($day)
                 {
@@ -183,7 +189,7 @@ trait Users
             ->where('VEN_DESTINO', $filters['node'])
             ->where('VEN_NODO', $filters['user'])
             ->where('VEN_ESTADO', 'VIGENTE')
-            ->orderBy('VEN_FECHA_HORA')
+            ->orderBy('VEN_FECHA_HORA', 'desc')
             ->get();
         });
 
@@ -194,9 +200,12 @@ trait Users
         else
         {
             $result['sales'] = $userSales->toArray();
-            $result['sales_day'] = ['L' => 0, 'Ma' => 0, 'Mi' => 0, 'J' => 0, 'V' => 0, 'S' => 0, 'D' => 0];
+
             foreach($userSales as $sale)
             {
+                $result['sales_period']['sales'] += 1;
+                $result['sales_period']['amount'] += $sale->MONTO;
+
                 $day = date('l', strtotime($sale->FECHA));
                 switch($day)
                 {

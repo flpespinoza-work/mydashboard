@@ -38,20 +38,139 @@
                             <p class="mt-2 text-sm font-semibold md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl">${{ number_format($result['info']->SALDO,2) }}</p>
                         </div>
                         <div class="col-span-1 p-3 rounded-md drop-shadow-sm bg-gray-50 sm:col-span-1 md:col-span-1 ">
-                            <h5 class="text-xs font-light text-gray-500 lg:text-sm">Canjes del periodo: {{ number_format($result['redeems_total']->CANJES) }}</h5>
-                            <p class="mt-2 text-sm font-semibold md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl">${{ number_format($result['redeems_total']->MONTO,2) }}</p>
+                            <h5 class="text-xs font-light text-gray-500 lg:text-sm">Canjes del periodo: {{ number_format($result['redeems_period']['redeems']) }}</h5>
+                            <p class="mt-2 text-sm font-semibold md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl">${{ number_format($result['redeems_period']['amount'],2) }}</p>
                         </div>
                         <div class="col-span-1 p-3 rounded-md drop-shadow-sm bg-gray-50 sm:col-span-1 md:col-span-1 ">
                             <h5 class="text-xs font-light text-gray-500 lg:text-sm">Canjes totales: {{ number_format($result['redeems_total']->CANJES) }}</h5>
                             <p class="mt-2 text-sm font-semibold md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl">${{ number_format($result['redeems_total']->MONTO,2) }}</p>
                         </div>
                         <div class="col-span-1 p-3 rounded-md drop-shadow-sm bg-gray-50 sm:col-span-1 md:col-span-1 ">
-                            <h5 class="text-xs font-light text-gray-500 lg:text-sm">Compras del periodo: {{ number_format($result['redeems_total']->CANJES) }}</h5>
-                            <p class="mt-2 text-sm font-semibold md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl">${{ number_format($result['redeems_total']->MONTO,2) }}</p>
+                            <h5 class="text-xs font-light text-gray-500 lg:text-sm">Compras del periodo: {{ number_format($result['sales_period']['sales']) }}</h5>
+                            <p class="mt-2 text-sm font-semibold md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl">${{ number_format($result['sales_period']['amount'],2) }}</p>
                         </div>
                         <div class="col-span-1 p-3 rounded-md drop-shadow-sm bg-gray-50 sm:col-span-1 md:col-span-1 ">
                             <h5 class="text-xs font-light text-gray-500 lg:text-sm">Compras totales: {{ number_format($result['sales_total']->VENTAS) }}</h5>
                             <p class="mt-2 text-sm font-semibold md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl">${{ number_format($result['sales_total']->MONTO,2) }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full py-3 mt-8 text-xs rounded-md h-60 md:h-96 bg-gray-50">
+                    <livewire:livewire-line-chart
+                    key="{{ $chartModel->reactiveKey() }}"
+                    :line-chart-model="$chartModel"
+                    />
+                </div>
+
+                <div class="mt-8 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <h3 class="py-3 font-semibold text-center">Detallado de cupones canjeados</h3>
+                    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                        <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
+                                            #
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
+                                            Cupón ID
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
+                                            Fecha de impresión
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
+                                            Fecha de canje
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
+                                            Código de cupón
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
+                                            Monto
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @forelse ($result['redeems'] as $redeem)
+                                    <tr>
+                                        <td class="px-4 py-3 text-xs text-gray-500 whitespace-nowrap">
+                                            {{ $loop->iteration }}
+                                        </td>
+                                        <td class="px-4 py-3 text-xs text-gray-500 whitespace-nowrap">
+                                            {{ $redeem->ID }}
+                                        </td>
+                                        <td class="px-4 py-3 text-xs text-gray-500 whitespace-nowrap">
+                                            {{ $redeem->IMPRESION }}
+                                        </td>
+                                        <td class="px-4 py-3 text-xs text-gray-500 whitespace-nowrap">
+                                            {{ $redeem->CANJE }}
+                                        </td>
+                                        <td class="px-4 py-3 text-xs text-gray-500 whitespace-nowrap">
+                                            <span class="px-2 py-1 text-green-700 bg-green-100 rounded-full">{{ $redeem->CODIGO }}</span>
+                                        </td>
+                                        <td class="px-4 py-3 text-xs text-gray-500 whitespace-nowrap">
+                                            ${{ number_format($redeem->MONTO,2) }}
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="6" class="px-6 py-4 text-sm text-center text-gray-500 whitespace-nowrap">
+                                            No existen registros de canjes
+                                        </td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+                    <h3 class="py-3 font-semibold text-center">Detallado de ventas</h3>
+                    <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+                        <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
+                                            #
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
+                                            Venta ID
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
+                                            Fecha de venta
+                                        </th>
+                                        <th scope="col" class="px-4 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
+                                            Monto
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200">
+                                    @forelse ($result['sales'] as $sale)
+                                    <tr>
+                                        <td class="px-4 py-3 text-xs text-gray-500 whitespace-nowrap">
+                                            {{ $loop->iteration }}
+                                        </td>
+                                        <td class="px-4 py-3 text-xs text-gray-500 whitespace-nowrap">
+                                            {{ $sale->ID }}
+                                        </td>
+                                        <td class="px-4 py-3 text-xs text-gray-500 whitespace-nowrap">
+                                            {{ $sale->FECHA }}
+                                        </td>
+                                        <td class="px-4 py-3 text-xs text-gray-500 whitespace-nowrap">
+                                            ${{ number_format($sale->MONTO,2) }}
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="4" class="px-6 py-4 text-sm text-center text-gray-500 whitespace-nowrap">
+                                            No existen registros de ventas
+                                        </td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
