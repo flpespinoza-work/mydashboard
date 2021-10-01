@@ -1,4 +1,6 @@
-<div>
+<div
+    x-data="{ scrollAtTop: true}"
+    >
     <x-slot name="actions">
         <livewire:score.score-filters />
     </x-slot>
@@ -12,7 +14,8 @@
         </div>
 
         @if(!is_null($scores) && !empty($scores))
-        <div wire:loading.remove>
+        <div
+            wire:loading.remove>
             <div>
                 <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $report_data['store'] }}</h3>
                 <h5 class="text-xs font-medium text-gray-500 md:text-base">{{ $report_data['period'] }}</h5>
@@ -58,8 +61,8 @@
                 </div>
             </div>
 
-            <div id="comments">
-                <h4 class="text-sm text-gray-400 md:text-lg xl:text-xl">Comentarios</h4>
+            <div id="comments" class="mt-8">
+                <h4 class="text-sm text-center text-gray-400 text-gray-700 md:text-lg xl:text-xl">Comentarios</h4>
                 <div x-data="{ openTab: 5 }" class="mt-4">
                     <div class="w-full">
                         <ul class="flex items-center justify-between overflow-auto border rounded-sm flex-nowrap border-gray-150">
