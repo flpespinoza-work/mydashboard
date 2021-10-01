@@ -7,22 +7,22 @@
         placeholder="Buscar...">
         @can('can_create_new_campaign')
         <button
-            class="flex items-center justify-center p-2 ml-auto transition duration-75 rounded-md bg-orange">
+            class="flex items-center justify-center p-2 ml-2 transition duration-75 rounded-md md:ml-auto bg-orange">
             <x-icons.plus class="w-5 h-5 text-orange-light"/>
             <span class="hidden ml-2 text-xs font-semibold md:inline-block text-orange-light">Nueva campaña</span>
         </button>
         @endcan
     </div>
     <div class="mt-4">
+        <div class="flex items-center space-x-4 text-xs">
+            <div class="flex items-center space-x-1"><span class="block w-3 h-3 bg-green-400 rounded-full"></span><span>Enviada</span></div>
+            <div class="flex items-center space-x-1"><span class="block w-3 h-3 bg-yellow-400 rounded-full"></span><span>En procesamiento</span></div>
+            <div class="flex items-center space-x-1"><span class="block w-3 h-3 bg-red-400 rounded-full"></span><span>Suspendida</span></div>
+        </div>
         <div class="flex flex-col">
             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                     <div class="overflow-hidden border-b border-gray-200">
-                        <div class="flex items-center space-x-4 text-xs">
-                            <div class="flex items-center space-x-1"><span class="block w-3 h-3 bg-green-400 rounded-full"></span><span>Enviada</span></div>
-                            <div class="flex items-center space-x-1"><span class="block w-3 h-3 bg-yellow-400 rounded-full"></span><span>En procesamiento</span></div>
-                            <div class="flex items-center space-x-1"><span class="block w-3 h-3 bg-red-400 rounded-full"></span><span>Suspendida</span></div>
-                        </div>
                         <table class="min-w-full mt-6 divide-y divide-gray-200 table-auto">
                             <thead class="bg-gray-50">
                                 <tr>
@@ -50,8 +50,8 @@
                                 @if ($campaigns->count() > 0)
                                     @forelse($campaigns as $campaign)
                                         @php $action = json_decode($campaign->notification->NOT_ACCION) @endphp
-                                        <tr>
-                                            <td class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500">
+                                        <tr class="{{ $loop->even ? 'bg-gray-50' : '' }}">
+                                            <td class="px-6 py-2 text-xs font-medium tracking-wider text-left text-gray-500">
                                                 <div class="flex items-center">
                                                     <div class="flex-shrink-0 overflow-hidden rounded">
                                                         <a class="thumb" href="{{ $action->IMG }}">
@@ -65,12 +65,12 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td class="px-6 py-3 font-medium tracking-wider text-left text-gray-500 ">
+                                            <td class="px-6 py-2 font-medium tracking-wider text-left text-gray-500 ">
                                                 <span class="{{ ($campaign->notification->NOT_TIPO == 'INFORMATIVA') ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600' }} text-xxs inline-block px-3 py-1 rounded-full">
                                                     {{ $campaign->notification->NOT_TIPO }}
                                                 </span>
                                             </td>
-                                            <td class="px-6 py-3 font-medium tracking-wider text-center text-gray-500 text-xxs">
+                                            <td class="px-6 py-2 font-medium tracking-wider text-center text-gray-500 text-xxs">
                                                 @switch($campaign->CAMP_AUTORIZACION)
                                                     @case(1)
                                                         <span class="inline-block w-3 h-3 bg-green-400 rounded-full"></span>
@@ -82,9 +82,9 @@
                                                         <span class="inline-block w-3 h-3 bg-red-400 rounded-full"></span>
                                                 @endswitch
                                             </td>
-                                            <td class="px-6 py-3 font-medium tracking-wider text-left text-gray-500 text-xxs">{{ date('d/m/Y H:i:s', strtotime($campaign->CAMP_TS)) }}</td>
-                                            <td class="px-6 py-3 font-medium tracking-wider text-left text-gray-500 text-xxs">{{ $campaign->CAMP_AUTOR }}</td>
-                                            <td class="px-6 py-3 font-medium tracking-wider text-left text-gray-500 text-xxs">
+                                            <td class="px-6 py-2 font-medium tracking-wider text-left text-gray-500 text-xxs">{{ date('d/m/Y H:i:s', strtotime($campaign->CAMP_TS)) }}</td>
+                                            <td class="px-6 py-2 font-medium tracking-wider text-left text-gray-500 text-xxs">{{ $campaign->CAMP_AUTOR }}</td>
+                                            <td class="px-6 py-2 font-medium tracking-wider text-left text-gray-500 text-xxs">
                                                 <div class="flex items-center space-x-2">
                                                     @can('can_see_campaign')
                                                     <a class="cursor-pointer" wire:click="stats('{{ Crypt::encrypt($campaign->CAMP_ID) }}', '{{ $campaign->CAMP_AUTORIZACION}}')">

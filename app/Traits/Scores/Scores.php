@@ -87,7 +87,8 @@ trait Scores
                 }
             });
 
-            return mb_convert_encoding($result, 'UTF-8', 'UTF-8');
+            return $result;
+            //return mb_convert_encoding($result, 'UTF-8', 'UTF-8');
         });
         return $scores;
     }
@@ -116,7 +117,7 @@ trait Scores
             })
             ->whereBetween('VEN_FECHA_HORA', [$filters['initial_date'], $filters['final_date']])
             ->whereRaw("(BINARY NOD_USU_CERTIFICADO REGEXP '[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]+[o][CEFIKLNQSTWXYbcdgkmprsuvy24579]+[a-zA-Z0-9]' OR NOD_USU_CERTIFICADO = '')")
-            ->where('COM_COMENTARIO', 'NOT LIKE', "%escribe tus comentarios aqu%")
+            ->where('VEN_ADICIONAL', 'NOT LIKE', "%escribe tus comentarios aqu%")
             ->orderBy('VEN_FECHA_HORA', 'desc');
 
             $query->chunk(5000, function($scores) use(&$result, $tokDB) {
@@ -153,13 +154,14 @@ trait Scores
                         'action' => $action,
                         'comment' => (isset($m_adicional['COMENTARIOS'])) ? utf8_encode(trim($m_adicional['COMENTARIOS'])) : '',
                         'score' => (isset($m_adicional['CALIFICACION']))? $m_adicional['CALIFICACION'] : '',
-                        'seller' => utf8_encode($seller),
+                        'seller' => $seller,
                         'aditional' => $score->VEN_ADICIONAL
                     ];
                 }
             });
 
-            return mb_convert_encoding($result, 'UTF-8', 'UTF-8');
+            return $result;
+            //return mb_convert_encoding($result, 'UTF-8', 'UTF-8');
         });
 
         if(count($scores) && $filters['seller'])

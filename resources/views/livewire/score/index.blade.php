@@ -22,32 +22,32 @@
             </div>
             <div class="space-y-4 mt-7">
                 <div class="grid grid-cols-4 gap-4">
-                    <div class="col-span-1 p-4 border border-gray-100 rounded-sm bg-gray-50">
-                        <h5 class="text-sm font-semibold text-gray-400">Calificaciones totales:</h5>
+                    <div class="col-span-2 p-4 border border-gray-100 rounded-sm md:col-span-1 bg-gray-50">
+                        <h5 class="text-xs font-semibold text-gray-400 md:text-sm">Calificaciones totales:</h5>
                         <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ $scores['totalScores'] }} </span>
                     </div>
-                    <div class="col-span-1 p-4 border border-gray-100 rounded-sm bg-gray-50">
-                        <h5 class="text-sm font-semibold text-gray-400">Promedio:</h5>
+                    <div class="col-span-2 p-4 border border-gray-100 rounded-sm md:col-span-1 bg-gray-50">
+                        <h5 class="text-xs font-semibold text-gray-400 md:text-sm">Promedio:</h5>
                         <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ $scores['scorePromedio'] }}% </span>
                     </div>
-                    <div class="col-span-1 p-4 border border-gray-100 rounded-sm bg-gray-50">
-                        <h5 class="text-sm font-semibold text-gray-400">Total de comentarios:</h5>
+                    <div class="col-span-2 p-4 border border-gray-100 rounded-sm md:col-span-1 bg-gray-50">
+                        <h5 class="text-xs font-semibold text-gray-400 md:text-sm">Total de comentarios:</h5>
                         <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ number_format($scores['totalComments']) }} </span>
                     </div>
-                    <div class="col-span-1 p-4 border border-gray-100 rounded-sm bg-gray-50">
-                        <h5 class="text-sm font-semibold text-gray-400">Porcentaje de comentarios:</h5>
+                    <div class="col-span-2 p-4 border border-gray-100 rounded-sm md:col-span-1 bg-gray-50">
+                        <h5 class="text-xs font-semibold text-gray-400 md:text-sm">Porcentaje de comentarios:</h5>
                         <span class="inline-block mt-2 text-lg font-semibold text-gray-darker md:text-xl xl:text-3xl">{{ number_format($scores['totalComments'] * 100 / $scores['totalScores'],2) }}% </span>
                     </div>
                 </div>
-                <div id="charts" class="grid grid-cols-2 gap-4">
+                <div id="charts" class="grid grid-cols-2 gap-4 mt-8">
                     <div class="col-span-2 md:col-span-1 h-60 md:h-96">
                         <div class="flex items-center h-full">
-                            <div class="justify-between space-y-3 flex-flex-col">
-                                <x-scores.5 class="w-12 h-12" />
-                                <x-scores.4 class="w-12 h-12" />
-                                <x-scores.3 class="w-12 h-12" />
-                                <x-scores.2 class="w-12 h-12" />
-                                <x-scores.1 class="w-12 h-12" />
+                            <div class="justify-between space-y-1 md:space-y-3 flex-flex-col">
+                                <x-scores.5 class="w-8 h-8 md:w-12 md:h-12" />
+                                <x-scores.4 class="w-8 h-8 md:w-12 md:h-12" />
+                                <x-scores.3 class="w-8 h-8 md:w-12 md:h-12" />
+                                <x-scores.2 class="w-8 h-8 md:w-12 md:h-12" />
+                                <x-scores.1 class="w-8 h-8 md:w-12 md:h-12" />
                             </div>
                             <livewire:livewire-column-chart key="{{ $columnChartModel->reactiveKey() }}" :column-chart-model="$columnChartModel"/>
                         </div>
@@ -100,7 +100,7 @@
                             </li>
                             <li @click="openTab = 0" :class="openTab === 0 ? 'bg-gray-25' : 'bg-orange-lightest'"
                                 class="flex-shrink-0 w-60 h-14 md:flex-1">
-                                <a class="flex items-center justify-center w-full h-full text-xs font-semibold leading-snug cursor-pointer md:text-sm">
+                                <a class="flex items-center justify-center w-full h-full text-xs font-semibold leading-snug cursor-pointer md:text-xxs lg:text-sm">
                                     <span>Solo comentarios</span>
                                     <span class="ml-2 text-xs font-medium">{{ $scores['count0'] }}</span>
                                 </a>
@@ -120,15 +120,15 @@
                                                 @endif
                                             <div class="p-3 mx-auto my-2 border rounded-md md:w-3/4 border-gray-150">
                                                 <div class="flex flex-wrap items-center">
-                                                    <span class="inline-block px-2 mr-4 font-bold bg-yellow-500 rounded text-gray-50">{{ $show }}</span>
-                                                    <span class="text-xs font-semibold text-gray-500">Usuario: {{ $comment['user']}}</span>
-                                                    <span class="mx-6 font-medium text-gray-400 text-xxs md:text-xs">{{ $comment['date']}}</span>
+                                                    <span class="inline-block w-auto px-2 font-bold bg-yellow-500 rounded text-xxs max-w-max md:mr-4 text-gray-50">{{ $show }}</span>
+                                                    <span class="ml-2 font-semibold text-gray-500 text-xxs sm:text-xs">Usuario: {{ $comment['user']}}</span>
+                                                    <span class="mx-2 font-medium text-gray-400 md:mx-6 text-xxs md:text-xs">{{ $comment['date']}}</span>
                                                     @if (strpos($comment['action'], 'Pago') !== false)
-                                                        <span class="text-xxs tracking-wide font-medium py-0.5 px-3 rounded-full bg-red-100 text-red-500">
+                                                        <span class="text-xxs max-w-max inline-block tracking-wide font-medium py-0.5 px-3 rounded-full bg-red-100 text-red-500">
                                                             {{ Str::lower($comment['action']) }}
                                                         </span>
                                                     @else
-                                                        <span class="text-xxs tracking-wide font-medium py-0.5 px-3 rounded-full bg-green-100 text-green-500">
+                                                        <span class="text-xxs max-w-max inline-block tracking-wide font-medium py-0.5 px-3 rounded-full bg-green-100 text-green-500">
                                                             {{ Str::lower($comment['action']) }}
                                                         </span>
                                                     @endif
@@ -136,7 +136,7 @@
                                                     <span class="font-medium text-gray-400 md:ml-auto text-xxs">Atendio: {{ $comment['seller']}}</span>
                                                 </div>
                                                 <div class="p-3 mt-3 rounded-sm bg-gray-50">
-                                                    <p class="text-sm font-medium text-gray-500 md:text-sm">{{ $comment['comment'] }}</p>
+                                                    <p class="text-xs font-medium text-gray-500 md:text-sm">{{ $comment['comment'] }}</p>
                                                 </div>
                                             </div>
                                             @endif

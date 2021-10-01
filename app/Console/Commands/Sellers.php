@@ -65,8 +65,8 @@ class Sellers extends Command
                 //Guardar vendedores en tabla sellers
                 foreach($tokSellers as $seller)
                 {
-                    $name = utf8_encode($seller->COM_VENDEDOR);
-                    //$name = $seller->COM_VENDEDOR;
+                    //$name = utf8_encode($seller->COM_VENDEDOR);
+                    $name = $seller->COM_VENDEDOR;
                     Seller::create(['store_id' => $store->id, 'name' => $name]);
                 }
             }
