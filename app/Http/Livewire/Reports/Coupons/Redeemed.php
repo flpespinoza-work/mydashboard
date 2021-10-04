@@ -23,7 +23,8 @@ class Redeemed extends BaseCouponsReport
 
             $couponsChartModel = $coupons->reduce(function (AreaChartModel $couponsChartModel, $data, $key) use($coupons) {
                 $coupon = $coupons[$key];
-                return $couponsChartModel->addPoint($coupon['day'], $coupon['count']);
+                $day = __(date('D', strtotime(str_replace('/', '-',$coupon['day']))));
+                return $couponsChartModel->addPoint($day . ' - ' . $coupon['day'], $coupon['count']);
             }, (new AreaChartModel())
                 ->setTitle('Cupones canjeados')
                 ->setAnimated(true)
@@ -36,7 +37,8 @@ class Redeemed extends BaseCouponsReport
             $amountChartModel = $coupons->reduce(function (AreaChartModel $amountChartModel, $data, $key) use($coupons, &$amount) {
                 $coupon = $coupons[$key];
                 $amount += $coupon['amount'];
-                return $amountChartModel->addPoint($coupon['day'], round($amount));
+                $day = __(date('D', strtotime(str_replace('/', '-',$coupon['day']))));
+                return $amountChartModel->addPoint($day . ' - ' . $coupon['day'], round($amount));
             }, (new AreaChartModel())
                 ->setTitle('Dinero canjeado')
                 ->setAnimated(true)

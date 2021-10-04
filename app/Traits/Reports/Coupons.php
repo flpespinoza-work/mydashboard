@@ -135,8 +135,8 @@ trait Coupons
             ->chunk(1000, function($coupons) use(&$tmpRes, &$totales) {
                 foreach($coupons as $coupon)
                 {
-                    //$totales['redeemed_coupons'] += 1;
-                    //$totales['redeemed_amount'] += $coupon->CANJE_MONTO;
+                    $totales['redeemed_coupons'] += 1;
+                    $totales['redeemed_amount'] += $coupon->CANJE_MONTO;
 
                     $tmpRes['coupons'][] = [
                         'user' => $coupon->USUARIO_NODO,
@@ -148,7 +148,6 @@ trait Coupons
                     ];
                 }
             });
-
             if(!empty($tmpRes))
             {
                 $tmpRes['totals'] = $totales;
@@ -156,6 +155,7 @@ trait Coupons
             }
 
             return $tmpRes;
+
         });
 
         if(count($result))

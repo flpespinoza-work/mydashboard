@@ -21,7 +21,8 @@ class NewUsers extends BaseUsersReport
             $users = collect($this->result['data']);
 
             $usersChartModel = $users->reduce(function (ColumnChartModel $usersChartModel, $data, $key) {
-                return $usersChartModel->addColumn($data['day'], $data['users'], '#5CB7DA');
+                $day = __(date('D', strtotime(str_replace('/', '-',$data['day']))));
+                return $usersChartModel->addColumn( $day . '- '. $data['day'], $data['users'], '#EF6A37');
 
             }, (new ColumnChartModel())
                 ->setTitle('Nuevos usuarios')

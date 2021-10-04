@@ -20,7 +20,9 @@ class PrintedRedeemed extends BaseCouponsReport
             $mount = 0.00;
             $coupons = collect($this->result['coupons']);
             $couponsChartModel = $coupons->reduce(function (LineChartModel $couponsChartModel, $data, $key) use(&$mount) {
-                $couponsChartModel->addSeriesPoint('Cupones impresos', $key, $data['printed']);
+                $day = __(date('D', strtotime(str_replace('/', '-', $key))));
+                $couponsChartModel->addSeriesPoint('Cupones impresos', $day . ' - '. $key, $data['printed']);
+
 
                 if(isset($data['redeemed']))
                 {
@@ -41,7 +43,7 @@ class PrintedRedeemed extends BaseCouponsReport
                 ->setSmoothCurve()
                 ->withGrid()
                 ->setXAxisVisible(true)
-                ->setColors(['#E86300', '#FFA35E'])
+                ->setColors(['#259FFB', '#DD5044'])
             );
 
             return view('livewire.reports.coupons.printed-redeemed')->with(['couponsChartModel' => $couponsChartModel]);

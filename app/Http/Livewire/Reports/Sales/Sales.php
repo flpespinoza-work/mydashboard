@@ -23,13 +23,15 @@ class Sales extends BaseSalesReport
 
             $couponsChartModel = $coupons->reduce(function (AreaChartModel $couponsChartModel, $data, $key) use($coupons) {
                 $coupon = $coupons[$key];
-                return $couponsChartModel->addPoint($coupon['date'], $coupon['sales']);
+                $day = __(date('D', strtotime(str_replace('/', '-', $coupon['date']))));
+                return $couponsChartModel->addPoint($day . ' - ' . $coupon['date'], $coupon['sales']);
             }, (new AreaChartModel())
                 ->setTitle('Ventas realizadas')
                 ->setAnimated(true)
                 ->setSmoothCurve()
                 ->withGrid()
                 ->setXAxisVisible(true)
+                ->setColor('#EF6A37')
             );
 
             return view('livewire.reports.sales.sales')->with(['salesChartModel' => $couponsChartModel]);

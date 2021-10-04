@@ -25,7 +25,8 @@ class Redeems extends BaseGlobalsReport
             {
                 $redeems = collect($this->result['totals']);
                 $redeemsChartModel = $redeems->reduce(function (ColumnChartModel $redeemsChartModel, $redeems, $key) {
-                    return $redeemsChartModel->addColumn($key, $redeems, '#5CB7DA');
+                    $day = __(date('D', strtotime(str_replace('/', '-', $key))));
+                    return $redeemsChartModel->addColumn($day . ' - ' . $key, $redeems, '#EF6A37');
                 }, (new ColumnChartModel())
                     ->setTitle('Canjes diarios')
                     ->setAnimated(true)
@@ -38,7 +39,8 @@ class Redeems extends BaseGlobalsReport
             {
                 $redeems = collect($this->result['redeems'][$this->report_data['store']]);
                 $redeemsChartModel = $redeems->reduce(function (ColumnChartModel $redeemsChartModel, $redeems, $key) {
-                    return $redeemsChartModel->addColumn($key, $redeems, '#5CB7DA');
+                    $day = __(date('D', strtotime(str_replace('/', '-', $key))));
+                    return $redeemsChartModel->addColumn($day . ' - ' . $key, $redeems, '#EF6A37');
                 }, (new ColumnChartModel())
                     ->setTitle('Canjes diarios')
                     ->setAnimated(true)

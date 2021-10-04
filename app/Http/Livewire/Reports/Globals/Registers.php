@@ -25,7 +25,8 @@ class Registers extends BaseGlobalsReport
             {
                 $users = collect($this->result['totals']);
                 $usersChartModel = $users->reduce(function (ColumnChartModel $usersChartModel, $users, $key) {
-                    return $usersChartModel->addColumn($key, $users, '#5CB7DA');
+                    $day = __(date('D', strtotime(str_replace('/', '-', $key))));
+                    return $usersChartModel->addColumn($day . ' - ' . $key, $users, '#EF6A37');
                 }, (new ColumnChartModel())
                     ->setTitle('Altas diarias')
                     ->withoutLegend()
@@ -38,7 +39,8 @@ class Registers extends BaseGlobalsReport
             {
                 $users = collect($this->result['registers'][$this->report_data['store']]);
                 $usersChartModel = $users->reduce(function (ColumnChartModel $usersChartModel, $users, $key) {
-                    return $usersChartModel->addColumn($key, $users, '#5CB7DA');
+                    $day = __(date('D', strtotime(str_replace('/', '-', $key))));
+                    return $usersChartModel->addColumn($day . ' - ' . $key, $users, '#EF6A37');
                 }, (new ColumnChartModel())
                     ->setTitle('Altas diarias')
                     ->withoutLegend()

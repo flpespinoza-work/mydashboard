@@ -22,8 +22,8 @@ class Printed extends BaseCouponsReport
             $coupons = collect($this->result['coupons']);
 
             $couponsChartModel = $coupons->reduce(function (AreaChartModel $couponsChartModel, $data, $key) {
-                return $couponsChartModel
-                ->addPoint($key, $data['count']);
+                $day = __(date('D', strtotime(str_replace('/', '-', $key))));
+                return $couponsChartModel->addPoint($day . ' - ' . $key, $data['count']);
             }, (new AreaChartModel())
                 ->setTitle('Cupones impresos')
                 ->setAnimated(true)
@@ -33,7 +33,8 @@ class Printed extends BaseCouponsReport
             );
 
             $amountChartModel = $coupons->reduce(function (AreaChartModel $amountChartModel, $data, $key) {
-                return $amountChartModel->addPoint($key, round($data['aggr']));
+                $day = __(date('D', strtotime(str_replace('/', '-', $key))));
+                return $amountChartModel->addPoint($day . ' - ' . $key, round($data['aggr']));
             }, (new AreaChartModel())
                 ->setTitle('Dinero impreso')
                 ->setAnimated(true)

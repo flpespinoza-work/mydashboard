@@ -615,5 +615,12 @@
     "You need to enable JavaScript to run this app.": "Necesita habilitar JavaScript para use la aplicación",
     "Your email address is not verified.": "Su dirección de correo electrónico no está verificada.",
     "Zambia": "Zambia",
-    "Zimbabwe": "Zimbabwe"
+    "Zimbabwe": "Zimbabwe",
+    "Tue": "Mar",
+    "Wed": "Mie",
+    "Thu": "Jue",
+    "Fri": "Vie",
+    "Sat": "Sab",
+    "Sun": "Dom",
+    "Mon": "Lun"
 }
