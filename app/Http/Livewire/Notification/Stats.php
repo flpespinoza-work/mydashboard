@@ -27,7 +27,7 @@ class Stats extends Component
         ->setTitle('Notificaciones')
         ->setDataLabelsEnabled(false)
         ->addColumn('Exitosas', $data->CAMP_EXITOSAS, '#09D17F')
-        ->addColumn('Fallidas', $data->CAMP_FALLIDAS, '#F5927E')
+        ->addColumn('Fallidas', $data->CAMP_FALLIDAS, '#DD5044')
         ->withoutLegend();
 
         $deviceColumnchart = (new ColumnChartModel())
@@ -41,8 +41,8 @@ class Stats extends Component
         ->setTitle('Acciones')
         ->setDataLabelsEnabled(false)
         ->addColumn('Leídas', $data->LEIDAS, '#2394F1')
-        ->addColumn('No leídas', $data->NO_LEIDAS, '#F39449')
-        ->addColumn('Eliminadas', $data->ELIMINADAS, '#F5927E')
+        ->addColumn('No leídas', $data->NO_LEIDAS, '#FFD300')
+        ->addColumn('Eliminadas', $data->ELIMINADAS, '#DD5044')
         ->withoutLegend();
 
         return view('livewire.notification.stats')->with(['data' => $data, 'mainColumnchart' => $mainColumnchart, 'deviceColumnchart' => $deviceColumnchart, 'actionsColumnChart' => $actionsColumnchart]);

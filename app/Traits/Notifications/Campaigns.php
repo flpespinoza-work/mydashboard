@@ -30,7 +30,8 @@ trait Campaigns
             return $tokDB->table('dat_notificacion')
             ->join('dat_campush', 'dat_notificacion.NOT_ID', '=', 'dat_campush.CAMP_NOT_ID')
             ->join('dat_notificacion_usuario', 'dat_notificacion.NOT_ID', '=', 'dat_notificacion_usuario.NOT_USU_NOTIFICACION_ID')
-            ->selectRaw("CAMP_NOMBRE, CAMP_EXITOSAS, CAMP_FALLIDAS, CAMP_ANDROID, CAMP_IOS, SUM(IF(NOT_USU_ESTADO = '0', 1, 0)) NO_LEIDAS, SUM(IF(NOT_USU_ESTADO = '1', 1, 0)) LEIDAS, SUM(IF(NOT_USU_ESTADO = '2', 1, 0)) ELIMINADAS")
+            ->selectRaw("CAMP_NOMBRE, IF(CAMP_EXITOSAS > 0, CAMP_EXITOSAS , 0) CAMP_EXITOSAS, IF(CAMP_FALLIDAS > 0, CAMP_FALLIDAS, 0) CAMP_FALLIDAS,
+              IF(CAMP_ANDROID > 0, CAMP_ANDROID, 0) CAMP_ANDROID, IF(CAMP_IOS > 0, CAMP_IOS, 0) CAMP_IOS, SUM(IF(NOT_USU_ESTADO = '0', 1, 0)) NO_LEIDAS, SUM(IF(NOT_USU_ESTADO = '1', 1, 0)) LEIDAS, SUM(IF(NOT_USU_ESTADO = '2', 1, 0)) ELIMINADAS")
             ->where('CAMP_ID', '=', $campId)
             ->first();
         });
