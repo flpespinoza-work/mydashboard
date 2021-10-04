@@ -62,7 +62,7 @@
             </div>
 
             <div id="comments" class="mt-8">
-                <h4 class="text-sm text-center text-gray-400 text-gray-700 md:text-lg xl:text-xl">Comentarios</h4>
+                <h4 class="text-sm text-center text-gray-700 md:text-lg xl:text-xl">Comentarios</h4>
                 <div x-data="{ openTab: 5 }" class="mt-4">
                     <div class="w-full">
                         <ul class="flex items-center justify-between overflow-auto border rounded-sm flex-nowrap border-gray-150">

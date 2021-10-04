@@ -37,7 +37,7 @@ class Index extends Component
 
             $columnChartModelScore = (new ColumnChartModel())
                 ->setTitle('Calificaciones - Comentarios')
-                ->setDataLabelsEnabled(false)
+                ->setDataLabelsEnabled(true)
                 ->addColumn('Califico', $this->scores['totalScores'], '#53ADF4')
                 ->addColumn('Comentarios', $this->scores['totalComments'], '#F17061');
 
