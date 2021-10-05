@@ -53,7 +53,9 @@ trait Sales
             return $tmpRes;
         });
 
-        $result['report_id'] = $reportId;
+        if(isset($result['sales']))
+            $result['report_id'] = $reportId;
+
         return $result;
     }
 
@@ -73,6 +75,7 @@ trait Sales
             ->get()
             ->toArray();
         });
+
         if(count($result))
         {
             return ['sales' => $result[0]->sales, 'amount' => $result[0]->amount ];
@@ -127,7 +130,9 @@ trait Sales
             return $tmpRes;
         });
 
-        $result['report_id'] = $reportId;
+        if(isset($result['sales']))
+            $result['report_id'] = $reportId;
+
         return $result;
     }
 }

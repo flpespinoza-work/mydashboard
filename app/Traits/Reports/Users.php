@@ -3,8 +3,6 @@
 namespace App\Traits\Reports;
 use Illuminate\Support\Facades\DB;
 
-use function PHPUnit\Framework\isEmpty;
-
 trait Users
 {
     function getNewUsers($filters)
@@ -13,7 +11,6 @@ trait Users
         $reportId = 'new-users-report' . fnGenerateReportId($filters);
         $filters['giftcard'] = fnGetGiftcardFull($filters['store']);
         $rememberReport = fnRememberReportTime($filters['final_date']);
-        //dd($filters);
         $result = cache()->remember($reportId, $rememberReport, function() use($tokDB, $filters){
             $tmpRes = [];
             $totalUsers = 0;
@@ -50,7 +47,9 @@ trait Users
 
         });
 
-        $result['report_id'] = $reportId;
+        if(isset($result['data']))
+            $result['report_id'] = $reportId;
+
         return $result;
     }
 

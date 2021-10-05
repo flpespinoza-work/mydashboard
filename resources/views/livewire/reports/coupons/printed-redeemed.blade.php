@@ -135,10 +135,10 @@
                                             {{ $day }}
                                         </td>
                                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
-                                            {{ number_format($data['printed_amount'],2) }}
+                                            ${{ number_format($data['printed_amount'],2) }}
                                         </td>
                                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
-                                            {{ number_format($data['redeemed_amount'],2) }}
+                                            ${{ number_format($data['redeemed_amount'],2) }}
                                         </td>
                                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
                                             {{ number_format($data['redeemed_amount'] * 100 / $data['printed_amount'], 2) }}%

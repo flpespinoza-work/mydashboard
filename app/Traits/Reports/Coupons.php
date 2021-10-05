@@ -53,7 +53,9 @@ trait Coupons
             return $tmpRes;
         });
 
-        $result['report_id'] = $reportId;
+        if(isset($result['coupons']))
+            $result['report_id'] = $reportId;
+
         return $result;
     }
 
@@ -102,7 +104,9 @@ trait Coupons
             return $tmpRes;
         });
 
-        $result['report_id'] = $reportId;
+        if(isset($result['coupons']))
+            $result['report_id'] = $reportId;
+
         return $result;
     }
 
@@ -157,7 +161,9 @@ trait Coupons
 
         });
 
-        $result['report_id'] = $reportId;
+        if(isset($result['coupons']))
+            $result['report_id'] = $reportId;
+
         return $result;
     }
 
@@ -201,7 +207,9 @@ trait Coupons
             return $pr;
         });
 
-        $result['report_id'] = $reportId;
+        if(isset($result['coupons']))
+            $result['report_id'] = $reportId;
+
         return $result;
     }
 

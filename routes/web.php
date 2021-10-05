@@ -78,7 +78,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/reportes/globales/altas', [GlobalReportController::class, 'registers'])->name('reports.globals.registers');
     Route::get('/reportes/globales/altas/descargar/{data}', [GlobalReportController::class, 'downloadRegisters'])->name('reports.globals.registers.download');
 
-
 });
 
 require __DIR__.'/auth.php';

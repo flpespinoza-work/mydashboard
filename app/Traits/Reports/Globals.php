@@ -81,23 +81,23 @@ trait Globals
             return $tmpRes;
         });
 
-        $result['report_id'] = $reportId;
+        if(isset($result['redeems']))
+            $result['report_id'] = $reportId;
         return $result;
     }
 
     function getRegisters($filters)
     {
-        //sin periodo la fecha inicial es 2018-01-01
         $result = [];
         $tokDB = DB::connection('reportes');
-        $reportId = fnGenerateReportId($filters);
+        $reportId = 'global-registers-report' . fnGenerateReportId($filters);
         if($filters['store'] == 'all')
             $filters['giftcards'] = fnGetAllGiftcardsFull();
         else
             $filters['giftcards'] = fnGetGiftcardFull($filters['store']);
 
         $rememberReport = fnRememberReportTime(date('Y-m-d'));
-        $result = cache()->remember('global-registers-report' . $reportId, $rememberReport, function() use($tokDB, $filters){
+        $result = cache()->remember($reportId, $rememberReport, function() use($tokDB, $filters){
             $tmpRes = [];
             $totals = ['users' => 0];
             $query = $tokDB->table('bal_tae_saldos')
@@ -121,45 +121,49 @@ trait Globals
                     $tmpRes['registers'][$name][$register->day] = $register->users;
                 }
             });
+
+            if(count($tmpRes))
+            {
+                //Eliminar dias duplicados
+                $tmpRes['days'] = array_values(array_unique($tmpRes['days']));
+                usort($tmpRes['days'], function($a,$b){
+                    return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
+                });
+
+                //Ordenar alfabeticamente
+                uksort($tmpRes['registers'], function($a, $b) {
+                    return $a <=> $b;
+                });
+
+                //Ordenar por fecha
+                foreach($tmpRes['registers'] as $store => &$redeems)
+                {
+                    uksort($redeems, function($a, $b){
+
+                        return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));;
+                    });
+                }
+
+                //Obtener totales
+                if(count($tmpRes['registers']) > 1)
+                {
+                    $totals = [];
+                    foreach($tmpRes['registers'] as $store => $days)
+                    {
+                        foreach($days as $day => $users)
+                        {
+                            isset($totals["{$day}"]) ? $totals["{$day}"] += $users : $totals["{$day}"] = $users;
+                        }
+                    }
+                    $tmpRes['totals'] = $totals;
+                }
+            }
+
             return $tmpRes;
         });
 
-        if(count($result))
-        {
-            //Eliminar dias duplicados
-            $result['days'] = array_values(array_unique($result['days']));
-            usort($result['days'], function($a,$b){
-                return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
-            });
-
-            //Ordenar alfabeticamente
-            uksort($result['registers'], function($a, $b) {
-                return $a <=> $b;
-            });
-
-            //Ordenar por fecha
-            foreach($result['registers'] as $store => &$redeems)
-            {
-                uksort($redeems, function($a, $b){
-
-                    return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));;
-                });
-            }
-
-            //Obtener totales
-            if(count($result['registers']) > 1)
-            {
-                $totals = [];
-                foreach($result['registers'] as $store => $days)
-                {
-                    foreach($days as $day => $users)
-                    {
-                        isset($totals["{$day}"]) ? $totals["{$day}"] += $users : $totals["{$day}"] = $users;
-                    }
-                }
-                $result['totals'] = $totals;
-            }
-        }
+        if(isset($result['registers']))
+            $result['report_id'] = $reportId;
 
         return $result;
     }

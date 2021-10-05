@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\GlobalsRedeemsExport;
+use App\Exports\GlobalsRegistersExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Response;
@@ -28,7 +29,6 @@ class GlobalReportController extends Controller
     public function downloadRedeems($data)
     {
         $data = Crypt::decrypt($data);
-        dd($data);
         $info = Cache::get($data['report_id']);
         return (new GlobalsRedeemsExport($data['days'], collect($info['redeems']), $data['report_data']))->download('reporte_global_canjes_diarios.xlsx');
     }
@@ -36,5 +36,7 @@ class GlobalReportController extends Controller
     public function downloadRegisters($data)
     {
         $data = Crypt::decrypt($data);
+        $info = Cache::get($data['report_id']);
+        return (new GlobalsRegistersExport($data['days'], collect($info['registers']), $data['report_data']))->download('reporte_global_altas_diarias.xlsx');
     }
 }
