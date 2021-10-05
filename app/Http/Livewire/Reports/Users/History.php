@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Reports\Users;
 
-use App\Exports\UsersHistoryExport;
 use App\Http\Livewire\Reports\BaseUsersReport;
 
 class History extends BaseUsersReport
@@ -22,8 +21,4 @@ class History extends BaseUsersReport
         $this->result = $this->getHistoryUsers($filters);
     }
 
-    public function exportReport()
-    {
-        return (new UsersHistoryExport(collect($this->result['data']), $this->store_name))->download('reporte_acumulado_usuarios.xlsx');
-    }
 }

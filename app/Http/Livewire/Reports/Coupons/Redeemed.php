@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Reports\Coupons;
 use App\Exports\RedeemedCouponsExport;
 use App\Http\Livewire\Reports\BaseCouponsReport;
 use Asantibanez\LivewireCharts\Models\AreaChartModel;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Redeemed extends BaseCouponsReport
 {
@@ -60,8 +61,4 @@ class Redeemed extends BaseCouponsReport
         $this->result = $this->getRedeemedCoupons($filters);
     }
 
-    public function exportReport()
-    {
-        return (new RedeemedCouponsExport(collect($this->result['coupons']), $this->report_data))->download('reporte_cupones_canjeados.xlsx');
-    }
 }

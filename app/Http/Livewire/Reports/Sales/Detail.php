@@ -23,8 +23,4 @@ class Detail extends BaseSalesReport
         $this->result = $this->getDetailSales($filters);
     }
 
-    public function exportReport()
-    {
-        return (new DetailSalesExport(collect($this->result['sales']), $this->report_data))->download('reporte_ventas_detalle.xlsx');
-    }
 }

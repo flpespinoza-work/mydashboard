@@ -47,8 +47,4 @@ class Sales extends BaseSalesReport
         $this->result = $this->getSales($filters);
     }
 
-    public function exportReport()
-    {
-        return (new SalesExport(collect($this->result['sales']), $this->report_data))->download('reporte_ventas.xlsx');
-    }
 }

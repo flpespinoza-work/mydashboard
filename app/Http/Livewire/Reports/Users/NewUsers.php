@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire\Reports\Users;
 
-use App\Exports\UsersExport;
 use App\Http\Livewire\Reports\BaseUsersReport;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 
@@ -10,7 +9,7 @@ class NewUsers extends BaseUsersReport
 {
     public $reportName = 'reports.users.new-users';
     public $report_data;
-    protected $listeners = ['generateReport', 'exportReport'];
+    protected $listeners = ['generateReport'];
 
     public function render()
     {
@@ -22,7 +21,7 @@ class NewUsers extends BaseUsersReport
 
             $usersChartModel = $users->reduce(function (ColumnChartModel $usersChartModel, $data, $key) {
                 $day = __(date('D', strtotime(str_replace('/', '-',$data['day']))));
-                return $usersChartModel->addColumn( $day . '- '. $data['day'], $data['users'], '#EF6A37');
+                return $usersChartModel->addColumn( $day . ' - '. $data['day'], $data['users'], '#EF6A37');
 
             }, (new ColumnChartModel())
                 ->setTitle('Nuevos usuarios')
@@ -45,8 +44,4 @@ class NewUsers extends BaseUsersReport
         $this->result = $this->getNewUsers($filters);
     }
 
-    public function exportReport()
-    {
-        return (new UsersExport(collect($this->result['data']), $this->report_data))->download('reporte_nuevos_usuarios.xlsx');
-    }
 }

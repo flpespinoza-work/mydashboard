@@ -3,7 +3,6 @@
 namespace App\Traits\Reports;
 
 use App\Models\Store;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 trait Coupons
@@ -11,11 +10,11 @@ trait Coupons
     function getPrintedCoupons($filters)
     {
         $tokDB = DB::connection('reportes');
-        $reportId = fnGenerateReportId($filters);
+        $reportId = 'reporte-cupones-impresos' . fnGenerateReportId($filters);
         $filters['budget'] = fnGetBudget($filters['store']);
         $rememberReport = fnRememberReportTime($filters['final_date']);
 
-        $result = cache()->remember('reporte-cupones-impresos' . $reportId, $rememberReport, function() use($tokDB, $filters){
+        $result = cache()->remember($reportId, $rememberReport, function() use($tokDB, $filters){
             $tmpRes = [];
             $totales = [ 'printed_coupons' => 0, 'printed_amount' => 0, 'printed_sale' => 0];
             $aggr = 0;
@@ -42,6 +41,10 @@ trait Coupons
 
             if(!empty($tmpRes))
             {
+                uksort($tmpRes['coupons'], function($a, $b){
+                    return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
+                });
+
                 $tmpRes['totals'] = $totales;
                 $tmpRes['totals']['average_amount'] = number_format($totales['printed_amount'] / $totales['printed_coupons'], 2);
                 $tmpRes['totals']['average_sale'] = number_format($totales['printed_sale'] / $totales['printed_coupons'], 2);
@@ -50,24 +53,18 @@ trait Coupons
             return $tmpRes;
         });
 
-        if(count($result))
-        {
-            uksort($result['coupons'], function($a, $b){
-                return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
-            });
-        }
-
+        $result['report_id'] = $reportId;
         return $result;
     }
 
     function getRedeemedCoupons($filters)
     {
         $tokDB = DB::connection('reportes');
-        $reportId = fnGenerateReportId($filters);
+        $reportId = 'reporte-cupones-canjeados' . fnGenerateReportId($filters);
         $filters['giftcard'] = fnGetGiftcard($filters['store']);
         $rememberReport = fnRememberReportTime($filters['final_date']);
 
-        $result = cache()->remember('reporte-cupones-canjeados' . $reportId, $rememberReport, function() use($tokDB, $filters){
+        $result = cache()->remember($reportId, $rememberReport, function() use($tokDB, $filters){
             $tmpRes = [];
             $totales = [ 'redeemed_coupons' => 0, 'redeemed_amount' => 0];
 
@@ -94,6 +91,10 @@ trait Coupons
 
             if(!empty($tmpRes))
             {
+                uksort($tmpRes['coupons'], function($a, $b){
+                    return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
+                });
+
                 $tmpRes['totals'] = $totales;
                 $tmpRes['totals']['average_amount'] = $totales['redeemed_amount'] / $totales['redeemed_coupons'];
             }
@@ -101,25 +102,19 @@ trait Coupons
             return $tmpRes;
         });
 
-        if(count($result))
-        {
-            uksort($result['coupons'], function($a, $b){
-                return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
-            });
-        }
-
+        $result['report_id'] = $reportId;
         return $result;
     }
 
     function getDetailRedeemedCoupons($filters)
     {
         $tokDB = DB::connection('reportes');
-        $reportId = fnGenerateReportId($filters);
+        $reportId = 'reporte-cupones-canjeados-detalle' . fnGenerateReportId($filters);
         $filters['budget'] = fnGetBudget($filters['store']);
         $filters['giftcard'] = fnGetGiftcardFull($filters['store']);
         $rememberReport = fnRememberReportTime($filters['final_date']);
 
-        $result = cache()->remember('reporte-cupones-canjeados-detalle' . $reportId, $rememberReport, function() use($tokDB, $filters){
+        $result = cache()->remember($reportId, $rememberReport, function() use($tokDB, $filters){
             $tmpRes = [];
             $totales = [ 'redeemed_coupons' => 0, 'redeemed_amount' => 0];
 
@@ -150,6 +145,10 @@ trait Coupons
             });
             if(!empty($tmpRes))
             {
+                usort($tmpRes['coupons'], function($a, $b){
+                    return strtotime(str_replace('/', '-', $a['date_coupon'])) - strtotime(str_replace('/', '-', $b['date_coupon']));
+                });
+
                 $tmpRes['totals'] = $totales;
                 $tmpRes['totals']['average_amount'] = $totales['redeemed_amount'] / $totales['redeemed_coupons'];
             }
@@ -158,23 +157,15 @@ trait Coupons
 
         });
 
-        if(count($result))
-        {
-            usort($result['coupons'], function($a, $b){
-                return strtotime(str_replace('/', '-', $a['date_coupon'])) - strtotime(str_replace('/', '-', $b['date_coupon']));
-            });
-        }
-
-
-
+        $result['report_id'] = $reportId;
         return $result;
     }
 
     function getPrintedRedeemedCoupons($filters)
     {
-        $reportId = fnGenerateReportId($filters);
+        $reportId = 'reporte-cupones-impresos-canjeados' . fnGenerateReportId($filters);
         $rememberReport = fnRememberReportTime($filters['final_date']);
-        $result = cache()->remember('reporte-cupones-impresos-canjeados' . $reportId, $rememberReport, function() use ($filters){
+        $result = cache()->remember($reportId, $rememberReport, function() use ($filters){
             $pr = [];
             $printed = $this->getPrintedCoupons($filters);
             $redeemed = $this->getRedeemedCoupons($filters);
@@ -209,6 +200,8 @@ trait Coupons
 
             return $pr;
         });
+
+        $result['report_id'] = $reportId;
         return $result;
     }
 

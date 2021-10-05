@@ -63,8 +63,4 @@ class Redeems extends BaseGlobalsReport
         $this->result = $this->getRedeems($filters);
     }
 
-    public function exportReport()
-    {
-        return (new GlobalsRedeemsExport($this->result['days'], collect($this->result['redeems']), $this->report_data))->download('reporte_global_canjes_diarios.xlsx');
-    }
 }

@@ -10,11 +10,11 @@ trait Users
     function getNewUsers($filters)
     {
         $tokDB = DB::connection('reportes');
-        $reportId = fnGenerateReportId($filters);
+        $reportId = 'new-users-report' . fnGenerateReportId($filters);
         $filters['giftcard'] = fnGetGiftcardFull($filters['store']);
         $rememberReport = fnRememberReportTime($filters['final_date']);
         //dd($filters);
-        $result = cache()->remember('new-users-report' . $reportId, $rememberReport, function() use($tokDB, $filters){
+        $result = cache()->remember($reportId, $rememberReport, function() use($tokDB, $filters){
             $tmpRes = [];
             $totalUsers = 0;
 
@@ -38,19 +38,19 @@ trait Users
                 }
             });
             if(count($tmpRes))
+            {
+                usort($tmpRes['data'], function($a, $b){
+                    return strtotime(str_replace('/', '-', $a['day'])) - strtotime(str_replace('/', '-', $b['day']));
+                });
+
                 $tmpRes['totals'] = $totalUsers;
+            }
 
             return $tmpRes;
 
         });
 
-        if(count($result))
-        {
-            usort($result['data'], function($a, $b){
-                return strtotime(str_replace('/', '-', $a['day'])) - strtotime(str_replace('/', '-', $b['day']));
-            });
-        }
-
+        $result['report_id'] = $reportId;
         return $result;
     }
 

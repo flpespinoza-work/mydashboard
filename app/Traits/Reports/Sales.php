@@ -8,12 +8,12 @@ trait Sales
     function getDetailSales($filters)
     {
         $tokDB = DB::connection('reportes');
-        $reportId = fnGenerateReportId($filters);
+        $reportId = 'sales-report' . fnGenerateReportId($filters);
         $filters['node'] = fnGetTokencashNode($filters['store']);
         $filters['giftcard'] = fnGetGiftcardFull($filters['store']);
         $rememberReport = fnRememberReportTime($filters['final_date']);
 
-        $result = cache()->remember('sales-report' . $reportId, $rememberReport, function() use($tokDB, $filters){
+        $result = cache()->remember($reportId, $rememberReport, function() use($tokDB, $filters){
             $tmpRes = [];
             $totalSales = ['sales' => 0, 'amount' => 0];
 
@@ -42,6 +42,10 @@ trait Sales
 
             if(count($tmpRes))
             {
+                uksort($tmpRes['sales'], function($a, $b){
+                    return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
+                });
+
                 $tmpRes['totals'] = $totalSales;
                 $tmpRes['totals']['average_sale'] = $totalSales['amount'] / $totalSales['sales'];
             }
@@ -49,13 +53,7 @@ trait Sales
             return $tmpRes;
         });
 
-        if(count($result))
-        {
-            uksort($result['sales'], function($a, $b){
-                return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
-            });
-        }
-
+        $result['report_id'] = $reportId;
         return $result;
     }
 
@@ -86,12 +84,12 @@ trait Sales
     function getSales($filters)
     {
         $tokDB = DB::connection('reportes');
-        $reportId = fnGenerateReportId($filters);
+        $reportId = 'datail-sales-report' . fnGenerateReportId($filters);
         $filters['node'] = fnGetTokencashNode($filters['store']);
 
         $rememberReport = fnRememberReportTime($filters['final_date']);
 
-        $result = cache()->remember('datail-sales-report' . $reportId, $rememberReport, function() use($tokDB, $filters){
+        $result = cache()->remember($reportId, $rememberReport, function() use($tokDB, $filters){
             $tmpRes = [];
             $totalSales = ['sales' => 0, 'amount' => 0];
             $tokDB->table('doc_dbm_ventas')
@@ -118,6 +116,10 @@ trait Sales
 
             if($totalSales['sales'] > 0)
             {
+                uksort($tmpRes['sales'], function($a, $b){
+                    return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
+                });
+
                 $tmpRes['totals'] = $totalSales;
                 $tmpRes['totals']['average_sale'] = $totalSales['amount'] / $totalSales['sales'];
             }
@@ -125,13 +127,7 @@ trait Sales
             return $tmpRes;
         });
 
-        if(count($result))
-        {
-            uksort($result['sales'], function($a, $b){
-                return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
-            });
-        }
-
+        $result['report_id'] = $reportId;
         return $result;
     }
 }

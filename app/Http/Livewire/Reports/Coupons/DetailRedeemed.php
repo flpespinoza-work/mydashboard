@@ -23,8 +23,4 @@ class DetailRedeemed extends BaseCouponsReport
         $this->result = $this->getDetailRedeemedCoupons($filters);
     }
 
-    public function exportReport()
-    {
-        return (new DetailRedeemedCouponsExport(collect($this->result['coupons']), $this->report_data))->download('reporte_detalle_cupones_canjeados.xlsx');
-    }
 }
