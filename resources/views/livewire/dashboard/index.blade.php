@@ -66,13 +66,13 @@
             </div>
 
             <div class="grid grid-cols-2 gap-2 mt-4 md:gap-4 lg:gap-5">
-                <div class="col-span-2 md:col-span-1 h-72">
+                <div class="col-span-2 md:col-span-1 h-72 bg-gray-50">
 
                     <livewire:livewire-column-chart
                     key="{{ $usersChartModel->reactiveKey() }}"
                     :column-chart-model="$usersChartModel"
                     />
-                    <h5 class="text-xs text-center">Nuevos usuarios</h5>
+                    <h5 class="mt-1 text-xs text-center">Nuevos usuarios</h5>
                 </div>
             </div>
         </div>

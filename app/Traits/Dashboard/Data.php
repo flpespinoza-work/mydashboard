@@ -13,7 +13,6 @@ trait Data
         $redeemed = $this->getRedeemedCoupons($filters);
         $sales = $this->getSales($filters);
 
-        //dd($sales);
         return [
             'balance' => $balance,
             'printed_coupons' => $printed,

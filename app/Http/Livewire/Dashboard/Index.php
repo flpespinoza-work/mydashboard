@@ -46,10 +46,14 @@ class Index extends Component
             $usersChartModel = null;
             $users = collect($this->result['users']);
             $usersChartModel = $users->reduce(function (ColumnChartModel $usersChartModel, $data, $key) {
-                return $usersChartModel->addColumn($key, $data, '#E86F36');
+                $day = __(date('D', strtotime(str_replace('/', '-', $key))));
+                $date = date('d/m/Y', strtotime($key));
+                return $usersChartModel->addColumn($day . ' - ' . $date, $data, '#E86F36');
             }, (new ColumnChartModel())
                 ->setTitle('Usuarios')
+                ->setAnimated(true)
                 ->withoutLegend()
+                ->withGrid()
             );
 
             return view('livewire.dashboard.index')->with(['usersChartModel' => $usersChartModel]);
