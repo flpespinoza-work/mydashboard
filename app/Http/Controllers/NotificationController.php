@@ -16,11 +16,13 @@ class NotificationController extends Controller
 
     public function stats($campaign)
     {
+        abort_if(Gate::denies('can_see_campaign'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('notification.stats', ['campaign' => $campaign]);
     }
 
     public function create()
     {
-        return view('notifications.create');
+        abort_if(Gate::denies('can_create_new_campaign'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return view('notification.create');
     }
 }

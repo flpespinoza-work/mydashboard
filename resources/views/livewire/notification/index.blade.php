@@ -6,11 +6,12 @@
         id="search"
         placeholder="Buscar...">
         @can('can_create_new_campaign')
-        <button
+        <a
+            href="{{ route('notifications.create') }}"
             class="flex items-center justify-center p-2 ml-2 transition duration-75 rounded-md md:ml-auto bg-orange">
             <x-icons.plus class="w-5 h-5 text-orange-light"/>
             <span class="hidden ml-2 text-xs font-semibold md:inline-block text-orange-light">Nueva campaña</span>
-        </button>
+        </a>
         @endcan
     </div>
     <div class="mt-4">
@@ -99,7 +100,7 @@
                                                     @endcan
 
                                                     @can('can_program_campaign')
-                                                    <a class="cursor-pointer" wire:click="showProgram('{{ Crypt::encrypt($campaign->CAMP_ID) }}')">
+                                                    <a class="cursor-pointer" wire:click="showProgram('{{ $campaign->CAMP_NOMBRE}}','{{ Crypt::encrypt($campaign->CAMP_ID) }}')">
                                                         <x-heroicon-s-clock class="w-5 h-5"/>
                                                     </a>
                                                     @endcan
@@ -136,9 +137,9 @@
     <div>
         <form wire:submit.prevent="program">
             <x-modals.dialog maxWidth="sm" wire:model.defer="showModal">
-                <x-slot name="title">Programar campaña</x-slot>
+                <x-slot name="title">Programar campaña: @isset($program['name']) {{ $program['name'] }} @endisset</x-slot>
                 <x-slot name="content">
-                    <div class="relative py-8">
+                    <div class="relative py-4">
                         <h3 class="text-xs text-gray-500">Seleccione la fecha-hora de envío</h3>
                         <div class="relative mt-3">
                             <input

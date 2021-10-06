@@ -59,9 +59,10 @@ class Index extends Component
         }
     }
 
-    public function showProgram($campaign)
+    public function showProgram($name, $campaign)
     {
         $this->program['campaign'] = $campaign;
+        $this->program['name'] = $name;
         $this->showModal = true;
     }
 
@@ -69,6 +70,7 @@ class Index extends Component
     {
         $this->showModal = false;
         $this->program['campaign'] = Crypt::decrypt($this->program['campaign']);
+
         if($this->programCampaign($this->program))
         {
             $this->dispatchBrowserEvent('swal:success', [

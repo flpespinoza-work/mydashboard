@@ -41,27 +41,34 @@ trait Campaigns
 
     function programCampaign($data)
     {
-        $tokDB = DB::connection('reportes');
+        $tokDB = DB::connection('tokencash_campanas');
         $ts = date('Y-m-d H:i:s');
         list($fecha, $hora) = explode(' ', $data['datetime']);
-
-        return false;
-
-        try {
+        try
+        {
             $tokDB->table('dat_notificacion_programada')
             ->insert([
                 'NOT_PROG_TS'  => $ts,
                 'NOT_PROG_UTS' => $ts,
-                'NOT_PROG_NOT_ID' => $data['NOT_ID'],
+                'NOT_PROG_NOT_ID' => $data['campaign'],
                 'NOT_PROG_FECHA_PROG' => $fecha,
                 'NOT_PROG_STATUS' => 'PENDIENTE',
                 'NOT_PROG_HORA_PROG' => date('H:i', strtotime($hora)),
             ]);
 
             return true;
-        } catch (\Illuminate\Database\QueryException $e) {
+        }
+        catch (\Illuminate\Database\QueryException $e)
+        {
+            //dd($e);
             return false;
         }
+
+    }
+
+    /** Guardar una nueva campaña */
+    function insertCampaign()
+    {
 
     }
 }
