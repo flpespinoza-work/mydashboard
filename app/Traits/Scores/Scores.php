@@ -184,7 +184,7 @@ trait Scores
         });
         //Ordenar por fecha
         usort($scores['data'], function($a, $b) {
-            return $a['date'] <=> $b['date'];
+            return   $b['date'] <=> $a['date'];
         });
 
         $a_scoreValue = [

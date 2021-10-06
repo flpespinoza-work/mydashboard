@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/respuestas', [ResponseController::class, 'index'])->name('response.index');
     Route::get('/campanas', [NotificationController::class, 'index'])->name('notifications');
     Route::get('/campanas/{campaign}/medir', [NotificationController::class, 'stats'])->name('notifications.stats');
+    Route::get('/campanas/crear', [NotificationController::class, 'create'])->name('notifications.create');
 
     Route::get('/usuarios', [UserController::class, 'index'])->name('users.index');
     Route::get('/usuarios/crear', [UserController::class, 'create'])->name('users.create');

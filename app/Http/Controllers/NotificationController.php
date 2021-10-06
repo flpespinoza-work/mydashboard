@@ -18,4 +18,9 @@ class NotificationController extends Controller
     {
         return view('notification.stats', ['campaign' => $campaign]);
     }
+
+    public function create()
+    {
+        return view('notifications.create');
+    }
 }
