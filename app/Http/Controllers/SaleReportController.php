@@ -37,13 +37,13 @@ class SaleReportController extends Controller
     {
         $data = Crypt::decrypt($data);
         $info = Cache::get($data['report_id']);
-        return (new SalesExport(collect($info['sales']), $data['report_data']))->download('reporte_ventas.xlsx');
+        return (new SalesExport(collect(array_reverse($info['sales'])), $data['report_data']))->download('reporte_ventas.xlsx');
     }
 
     public function downloadDetailSales($data)
     {
         $data = Crypt::decrypt($data);
         $info = Cache::get($data['report_id']);
-        return (new DetailSalesExport(collect($info['sales']), $data['report_data']))->download('reporte_ventas_detalle.xlsx');
+        return (new DetailSalesExport(collect(array_reverse($info['sales'])), $data['report_data']))->download('reporte_ventas_detalle.xlsx');
     }
 }

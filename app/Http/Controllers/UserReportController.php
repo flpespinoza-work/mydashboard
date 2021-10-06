@@ -36,7 +36,7 @@ class UserReportController extends Controller
     {
         $data = Crypt::decrypt($data);
         $info = Cache::get($data['report_id']);
-        return (new UsersExport(collect($info['data']), $data['report_data']))->download('reporte_nuevos_usuarios.xlsx');
+        return (new UsersExport(collect(array_reverse($info['data'])), $data['report_data']))->download('reporte_nuevos_usuarios.xlsx');
     }
 
     public function downloadHistory($data)
