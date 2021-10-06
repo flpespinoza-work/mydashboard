@@ -77,7 +77,7 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
-                                    @forelse ($result['coupons'] as $data)
+                                    @forelse (array_reverse($result['coupons']) as $data)
                                     <tr>
                                         <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
                                             {{ $data['day'] }}
