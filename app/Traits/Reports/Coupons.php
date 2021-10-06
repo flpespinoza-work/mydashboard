@@ -265,7 +265,7 @@ trait Coupons
             ->selectRaw('MAX(REP_IMP_CUPON_FECHA_HORA) date, REP_IMP_CUPON_PRESUPUESTO budget, REP_IMP_CUPON_MONTO amount')
             ->whereIn('REP_IMP_CUPON_PRESUPUESTO', $filters['budgets'])
             ->groupBy('REP_IMP_CUPON_PRESUPUESTO')
-            ->orderBy('date')
+            ->orderBy('date', 'desc')
             ->get()
             ->toArray();
         });
@@ -278,12 +278,13 @@ trait Coupons
             $coupon->store_name = $name;
             $coupon_printed = strtotime($coupon->date);
             $coupon->diff = round(($now-$coupon_printed) / 60);
+            $coupon->date = date('d/m/Y H:i:s', strtotime($coupon->date));
         }
 
         //Ordenar alfabeticamente
-        usort($result, function($a, $b) {
+        /*usort($result, function($a, $b) {
             return $a->store_name <=> $b->store_name;
-        });
+        });*/
 
         return $result;
     }
