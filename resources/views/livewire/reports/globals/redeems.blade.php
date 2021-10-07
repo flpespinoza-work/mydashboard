@@ -34,36 +34,37 @@
             </div>
 
             <div class="mt-8 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-                <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-                    <div class="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
+                <div class="min-w-full py-2 overflow-x-auto sm:px-6 lg:px-8">
+                    <h5 class="text-sm font-medium text-gray-500 md:text-base">Canjes diarios</h5>
+                    <div class="relative z-10 max-h-screen mt-6 overflow-auto bg-white">
+                        <table style="border-spacing:0;" class="w-full border-separate table-auto min-w-max">
+                            <thead class="border border-gray-200">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
+                                    <th scope="col" class="sticky top-0 left-0 z-30 px-4 py-2 text-xs font-medium tracking-wider text-left text-gray-500 capitalize border bg-gray-50">
                                         Establecimiento
                                     </th>
                                     @foreach ($result['days'] as $day)
-                                        <th scope="col" class="px-6 py-3 text-xs font-medium tracking-wider text-left text-gray-500 capitalize">
+                                        <th scope="col" class="sticky top-0 px-4 py-2 text-xs font-medium tracking-wider text-left text-gray-500 capitalize border border-l-0 bg-gray-50">
                                             {{ $day }}
                                         </th>
                                     @endforeach
                                 </tr>
                             </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
+                            <tbody>
                                 @forelse ($result['redeems'] as $store => $days)
                                     <tr>
-                                        <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
+                                        <th class="sticky left-0 z-20 px-4 py-2 text-xs text-left text-gray-500 align-middle border border-t-0 border-gray-200 bg-gray-25">
                                             {{ $store }}
-                                        </td>
+                                        </th>
                                         @foreach ($days as $redeems)
-                                        <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
+                                        <td class="px-4 py-2 text-sm text-center text-gray-500 align-middle border border-t-0 border-l-0 border-gray-100">
                                             {{ ($redeems > 0) ? $redeems : '0' }}
                                         </td>
                                         @endforeach
                                     </tr>
                                 @empty
                                 <tr>
-                                    <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">
+                                    <td class="px-4 py-2 text-sm text-gray-500">
                                         No existen registros para esta búsqueda
                                     </td>
                                 </tr>
@@ -72,9 +73,9 @@
                             @if(isset($result['totals']))
                             <tfoot>
                                 <tr>
-                                    <td class="px-6 py-3 text-sm font-bold text-gray-500 whitespace-nowrap">Totales</td>
+                                    <th class="sticky left-0 z-20 px-4 py-2 text-sm font-bold text-left text-gray-500 border border-t-0 border-gray-200 bg-gray-25">Totales</th>
                                     @foreach ($result['totals'] as $total)
-                                        <td class="px-6 py-3 text-sm text-gray-500 whitespace-nowrap">{{ $total }}</td>
+                                        <td class="px-4 py-2 text-sm text-center text-gray-500 border border-t-0 border-l-0 border-gray-100">{{ $total }}</td>
                                     @endforeach
                                 </tr>
                             </tfoot>

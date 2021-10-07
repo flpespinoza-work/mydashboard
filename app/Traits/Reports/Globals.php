@@ -54,11 +54,22 @@ trait Globals
                     return $a <=> $b;
                 });
 
+                //Agregar los dias que no hay altas en 0 para cada establecimiento
+                foreach($tmpRes['days'] as $day)
+                {
+                    foreach($tmpRes['redeems'] as $store => $redeems)
+                    {
+                        if(!isset($tmpRes['redeems'][$store][$day]))
+                        {
+                            $tmpRes['redeems'][$store][$day] = 0;
+                        }
+                    }
+                }
+
                 //Ordenar por fecha
                 foreach($tmpRes['redeems'] as $store => &$redeems)
                 {
                     uksort($redeems, function($a, $b){
-
                         return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));;
                     });
                 }
@@ -74,6 +85,13 @@ trait Globals
                             isset($totals["{$day}"]) ? $totals["{$day}"] += $amount : $totals["{$day}"] = $amount;
                         }
                     }
+
+                    //Ordenar totales por fecha
+                    uksort($totals, function($a, $b)
+                    {
+                        return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));;
+                    });
+
                     $tmpRes['totals'] = $totals;
                 }
             }
@@ -99,7 +117,6 @@ trait Globals
         $rememberReport = fnRememberReportTime(date('Y-m-d'));
         $result = cache()->remember($reportId, $rememberReport, function() use($tokDB, $filters){
             $tmpRes = [];
-            $totals = ['users' => 0];
             $query = $tokDB->table('bal_tae_saldos')
             ->join('cat_dbm_nodos_usuarios', 'bal_tae_saldos.TAE_SAL_NODO', '=', 'cat_dbm_nodos_usuarios.NOD_USU_NODO')
             ->selectRaw('DATE_FORMAT(TAE_SAL_TS, "%d/%m/%Y") day, COUNT(1) users, TAE_SAL_BOLSA bag')
@@ -118,7 +135,7 @@ trait Globals
                 {
                     $name = Store::where('giftcard', str_replace('GIFTCARD_', '', $register->bag))->first()->name;
                     $tmpRes['days'][] = $register->day;
-                    $tmpRes['registers'][$name][$register->day] = $register->users;
+                    $tmpRes['registers'][trim($name)][$register->day] = $register->users;
                 }
             });
 
@@ -135,11 +152,24 @@ trait Globals
                     return $a <=> $b;
                 });
 
+
+                //Agregar los dias que no hay altas en 0 para cada establecimiento
+                foreach($tmpRes['days'] as $day)
+                {
+                    foreach($tmpRes['registers'] as $store => $redeems)
+                    {
+                        if(!isset($tmpRes['registers'][$store][$day]))
+                        {
+                            $tmpRes['registers'][$store][$day] = 0;
+                        }
+                    }
+                }
+
                 //Ordenar por fecha
                 foreach($tmpRes['registers'] as $store => &$redeems)
                 {
-                    uksort($redeems, function($a, $b){
-
+                    uksort($redeems, function($a, $b)
+                    {
                         return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));;
                     });
                 }
@@ -155,7 +185,15 @@ trait Globals
                             isset($totals["{$day}"]) ? $totals["{$day}"] += $users : $totals["{$day}"] = $users;
                         }
                     }
+
+                    //Ordenar totales por fecha
+                    uksort($totals, function($a, $b)
+                    {
+                        return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));;
+                    });
+
                     $tmpRes['totals'] = $totals;
+
                 }
             }
 
