@@ -32,7 +32,7 @@ class Printed extends BaseCouponsReport
                 ->setXAxisVisible(true)
             );
 
-            $amountChartModel = $coupons->reduce(function (AreaChartModel $amountChartModel, $data, $key) {
+            $amountChartModel = $coupons->reduce(function (AreaChartModel $amountChartModel, $data, $key){
                 $day = __(date('D', strtotime(str_replace('/', '-', $key))));
                 return $amountChartModel->addPoint($day . ' - ' . $key, round($data['aggr']));
             }, (new AreaChartModel())

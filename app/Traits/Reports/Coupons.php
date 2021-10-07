@@ -17,14 +17,13 @@ trait Coupons
         $result = cache()->remember($reportId, $rememberReport, function() use($tokDB, $filters){
             $tmpRes = [];
             $totales = [ 'printed_coupons' => 0, 'printed_amount' => 0, 'printed_sale' => 0];
-            $aggr = 0;
             $tokDB->table('dat_reporte_cupones_impresos')
             ->selectRaw('DATE_FORMAT(REP_IMP_CUPON_FECHA_HORA, "%d/%m/%Y") day, COUNT(REP_IMP_ID) coupons, SUM(REP_IMP_CUPON_MONTO) amount')
             ->where('REP_IMP_CUPON_PRESUPUESTO', $filters['budget'])
             ->whereBetween('REP_IMP_CUPON_FECHA_HORA', [$filters['initial_date'] . ' 00:00:00', $filters['final_date'] . ' 23:59:59'])
             ->groupBy('day')
             ->orderBy('day')
-            ->chunk(1000, function($coupons) use(&$tmpRes, &$totales, &$aggr) {
+            ->chunk(1000, function($coupons) use(&$tmpRes, &$totales) {
                 foreach($coupons as $coupon)
                 {
                     $totales['printed_coupons'] += $coupon->coupons;
@@ -33,8 +32,7 @@ trait Coupons
                     $tmpRes['coupons'][$coupon->day] = [
                         'day' => $coupon->day,
                         'count' => $coupon->coupons,
-                        'amount' => $coupon->amount,
-                        'aggr' => $aggr += $coupon->amount
+                        'amount' => $coupon->amount
                     ];
                 }
             });
@@ -44,6 +42,13 @@ trait Coupons
                 uksort($tmpRes['coupons'], function($a, $b){
                     return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
                 });
+
+                $aggr = 0;
+                foreach($tmpRes['coupons'] as &$coupon)
+                {
+                    $aggr += $coupon['amount'];
+                    $coupon['aggr'] = $aggr;
+                }
 
                 $tmpRes['totals'] = $totales;
                 $tmpRes['totals']['average_amount'] = number_format($totales['printed_amount'] / $totales['printed_coupons'], 2);
