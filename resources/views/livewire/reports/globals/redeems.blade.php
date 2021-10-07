@@ -4,7 +4,7 @@
         <livewire:reports.globals.filters :report="$reportName"/>
     </x-slot>
 
-    <div class="min-h-full mt-14">
+    <div class="min-h-full mt-7">
         <div wire:loading.delay class="w-full">
             <p class="text-xs font-semibold text-center md:text-sm">
                 <x-loader class="w-10 h-10" />
@@ -16,12 +16,12 @@
         <div wire:loading.remove wire:target="generateReport">
             <div class="flex items-center">
                 <div>
-                    <h3 class="text-sm font-semibold text-gray-600 md:text-lg lg:text-xl">Establecimiento: {{ $report_data['store'] }}</h3>
+                    <h3 class="text-xs font-semibold text-gray-600 sm:text-sm md:text-lg lg:text-xl">Establecimiento: {{ $report_data['store'] }}</h3>
                     <h5 class="text-xs font-medium text-gray-500 md:text-base">{{ $report_data['period'] }}</h5>
                 </div>
 
                 <a
-                    class="px-4 py-2 ml-auto text-sm font-semibold bg-green-600 rounded-md hover:bg-green-800 text-gray-50"
+                    class="flex items-center px-3 py-2 ml-auto text-sm font-semibold bg-green-600 rounded-md sm:px-4 hover:bg-green-800 text-gray-50"
                     target="_blank"
                     href="{{ route('reports.globals.redeems.download', ['data' => Crypt::encrypt(['days' => $result['days'], 'report_id' => $result['report_id'], 'report_data' => $report_data])] ) }}"
                 >
@@ -40,11 +40,11 @@
                         <table style="border-spacing:0;" class="w-full border-separate table-auto min-w-max">
                             <thead class="border border-gray-200">
                                 <tr>
-                                    <th scope="col" class="sticky top-0 left-0 z-30 px-4 py-2 text-xs font-medium tracking-wider text-left text-gray-500 capitalize border bg-gray-50">
+                                    <th scope="col" class="top-0 left-0 z-30 px-4 py-2 text-xs font-medium tracking-wider text-left text-gray-500 capitalize border sm:sticky bg-gray-50">
                                         Establecimiento
                                     </th>
                                     @foreach ($result['days'] as $day)
-                                        <th scope="col" class="sticky top-0 px-4 py-2 text-xs font-medium tracking-wider text-left text-gray-500 capitalize border border-l-0 bg-gray-50">
+                                        <th scope="col" class="top-0 px-4 py-2 text-xs font-medium tracking-wider text-left text-gray-500 capitalize border border-l-0 sm:sticky bg-gray-50">
                                             {{ $day }}
                                         </th>
                                     @endforeach
@@ -53,7 +53,7 @@
                             <tbody>
                                 @forelse ($result['redeems'] as $store => $days)
                                     <tr>
-                                        <th class="sticky left-0 z-20 px-4 py-2 text-xs text-left text-gray-500 align-middle border border-t-0 border-gray-200 bg-gray-25">
+                                        <th class="left-0 z-20 px-4 py-2 text-xs text-left text-gray-500 align-middle border border-t-0 border-gray-200 sm:sticky bg-gray-25">
                                             {{ $store }}
                                         </th>
                                         @foreach ($days as $redeems)
@@ -73,7 +73,7 @@
                             @if(isset($result['totals']))
                             <tfoot>
                                 <tr>
-                                    <th class="sticky left-0 z-20 px-4 py-2 text-sm font-bold text-left text-gray-500 border border-t-0 border-gray-200 bg-gray-25">Totales</th>
+                                    <th class="left-0 z-20 px-4 py-2 text-sm font-bold text-left text-gray-500 border border-t-0 border-gray-200 sm:sticky bg-gray-25">Totales</th>
                                     @foreach ($result['totals'] as $total)
                                         <td class="px-4 py-2 text-sm text-center text-gray-500 border border-t-0 border-l-0 border-gray-100">{{ $total }}</td>
                                     @endforeach
