@@ -1,5 +1,5 @@
 <div
-    x-data="{ showStoreList: @entangle('showStores'), showType: null, 'campaign': {} }"
+    x-data="{ showStoreList: @entangle('showStores'), showType: null, 'campaign': { } }"
     class="mt-7">
     <div class="md:flex md:space-x-8">
         <div class="md:w-8/12">
@@ -77,8 +77,24 @@
                         </div>
                     </div>
                     <div class="mt-4">
-                        <label for="body" class="block text-xs text-gray-600">Cuerpo <span class="text-xs text-red-400">*</span></label>
-                        <textarea wire:model="filters.body" name="body" id="body" class="w-full mt-2 border border-gray-200 rounded resize-none focus:ring-gray-200 focus:border-gray-200" rows="5"></textarea>
+                        <label for="body" class="block text-xs text-gray-600">Cuerpo de la notificación <span class="text-xs text-red-400">*</span></label>
+                        <!-- textarea
+                            wire:model="filters.body"
+                            x-model="campaign.body"
+                            name="body"
+                            id="body"
+                            class="w-full mt-2 border border-gray-200 rounded resize-none focus:ring-gray-200 focus:border-gray-200" rows="5">
+                        </textarea -->
+                        <div
+                        class="h-64 mt-2 border border-gray-200"
+                        x-ref="quillEditor"
+                        x-init="
+                            quill = new Quill($refs.quillEditor, {theme: 'snow'});
+                            quill.on('text-change', () => { $dispatch('quill-text-change', quill.root.innerHTML); });
+                        "
+                        wire:model.debounce.2000ms="filters.body"
+                        >
+                        </div>
                     </div>
 
                     <div class="mt-4" x-show="showType === 'INFORMATIVA'">
@@ -86,13 +102,13 @@
                         <label for="file" class="flex flex-1 p-2 mt-2 border border-gray-200 rounded cursor-pointer bg-gray-50">
                             <x-heroicon-s-photograph class="w-4 h-4"/>
                             <span class="text-xs ml-2 font-semibold {{ $errors->has('file') ? 'text-red-500' : 'text-gray-500'}}">
-                                @if (!is_null($this->file))
-                                    {{ $this->file->getClientOriginalName() }}
+                                @if (!is_null($file))
+                                    {{ $file->getClientOriginalName() }}
                                 @else
                                     Seleccionar archivo(.png o .jpg)
                                 @endif
                             </span>
-                            <input class="hidden" id="file" name="file" type="file" wire:model="file" accept=".xlsx, .xls">
+                            <input class="hidden" id="file" name="file" type="file" wire:model="file" accept=".png, .jpg">
                         </label>
                     </div>
 
@@ -144,12 +160,28 @@
         </div>
         <div class="px-4 md:px-8 md:w-4/12">
             <h5 class="text-xs font-semibold text-gray-500 sm:text-sm">Previa</h5>
-            <div class="max-h-full min-h-full px-5 py-6 mt-6 border border-gray-200 rounded-lg bg-gray-50">
+            <div style="min-height:330px;" class="max-h-full px-5 py-6 mt-6 border border-gray-200 rounded-lg bg-gray-50">
                 <div class="flex flex-col min-h-full px-4 py-2 space-y-6 tracking-wide bg-white border border-gray-100">
                     <p class="text-sm font-extrabold text-gray-800 md:text-xl" style="font-family:Arial, sans-serif;" x-text="campaign.header"></p>
+                    <div class="w-full overflow-hidden">
+                        @if($file)
+                        <img src="{{ $file->temporaryUrl() }}" alt="">
+                        @else
+                        <img src="{{ asset('img/placeholder-image.jpg')}}" class="w-full h-auto" alt="">
+                        @endif
+                    </div>
+                    <p class="text-sm text-gray-500" x-html="campaign.body"></p>
                 </div>
 
             </div>
         </div>
     </div>
 </div>
+
+@push('styles')
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+@endpush
+
+@push('scripts')
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+@endpush

@@ -3,9 +3,12 @@
 namespace App\Http\Livewire\Notification;
 
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Create extends Component
 {
+    use WithFileUploads;
+
     public $selectedStore = null;
     public $showStores = false;
     public $filters = [];
