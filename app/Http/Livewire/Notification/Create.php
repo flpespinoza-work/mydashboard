@@ -2,12 +2,13 @@
 
 namespace App\Http\Livewire\Notification;
 
+use App\Traits\Notifications\Campaigns;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class Create extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, Campaigns;
 
     public $selectedStore = null;
     public $showStores = false;
@@ -40,5 +41,55 @@ class Create extends Component
         $this->selectedStore = null;
         $this->showStores = true;
         $this->filters['store'] = null;
+    }
+
+    public function setBodyCampaign($text)
+    {
+        $this->filters['body'] = $text;
+    }
+
+    public function saveCampaign()
+    {
+        $this->validate([
+            'file' => 'mimes:jpg,png|max:1024'
+        ]);
+
+        try
+        {
+            //Subir la imagen
+            //$this->file->storeAs('push', $this->file->getClientOriginalName() , 'token-ftp');
+
+            //Guardar campaña y notificacion
+            if($this->filters['type'] == 'INFORMATIVA')
+            {
+                if($this->file == null)
+                {
+                    $this->filters['action'] = json_encode(['URL' => 'https://www.tokencash.mx', 'IMG' => 'https://tokencash.mx/push/warning.jpg', 'CUPON' => '']);
+                }
+                else
+                {
+                    $this->filters['action'] = json_encode(['URL' => 'https://www.tokencash.mx', 'IMG' => 'https://tokencash.mx/push/' . $this->file->getClientOriginalName(), 'CUPON' => '']);
+                }
+            }
+            else
+            {
+                $this->filters['action'] = json_encode(['URL' => 'https://www.tokencash.mx', 'IMG' => '', 'CUPON' => $this->filters['coupon']]);
+            }
+
+            $this->filters['date'] = date('Y-m-d H:i:s');
+            $this->filters['liberation'] = date('Y-m-d H:i:s', strtotime('+2 minutes'));
+            $this->filters['author'] = auth()->user()->email;
+            $this->filters['giftcard'] = fnGetGiftcardFull($this->filters['store']);
+
+            $created =$this->insertCampaign($this->filters);
+
+            //Lanzar evento para enviar notificación de prueba
+
+        }
+        catch (\Throwable $th)
+        {
+            dd($th);
+        }
+
     }
 }

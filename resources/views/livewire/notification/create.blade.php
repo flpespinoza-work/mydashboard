@@ -61,38 +61,31 @@
                             <input
                                 id="name"
                                 type="text"
-                                wire:model="filters.name"
+                                wire:model.lazy="filters.name"
                                 class="w-full mt-2 text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200"
                             >
                         </div>
                         <div class="md:w-1/2">
-                            <label for="email" class="block text-xs text-gray-600">Encabezado <span class="text-xs text-red-400">*</span></label>
+                            <label for="header" class="block text-xs text-gray-600">Encabezado <span class="text-xs text-red-400">*</span></label>
                             <input
-                                id="email"
-                                type="email"
-                                wire:model="filters.header"
+                                id="header"
+                                type="text"
+                                wire:model.lazy="filters.header"
                                 x-model="campaign.header"
                                 class="w-full mt-2 text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200"
                             >
                         </div>
                     </div>
-                    <div class="mt-4">
+                    <div class="mt-4" wire:ignore>
                         <label for="body" class="block text-xs text-gray-600">Cuerpo de la notificación <span class="text-xs text-red-400">*</span></label>
-                        <!-- textarea
-                            wire:model="filters.body"
-                            x-model="campaign.body"
-                            name="body"
-                            id="body"
-                            class="w-full mt-2 border border-gray-200 rounded resize-none focus:ring-gray-200 focus:border-gray-200" rows="5">
-                        </textarea -->
                         <div
-                        class="h-64 mt-2 border border-gray-200"
+                        class="h-64"
                         x-ref="quillEditor"
+                        x-model="campaign.body"
                         x-init="
                             quill = new Quill($refs.quillEditor, {theme: 'snow'});
-                            quill.on('text-change', () => { $dispatch('quill-text-change', quill.root.innerHTML); });
+                            quill.on('text-change', () => { campaign.body = quill.root.innerHTML; @this.set('filters.body', quill.root.innerHTML) })
                         "
-                        wire:model.debounce.2000ms="filters.body"
                         >
                         </div>
                     </div>
@@ -117,7 +110,7 @@
                         <input
                                 id="coupon"
                                 type="text"
-                                wire:model="filters.coupon"
+                                wire:model.lazy="filters.coupon"
                                 class="w-full mt-2 text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200"
                             >
                     </div>
@@ -130,15 +123,15 @@
                             <label class="block text-xs text-gray-600">Sexo</label>
                             <div class="flex items-center mt-3 space-x-3">
                                 <label for="femenino" class="text-xs">
-                                    <input type="radio" wire:model="filters.gender" id="femenino" value="femenino">
+                                    <input type="radio" class="text-orange focus:ring-orange" wire:model.lazy="filters.gender" id="femenino" value="femenino">
                                     Femenino
                                 </label>
                                 <label for="masculino" class="text-xs">
-                                    <input type="radio" wire:model="filters.gender" id="masculino" value="masculino">
+                                    <input type="radio" class="text-orange focus:ring-orange" wire:model.lazy="filters.gender" id="masculino" value="masculino">
                                     Masculino
                                 </label>
                                 <label for="otros" class="text-xs">
-                                    <input type="radio" wire:model="filters.gender" id="otros" value="otros">
+                                    <input type="radio" class="text-orange focus:ring-orange" wire:model.lazy="filters.gender" id="otros" value="otros">
                                     Otros
                                 </label>
 
@@ -150,19 +143,29 @@
                             <input
                                 id="activity"
                                 type="text"
-                                wire:model="filters.activity"
+                                wire:model.lazy="filters.activity"
                                 class="w-full mt-2 text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200"
                             >
                         </div>
                     </div>
                 </div>
+
+                <div class="mt-6">
+                    <button
+                        type="submit"
+                        class="flex items-center justify-center p-2 ml-2 transition duration-75 rounded-md md:ml-auto bg-orange">
+                        <x-icons.plus class="w-5 h-5 text-orange-light"/>
+                        <span class="hidden ml-2 text-xs font-semibold md:inline-block text-orange-lightest">Guardar campaña</span>
+                    </button>
+                </div>
             </form>
         </div>
+
         <div class="px-4 md:px-8 md:w-4/12">
             <h5 class="text-xs font-semibold text-gray-500 sm:text-sm">Previa</h5>
             <div style="min-height:330px;" class="max-h-full px-5 py-6 mt-6 border border-gray-200 rounded-lg bg-gray-50">
                 <div class="flex flex-col min-h-full px-4 py-2 space-y-6 tracking-wide bg-white border border-gray-100">
-                    <p class="text-sm font-extrabold text-gray-800 md:text-xl" style="font-family:Arial, sans-serif;" x-text="campaign.header"></p>
+                    <p class="text-sm font-extrabold text-gray-800 md:text-xl" style="font-family:Arial, sans-serif;" x-text="campaign.header ? campaign.header : 'Título de la notificación'"></p>
                     <div class="w-full overflow-hidden">
                         @if($file)
                         <img src="{{ $file->temporaryUrl() }}" alt="">
@@ -170,16 +173,27 @@
                         <img src="{{ asset('img/placeholder-image.jpg')}}" class="w-full h-auto" alt="">
                         @endif
                     </div>
-                    <p class="text-sm text-gray-500" x-html="campaign.body"></p>
+                    <p class="text-sm text-gray-500" x-html="campaign.body ? campaign.body : 'Contenido de la notificación'"></p>
                 </div>
 
             </div>
         </div>
+
     </div>
 </div>
 
 @push('styles')
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<style>
+.ql-toolbar.ql-snow {
+    border: 1px solid #e5e7eb;
+    margin-top: 0.5rem;
+}
+
+.ql-container.ql-snow {
+    border: 1px solid #e5e7eb;
+}
+</style>
 @endpush
 
 @push('scripts')

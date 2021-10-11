@@ -67,8 +67,45 @@ trait Campaigns
     }
 
     /** Guardar una nueva campaña */
-    function insertCampaign()
+    function insertCampaign($data)
     {
+        //dd($data);
+        $query = "SELECT
+                    NOD_USU_ID,
+                    NOD_USU_CONFIGURACION
 
+                FROM
+                    cat_dbm_nodos_usuarios
+                INNER JOIN
+                    bal_tae_saldos
+                ON
+                    NOD_USU_NODO = TAE_SAL_NODO
+                WHERE
+                    TAE_SAL_BOLSA = '". $data['giftcard'] ."'
+                AND
+                    LENGTH(NOD_USU_CONFIGURACION) > (180)";
+
+        if(isset($data['gender']))
+        {
+            switch($data['gender'])
+            {
+                case 'masculino' : $query .= " AND ((JSON_EXTRACT(NOD_USU_CONFIGURACION, \"$.SEXO\")) = \"H\" OR (JSON_EXTRACT(NOD_USU_CONFIGURACION, \"$.SEXO\")) = \"h\")"; break;
+                case 'femenino' : $query .= " AND ((JSON_EXTRACT(NOD_USU_CONFIGURACION, \"$.SEXO\")) = \"M\" OR (JSON_EXTRACT(NOD_USU_CONFIGURACION, \"$.SEXO\")) = \"m\" OR (JSON_EXTRACT(NOD_USU_CONFIGURACION, \"$.SEXO\")) = \"f\")"; break;
+                case 'otro' : $query .= " AND ((JSON_EXTRACT(NOD_USU_CONFIGURACION, \"$.SEXO\")) = \"LGBT\" OR (JSON_EXTRACT(NOD_USU_CONFIGURACION, \"$.SEXO\")) = \"lgtb\")"; break;
+            }
+        }
+
+        if(isset($data['activity']))
+        {
+            $query .= " AND TIMESTAMPDIFF(DAY, TAE_SAL_UTS, NOW()) > " . $data['activity'] . "";
+        }
+
+        dd($query);
+
+        //Guardar en dat_notificacion
+
+        //Guardar en dat_campush
+
+        //retornar
     }
 }
