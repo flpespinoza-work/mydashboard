@@ -64,24 +64,27 @@ class Create extends Component
             {
                 if($this->file == null)
                 {
-                    $this->filters['action'] = json_encode(['URL' => 'https://www.tokencash.mx', 'IMG' => 'https://tokencash.mx/push/warning.jpg', 'CUPON' => '']);
+                    $this->filters['action'] = "{\"URL\":\"https://www.tokencash.mx\", \"IMG\":\"https://tokencash.mx/push/warning.jpg\", \"CUPON\":\"\"}";
                 }
                 else
                 {
-                    $this->filters['action'] = json_encode(['URL' => 'https://www.tokencash.mx', 'IMG' => 'https://tokencash.mx/push/' . $this->file->getClientOriginalName(), 'CUPON' => '']);
+
+                    $this->filters['action'] = "{\"URL\":\"https://www.tokencash.mx\", \"IMG\":\"\https://tokencash.mx/push/". $this->file->getClientOriginalName() ."\", \"CUPON\":\"\"}";
                 }
             }
             else
             {
-                $this->filters['action'] = json_encode(['URL' => 'https://www.tokencash.mx', 'IMG' => '', 'CUPON' => $this->filters['coupon']]);
+                $this->filters['action'] = "{\"URL\":\"https://www.tokencash.mx\", \"IMG\":\"\", \"CUPON\":\" $this->filters['coupon'] \"}";
             }
 
             $this->filters['date'] = date('Y-m-d H:i:s');
-            $this->filters['liberation'] = date('Y-m-d H:i:s', strtotime('+2 minutes'));
+            $this->filters['release'] = date('Y-m-d H:i:s', strtotime('+2 minutes'));
             $this->filters['author'] = auth()->user()->email;
+            $this->filters['node'] = fnGetTokencashNode($this->filters['store']);
             $this->filters['giftcard'] = fnGetGiftcardFull($this->filters['store']);
 
             $created =$this->insertCampaign($this->filters);
+            dd($created);
 
             //Lanzar evento para enviar notificación de prueba
 
