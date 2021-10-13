@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Notification;
 
+use App\Events\CampaignCreate;
 use App\Traits\Notifications\Campaigns;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -50,12 +51,15 @@ class Create extends Component
 
     public function saveCampaign()
     {
-        $this->validate([
+        /*$this->validate([
             'file' => 'mimes:jpg,png|max:1024'
-        ]);
+        ]);*/
 
         try
         {
+            //Lanzar evento para enviar notificación de prueba
+            event(new CampaignCreate(197));
+
             //Subir la imagen
             //$this->file->storeAs('push', $this->file->getClientOriginalName() , 'token-ftp');
 
@@ -84,9 +88,9 @@ class Create extends Component
             $this->filters['giftcard'] = fnGetGiftcardFull($this->filters['store']);
 
             $created =$this->insertCampaign($this->filters);
-            dd($created);
 
             //Lanzar evento para enviar notificación de prueba
+            //event(new CampaignCreate(197));
 
         }
         catch (\Throwable $th)

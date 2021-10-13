@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\CampaignCreate;
 use App\Listeners\AfterLoginListener;
+use App\Listeners\SendNewCampaignNotification;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         Login::class => [
             AfterLoginListener::class,
+        ],
+        CampaignCreate::class => [
+            SendNewCampaignNotification::class,
         ],
     ];
 
