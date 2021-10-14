@@ -34,6 +34,7 @@ class SendNewCampaignNotification
         //Obtener datos de la campaña y notificacion
         $notification = $this->getNotification($event->notification);
 
-        dd($notification);
+        //Enviar la notificacion
+        $this->sendNotificationAlert($users, $notification);
     }
 }
