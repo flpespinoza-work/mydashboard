@@ -28,6 +28,17 @@ trait Notifications
         return $users;
     }
 
+    function getTokencashNotificationUser($number)
+    {
+        $tokDB = DB::connection('tokencash_campanas'); //Cambiar a reportes
+        $user = $tokDB->table('cat_dbm_nodos_usuarios')
+        ->select(['NOD_USU_ID', 'NOD_USU_CONFIGURACION'])
+        ->where('NOD_USU_NUMERO', $number)
+        ->first();
+
+        return $user;
+    }
+
     function getNotification($idNotification)
     {
         $tokDB = DB::connection('reportes');
@@ -85,6 +96,11 @@ trait Notifications
         ->withApnsConfig($apnsConfig);
 
         $firebase->sendMulticast($message, array_values($users));
+    }
+
+    function sendTestNotification($user, $notification)
+    {
+        //Obtener el tipo
     }
 
     function sendNotification($users, $notification, $type)

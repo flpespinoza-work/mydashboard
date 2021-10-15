@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Notification;
 
+use App\Events\CampaignTest;
 use App\Models\Campaign;
 use App\Traits\Notifications\Campaigns;
 use Illuminate\Support\Facades\Crypt;
@@ -25,7 +26,10 @@ class Index extends Component
     public $search = '';
 
     public $showModal = false;
+    public $showModalTest = false;
+
     public $program = [];
+    public $test = [];
 
     public function render()
     {
@@ -66,6 +70,14 @@ class Index extends Component
         $this->showModal = true;
     }
 
+    public function showTestNotification($name, $campaign)
+    {
+        $this->test['campaign'] = $campaign;
+        $this->test['name'] = $name;
+        $this->test['number'] = '';
+        $this->showModalTest = true;
+    }
+
     public function program()
     {
         $this->showModal = false;
@@ -85,5 +97,21 @@ class Index extends Component
                 'message' => 'Hubo error al programar la campaña, intentelo de nuevo.'
             ]);
         }
+    }
+
+    public function test()
+    {
+        $this->test['campaign'] = Crypt::decrypt($this->test['campaign']);
+        $this->showModalTest = false;
+
+
+        //Lanzar evento para enviar notificación de prueba
+        //event(new CampaignTest($this->test['campaign'], $this->test['number']));
+
+        $this->test = [];
+        $this->dispatchBrowserEvent('swal:success', [
+            'type' => 'success',
+            'message' => 'Se ha enviado la prueba de campaña'
+        ]);
     }
 }

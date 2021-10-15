@@ -94,7 +94,7 @@
                                                     @endcan
 
                                                     @can('can_test-campaign')
-                                                    <a href="">
+                                                    <a class="cursor-pointer" wire:click="showTestNotification('{{ $campaign->CAMP_NOMBRE}}','{{ Crypt::encrypt($campaign->CAMP_ID) }}')">
                                                         <x-heroicon-s-check-circle class="w-5 h-5"/>
                                                     </a>
                                                     @endcan
@@ -153,6 +153,29 @@
                 <x-slot name="footer">
                     <button type="button" x-on:click="show=false" class="px-4 py-2 font-semibold text-gray-500 bg-gray-200 rounded-md">Cancelar</button>
                     <button type="submit" class="px-4 py-2 font-semibold rounded-md text-orange-light bg-orange">Programar</button>
+                </x-slot>
+            </x-modals.dialog>
+        </form>
+    </div>
+
+    <div>
+        <form wire:submit.prevent="test">
+            <x-modals.dialog maxWidth="sm" wire:model.defer="showModalTest">
+                <x-slot name="title">Probar campaña: @isset($test['name']) {{ $test['name'] }} @endisset</x-slot>
+                <x-slot name="content">
+                    <div class="relative py-4">
+                        <h3 class="text-xs text-gray-500">Número telefónico</h3>
+                        <div class="relative mt-3">
+                            <input
+                            wire:model.debounce.2000ms="program.number"
+                            type="text"
+                            class="w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
+                        </div>
+                    </div>
+                </x-slot>
+                <x-slot name="footer">
+                    <button type="button" x-on:click="show=false" class="px-4 py-2 font-semibold text-gray-500 bg-gray-200 rounded-md">Cancelar</button>
+                    <button type="submit" class="px-4 py-2 font-semibold rounded-md text-orange-light bg-orange">Probar</button>
                 </x-slot>
             </x-modals.dialog>
         </form>
