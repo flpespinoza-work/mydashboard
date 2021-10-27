@@ -14,17 +14,17 @@ class CampaignTest
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $notification, $number;
+    public $notification, $numbers;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($notification, $number)
+    public function __construct($notification, $numbers)
     {
         $this->notification = $notification;
-        $this->number = $number;
+        $this->numbers = $numbers;
     }
 
     /**

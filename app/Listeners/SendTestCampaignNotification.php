@@ -29,11 +29,11 @@ class SendTestCampaignNotification
     public function handle(CampaignTest $event)
     {
         //Obtener usuarios tokencash
-        $user = $this->getTokencashNotificationUser($event->number);
+        $users = $this->getTokencashNotificationUser($event->numbers);
         //Obtener datos de la campaña y notificacion
         $notification = $this->getNotification($event->notification);
 
         //Enviar la notificacion
-        $this->sendNotification($user, $notification, $notification->NOT_TIPO);
+        $this->sendTestNotification($users, $notification, $notification->NOT_TIPO);
     }
 }

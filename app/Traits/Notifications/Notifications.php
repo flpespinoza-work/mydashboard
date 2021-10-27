@@ -3,6 +3,7 @@
 namespace App\Traits\Notifications;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Kreait\Firebase\ServiceAccount;
 use Kreait\Firebase\Factory;
 use Kreait\Firebase\Messaging\ApnsConfig;
@@ -13,7 +14,7 @@ trait Notifications
     function getTokencashNotificationUsers()
     {
         //$numbers = ['3315745279', '3314096129', '3318981880', '3310078100', '3329570029', '3334671759', '3411077555', '3310478782'];
-        $tokDB = DB::connection('tokencash_campanas'); //Cambiar a reportes
+        $tokDB = DB::connection('reportes'); //Cambiar a reportes
         $result = $tokDB->table('cat_dbm_nodos_usuarios')
         ->select(['NOD_USU_ID', 'NOD_USU_CONFIGURACION'])
         ->whereIn('NOD_USU_NUMERO', ['3315745279'])
@@ -28,24 +29,37 @@ trait Notifications
         return $users;
     }
 
-    function getTokencashNotificationUser($number)
+    function getTokencashNotificationUser($numbers)
     {
-        $tokDB = DB::connection('tokencash_campanas'); //Cambiar a reportes
-        $user = $tokDB->table('cat_dbm_nodos_usuarios')
+        $numbers = explode(',', $numbers);
+        $tokDB = DB::connection('reportes'); //Cambiar a reportes
+        $usersDB = $tokDB->table('cat_dbm_nodos_usuarios')
         ->select(['NOD_USU_ID', 'NOD_USU_CONFIGURACION'])
-        ->where('NOD_USU_NUMERO', $number)
-        ->first();
+        ->whereIn('NOD_USU_NUMERO', $numbers)
+        ->get();
 
-        return $user;
+        foreach($usersDB as $userDB)
+        {
+            $config = json_decode($userDB->NOD_USU_CONFIGURACION, true);
+            $users[$userDB->NOD_USU_ID] = $config['INSTALACION_ID'];
+        }
+
+        return $users;
     }
 
     function getNotification($idNotification)
     {
         $tokDB = DB::connection('reportes');
         return $tokDB->table('dat_notificacion')
+        ->join('dat_campush', 'dat_notificacion.NOT_ID', '=', 'dat_campush.CAMP_NOT_ID')
         ->select(['NOT_ID', 'NOT_TITULO', 'NOT_CUERPO', 'NOT_ACCION', 'NOT_TIPO'])
-        ->where('NOT_ID', $idNotification)
+        ->where('CAMP_ID', $idNotification)
         ->first();
+    }
+
+    function getDevices($users)
+    {
+        dd($users);
     }
 
     function sendNotificationAlert($users, $notification)
@@ -98,20 +112,72 @@ trait Notifications
         $firebase->sendMulticast($message, array_values($users));
     }
 
-    function sendTestNotification($user, $notification)
+    function sendTestNotification($device, $notification, $type)
     {
-        //Obtener el tipo
-    }
+        $users = array_keys($device);
+        $devices = array_values($device);
 
-    function sendNotification($users, $notification, $type)
-    {
+        //Obtener el tipo
         $firebase = $this->initService();
         if($type == 'informativa')
             $message = $this->getMessageInfo($notification);
         else
             $message = $this->getMessageCoupon($notification);
 
+        $result = $firebase->sendMulticast($message, $devices);
+        $success = $result->successes()->count();
+        if($success)
+        {
+            Log::info('Se envió la notificacion de prueba correctamente');
+            //Guardar en dat_notificacion usuario
+            $this->saveUsersNotification($users, $notification->NOT_ID);
+        }
+        else
+        {
+            Log::error('Ocurrió un error en el envió de la notificacion de prueba');
+        }
+    }
+
+    function saveUsersNotification($users, $notification)
+    {
+        $tokDB = DB::connection('tokencash_campanas');
+        $date = date('Y-m-d H:i:s');
+        foreach($users as $user)
+        {
+            try
+            {
+                $tokDB->table('dat_notificacion_usuario')
+                ->insert([
+                    'NOT_USU_TS'  => $date,
+                    'NOT_USU_UTS' => $date,
+                    'NOT_USU_NOTIFICACION_ID' => $notification,
+                    'NOT_USU_USUARIO_ID' => $user,
+                    'NOT_USU_ESTADO' => '0'
+                ]);
+                Log::info('Se guardo el usuario en la tabla de dat_notificacion_usuario');
+            }
+            catch (\Throwable $th)
+            {
+                Log::error('Error al guardar usuario en la tabla de dat_notificacion_usuario');
+            }
+
+        }
+    }
+
+    function sendNotification($users, $notification, $type)
+    {
+
+        $firebase = $this->initService();
+        if($type == 'informativa')
+            $message = $this->getMessageInfo($notification);
+        else
+            $message = $this->getMessageCoupon($notification);
+
+        //Obtener identificador firebase de cada dispositivo y su SO
+        $devices = $this->getDevices($users);
+
         //Obtener numero de dispositivos android e ios
+        dd($devices);
 
         //Dividir usuarios en array de 300 elementos
         $devices = array_values($users);

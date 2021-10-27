@@ -104,11 +104,10 @@ class Index extends Component
         $this->test['campaign'] = Crypt::decrypt($this->test['campaign']);
         $this->showModalTest = false;
 
-
         //Lanzar evento para enviar notificación de prueba
-        //event(new CampaignTest($this->test['campaign'], $this->test['number']));
-
+        event(new CampaignTest($this->test['campaign'], $this->test['number']));
         $this->test = [];
+
         $this->dispatchBrowserEvent('swal:success', [
             'type' => 'success',
             'message' => 'Se ha enviado la prueba de campaña'

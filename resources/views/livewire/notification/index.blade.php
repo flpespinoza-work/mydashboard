@@ -164,10 +164,10 @@
                 <x-slot name="title">Probar campaña: @isset($test['name']) {{ $test['name'] }} @endisset</x-slot>
                 <x-slot name="content">
                     <div class="relative py-4">
-                        <h3 class="text-xs text-gray-500">Número telefónico</h3>
+                        <h3 class="text-xs text-gray-500">Número(s) telefónico</h3>
                         <div class="relative mt-3">
                             <input
-                            wire:model.debounce.2000ms="program.number"
+                            wire:model.debounce.2000ms="test.number"
                             type="text"
                             class="w-full text-xs border-gray-200 rounded-sm focus:ring-gray-200 focus:border-gray-200">
                         </div>

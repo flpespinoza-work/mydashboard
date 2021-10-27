@@ -29,6 +29,7 @@ class SendNewCampaignNotification
      */
     public function handle(CampaignCreate $event)
     {
+
         //Obtener usuarios tokencash
         $users = $this->getTokencashNotificationUsers();
         //Obtener datos de la campaña y notificacion
