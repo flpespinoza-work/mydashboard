@@ -30,13 +30,13 @@ class GlobalReportController extends Controller
     {
         $data = Crypt::decrypt($data);
         $info = Cache::get($data['report_id']);
-        return (new GlobalsRedeemsExport($data['days'], collect($info['redeems']), $data['report_data']))->download('reporte_global_canjes_diarios.xlsx');
+        return (new GlobalsRedeemsExport($info['days'], collect($info['redeems']), $data['report_data']))->download('reporte_global_canjes_diarios.xlsx');
     }
 
     public function downloadRegisters($data)
     {
         $data = Crypt::decrypt($data);
         $info = Cache::get($data['report_id']);
-        return (new GlobalsRegistersExport($data['days'], collect($info['registers']), $data['report_data']))->download('reporte_global_altas_diarias.xlsx');
+        return (new GlobalsRegistersExport($info['days'], collect($info['registers']), $data['report_data']))->download('reporte_global_altas_diarias.xlsx');
     }
 }
