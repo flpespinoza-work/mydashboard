@@ -39,6 +39,10 @@ trait Coupons
 
             if(!empty($tmpRes))
             {
+                //Si faltan dias en el periodo, agregar faltantes
+                $period = fnGetPeriodDays($filters['initial_date'], $filters['final_date']);
+                $tmpRes['coupons'] = $this->fillPrintedCouponsDays($tmpRes['coupons'], $period);
+
                 uksort($tmpRes['coupons'], function($a, $b){
                     return strtotime(str_replace('/', '-', $a)) - strtotime(str_replace('/', '-', $b));
                 });
@@ -292,5 +296,18 @@ trait Coupons
         });*/
 
         return $result;
+    }
+
+    function fillPrintedCouponsDays($data, $period)
+    {
+        foreach($period as $day)
+        {
+            if(!isset($data[$day]))
+            {
+                $data[$day] = [ 'day' => $day, 'count' => 0, 'amount' => 0];
+            }
+        }
+
+        return $data;
     }
 }

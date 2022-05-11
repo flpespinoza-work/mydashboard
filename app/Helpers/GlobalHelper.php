@@ -166,3 +166,22 @@ if(!function_exists('fnRememberReportTime'))
 
     }
 }
+
+if(!function_exists('fnGetPeriodDays'))
+{
+    function fnGetPeriodDays($initialDate, $endDate)
+    {
+        $range = [];
+        $start = new DateTime($initialDate);
+        $end   = new DateTime($endDate);
+        $end->modify('+1 day');
+        $rangePeriod = new DatePeriod($start, new DateInterval('P1D'), $end);
+        foreach($rangePeriod as $date)
+        {
+            $key = $date->format("d/m/Y");
+            array_push($range, $key);
+        }
+
+        return $range;
+    }
+}
