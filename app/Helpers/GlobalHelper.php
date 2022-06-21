@@ -9,7 +9,7 @@ if(!function_exists('fnGetMyStores'))
 {
     function fnGetMyStores()
     {
-        $stores = Cache::remember('stores-' . auth()->user()->id, 60*60*12, function(){
+        $stores = Cache::remember('stores-' . auth()->user()->id, now()->addHours(8), function(){
             if(auth()->user()->isSuperAdmin())
                 return Store::orderBy('name')->pluck('name', 'id')->toArray();
 
@@ -123,6 +123,7 @@ if(!function_exists('fnGetStoreName'))
         return Store::find($store)->name;
     }
 }
+
 //Obtener la informacion de los establecimientos que tiene asignado el usuario
 if(!function_exists('fnGetMyStoresNodes'))
 {
@@ -130,6 +131,25 @@ if(!function_exists('fnGetMyStoresNodes'))
     {
         $myStores = array_keys(fnGetMyStores());
         return Store::whereIn('id', $myStores)->pluck('node')->toArray();
+    }
+}
+
+//Obtener id de merchant asociado a un establecimiento
+if(!function_exists('fnGetStoreMerchant'))
+{
+    function fnGetStoreMerchant($store)
+    {
+        return Store::where('id', $store)->value('merchant_id');
+    }
+}
+
+//Obtener todos los merchants de mis establecimientos
+if(!function_exists('fnGetMyStoresMerchants'))
+{
+    function fnGetMyStoresMerchants()
+    {
+        $myStores = array_keys(fnGetMyStores());
+        return Store::whereIn('id', $myStores)->pluck('merchant_id')->toArray();
     }
 }
 
